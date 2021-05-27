@@ -18,5 +18,8 @@
   "homepage": "https://github.com/ndronov/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.2"
   }
 }
