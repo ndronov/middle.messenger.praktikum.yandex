@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ndronov/middle.messenger.praktikum.yandex/issues"
   },
-  "homepage": "https://github.com/ndronov/middle.messenger.praktikum.yandex#readme"
+  "homepage": "https://github.com/ndronov/middle.messenger.praktikum.yandex#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
