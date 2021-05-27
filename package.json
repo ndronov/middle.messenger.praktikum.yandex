@@ -5,7 +5,8 @@
   "main": "dist/index.html",
   "scripts": {
     "build": "parcel build ./src/index.html",
-    "start": "parcel serve ./src/index.html --open --dist-dir .parcel-serve"
+    "dev": "parcel serve ./src/index.html --open --dist-dir .parcel-serve",
+    "start": "parcel build ./src/index.html && node server"
   },
   "repository": {
     "type": "git",
