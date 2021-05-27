@@ -2,7 +2,7 @@
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
   "description": "Messenger application",
-  "main": "dist/index.html",
+  "main": "build/index.html",
   "scripts": {
     "build": "parcel build ./src/index.html",
     "dev": "parcel serve ./src/index.html --open --dist-dir .parcel-serve",
