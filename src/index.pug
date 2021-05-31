@@ -1,8 +1,17 @@
 doctype html
-html(lang="en")
+
+include chatsData.pug
+include chats.pug
+
+html
     head
         meta(charset="UTF-8")
         title Messenger
-    body
-        h1.title here will be app
         script(src='./main.js')
+    body
+        main.app
+            nav.navigation
+                a(href="#").profile-link Профиль &rang;
+                button.search-button &#128269; Поиск
+                +chatList(chatsData)
+            div.active-chat-placeholder Выберите чат чтобы отправить сообщение
