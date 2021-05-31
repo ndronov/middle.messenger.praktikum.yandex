@@ -4,10 +4,11 @@
   "description": "Messenger application",
   "main": "build/index.html",
   "scripts": {
-    "prebuild": "rimraf build",
+    "prebuild": "rimraf build/*",
     "build": "parcel build ./src/index.pug",
-    "dev": "rimraf .parcel-serve && parcel serve ./src/index.pug --open --dist-dir .parcel-serve",
-    "start": "parcel build ./src/index.html && node server"
+    "dev": "parcel serve ./src/index.pug --open --dist-dir .parcel-serve",
+    "prestart": "rimraf build/*",
+    "start": "parcel build ./src/index.pug && node server"
   },
   "repository": {
     "type": "git",
