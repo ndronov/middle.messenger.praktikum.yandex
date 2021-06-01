@@ -26,6 +26,7 @@
     "@parcel/transformer-pug": "^2.0.0-beta.2",
     "@parcel/transformer-sass": "^2.0.0-beta.2",
     "parcel": "^2.0.0-beta.2",
+    "parcel-reporter-static-files-copy": "^1.3.0",
     "rimraf": "^3.0.2"
   },
   "engines": {
