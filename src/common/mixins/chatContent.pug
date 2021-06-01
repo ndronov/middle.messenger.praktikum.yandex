@@ -1,0 +1,14 @@
+mixin chatContent(content)
+    div.chat-content
+        div.date= content.date
+        each message in content.messages
+            if message.text
+                if message.own
+                    span.text-message.text-message_own= message.text
+                else
+                    span.text-message= message.text
+            else if message.image
+                if message.own
+                    img.image-message.image-message_own(src=`../../../static/image.png`)
+                else
+                    img.image-message(src=`../../../static/image.png`)

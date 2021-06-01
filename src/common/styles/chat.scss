@@ -34,14 +34,6 @@
       align-items: stretch;
       border-top: 1px solid $color_grey4;
 
-      .avatar {
-        align-self: stretch;
-        aspect-ratio: 1;
-        margin-right: 10px;
-        border-radius: 50%;
-        background: $color_grey3;
-      }
-
       .content {
         display: flex;
         flex-flow: column;
@@ -96,4 +88,12 @@
   ::-webkit-scrollbar {
     display: none;
   }
+}
+
+.avatar {
+  align-self: stretch;
+  aspect-ratio: 1;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: $color_grey3;
 }

@@ -3,12 +3,75 @@
 @import '../../common/styles/chat';
 
 .active-chat {
+  align-self: stretch;
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-flow: column;
+  padding: 0 20px;
   font-size: 12px;
   line-height: 12px;
   color: $color_grey5;
   background: $color_white;
+
+  .user-panel {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid $color_grey4;
+
+    .avatar {
+      width: 34px;
+    }
+
+    .name {
+      flex: 1;
+      font-size: 13px;
+      line-height: 13px;
+      font-weight: 600;
+      color: $color_black;
+    }
+  }
+
+  .chat-content {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+
+    .date {
+      align-self: center;
+      margin: 48px 0 30px 0;
+    }
+
+    .text-message {
+      max-width: 402px;
+      margin-bottom: 10px;
+      padding: 11px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: $color_black;
+      background-color: $color_grey2;
+      border-radius: 5px;
+    }
+
+    .text-message_own {
+      background-color: $color_light_blue;
+      align-self: flex-end;
+    }
+
+    .image-message {
+      margin-bottom: 10px;
+    }
+
+    .image-message_own {
+      align-self: flex-end;
+    }
+  }
+
+  .message-sending-form {
+    height: 54px;
+    border-top: 1px solid $color_grey4;
+  }
 }

@@ -1,7 +1,9 @@
 doctype html
 
-include ../../common/mockData/chatListData.pug
 include ../../common/mixins/chatList.pug
+include ../../common/mixins/chatContent.pug
+include ../../common/mockData/chatListData.pug
+include ../../common/mockData/activeChatData.pug
 
 html
     head
@@ -14,4 +16,10 @@ html
                 a(href="#").profile-link Профиль &rang;
                 button.search-button &#128269; Поиск
                 +chatList(chatListData)
-            div.active-chat активный чат
+            div.active-chat
+                div.user-panel
+                    div.avatar
+                    div.name= activeChatData.userName
+                +chatContent(activeChatData.content)
+                form.message-sending-form
+
