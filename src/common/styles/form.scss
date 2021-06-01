@@ -33,7 +33,6 @@
     font-weight: 500;
     color: $color_black;
     border-bottom: 1px solid $color_blue;
-    outline: none;
 
     &:focus {
       border-bottom-style: dashed;
@@ -45,20 +44,6 @@
     min-height: 40px;
   }
 
-  .submit-button {
-    min-height: 37px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    line-height: 13px;
-    background-color: $color_blue;
-    color: $color_white;
-    border-radius: 8px;
-    outline: none;
-    &:focus {
-      box-shadow: 0px 0px 2px 2px $color_grey5;
-    }
-  }
-
   .auth-mode-switch-link {
     align-self: center;
     font-weight: 500;
@@ -68,7 +53,21 @@
     color: $color_blue;
     outline: none;
     &:focus {
-      box-shadow: 0px 0px 2px 2px $color_grey5;
+      box-shadow: 0 0 2px 2px $color_grey5;
     }
+  }
+}
+
+.submit-button {
+  min-width: 280px;
+  min-height: 37px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 13px;
+  background-color: $color_blue;
+  color: $color_white;
+  border-radius: 8px;
+  &:focus {
+    box-shadow: 0 0 2px 2px $color_grey5;
   }
 }

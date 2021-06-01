@@ -16,6 +16,8 @@ const handleFormSubmit = () => {
   const form = document.forms[0];
 
   if (!form) {
+    console.log('на странице нет доступных форм');
+
     return;
   }
 
