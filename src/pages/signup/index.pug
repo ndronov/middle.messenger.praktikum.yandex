@@ -4,7 +4,7 @@ html
     head
         meta(charset="UTF-8")
         title Регистрация
-        script(src='./signup.js')
+        link(rel="stylesheet", href="index.scss")
     body
         main.app
             form.auth-form#signup-form
@@ -34,3 +34,4 @@ html
 
                 button.submit-button(type="submit") Зарегистрироваться
                 a.auth-mode-switch-link(href="../login/index.pug") Войти
+        script(src='./index.js')

@@ -4,7 +4,7 @@ html
     head
         meta(charset="UTF-8")
         title Авторизация
-        script(src='./login.js')
+        link(rel="stylesheet", href="index.scss")
     body
         main.app
             form.auth-form#login-form
@@ -16,3 +16,4 @@ html
                 div.gap
                 button.submit-button(type="submit") Авторизоваться
                 a.auth-mode-switch-link(href="../signup/index.pug") Нет аккаунта?
+        script(src='./index.js')
