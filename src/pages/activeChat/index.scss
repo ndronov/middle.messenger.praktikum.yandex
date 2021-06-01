@@ -72,6 +72,28 @@
 
   .message-sending-form {
     height: 54px;
+    display: flex;
+    padding: 11px 0;
     border-top: 1px solid $color_grey4;
+
+    .message-input {
+      flex: 1;
+      padding: 0 20px;
+      background-color: $color_grey3;
+      border-radius: 16px;
+      outline: none;
+
+      &::placeholder {
+        color: $color_grey5;
+      }
+    }
+
+    .submit-button {
+      width: 28px;
+      margin-left: 10px;
+      border-radius: 50%;
+      color: $color_white;
+      background-color: $color_blue;
+    }
   }
 }
