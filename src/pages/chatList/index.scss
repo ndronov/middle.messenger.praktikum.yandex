@@ -1,0 +1,111 @@
+@import '../../common/styles/global';
+@import '../../common/styles/colors';
+
+.navigation {
+  width: 310px;
+  height: 100%;
+  padding: 0 10px;
+  display: flex;
+  flex-flow: column;
+  background: $color_grey1;
+  border-right: 1px solid $color_grey4;
+
+  .profile-link {
+    margin: 20px 0;
+    font-size: 12px;
+    line-height: 12px;
+    align-self: flex-end;
+    color: $color_grey5;
+  }
+
+  .search-button {
+    min-height: 32px;
+    margin-bottom: 14px;
+    border-radius: 5px;
+    color: $color_grey5;
+  }
+
+  .chats {
+    overflow: scroll;
+
+    .chat {
+      height: 70px;
+      padding: 12px 0;
+      display: flex;
+      align-items: stretch;
+      border-top: 1px solid $color_grey4;
+
+      .avatar {
+        align-self: stretch;
+        aspect-ratio: 1;
+        margin-right: 10px;
+        border-radius: 50%;
+        background: $color_grey3;
+      }
+
+      .content {
+        display: flex;
+        flex-flow: column;
+        flex: 1;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        overflow: hidden;
+      }
+
+      .name {
+        font-size: 13px;
+        line-height: 13px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: $color_black;
+      }
+
+      .message {
+        font-size: 12px;
+        line-height: 15px;
+        color: $color_grey5;
+      }
+
+      .additional-content {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+      }
+
+      .time {
+        align-self: flex-end;
+        font-size: 9px;
+        line-height: 13px;
+        color: $color_grey5;
+      }
+
+      .notifications-number {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 11px;
+        line-height: 12px;
+        color: $color_white;
+        background: $color_blue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.active-chat-placeholder {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  line-height: 12px;
+  color: $color_grey5;
+  background: $color_white;
+}

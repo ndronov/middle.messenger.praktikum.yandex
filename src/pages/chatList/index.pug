@@ -1,0 +1,17 @@
+doctype html
+
+include chatsData.pug
+include chatList.pug
+
+html
+    head
+        meta(charset="UTF-8")
+        title Список чатов
+        link(rel="stylesheet", href="./index.scss")
+    body
+        main.app
+            nav.navigation
+                a(href="#").profile-link Профиль &rang;
+                button.search-button &#128269; Поиск
+                +chatList(chatsData)
+            div.active-chat-placeholder Выберите чат, чтобы отправить сообщение
