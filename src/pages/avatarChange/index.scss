@@ -1,5 +1,70 @@
 @import '../../common/styles/global';
 @import '../../common/styles/colors';
+@import '../../common/styles/auth';
+@import '../../common/styles/settings';
 
-.placeholder {}
-  
+.links {
+  width: 510px;
+  margin-top: 60px;
+  display: flex;
+  flex-flow: column;
+}
+
+.link {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 32px;
+  color: $color_blue;
+  border-bottom: 1px solid $color_grey4;
+}
+
+.exit-link {
+  color: $color_red;
+  border-bottom: none;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparentize($color_total_black, 0.6);
+}
+
+.avatar-form {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 30px;
+  background-color: $color_white;
+  border-radius: 12px;
+  box-shadow: 0 0 6px transparentize($color_total_black, 0.86);
+
+  .title {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 40px;
+    color: $color_black;
+  }
+
+  .label {
+    margin-bottom: 45px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-decoration: underline;
+    color: $color_blue;
+
+    .input {
+      width: 0;
+      height: 0;
+      visibility: hidden;
+    }
+  }
+}
