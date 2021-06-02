@@ -44,9 +44,12 @@
       margin: 48px 0 30px 0;
     }
 
+    .message {
+      margin-bottom: 10px;
+    }
+
     .text-message {
       max-width: 402px;
-      margin-bottom: 10px;
       padding: 11px;
       font-weight: 500;
       font-size: 12px;
@@ -62,11 +65,34 @@
     }
 
     .image-message {
-      margin-bottom: 10px;
+      position: relative;
     }
 
     .image-message_own {
       align-self: flex-end;
+    }
+
+    .image-message-time {
+      position: absolute;
+      right: 11px;
+      bottom: 11px;
+      padding: 2px 7px;
+      font-weight: 500;
+      font-size: 9px;
+      line-height: 9px;
+      color: $color_white;
+      background: $color_grey5;
+      border-radius: 30px;
+    }
+
+    .text-message-time {
+      margin-top: 10px;
+      margin-left: 10px;
+      float: right;
+      font-weight: 500;
+      font-size: 9px;
+      line-height: 9px;
+      color: $color_grey5;
     }
   }
 

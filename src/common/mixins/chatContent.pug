@@ -4,11 +4,17 @@ mixin chatContent(content)
         each message in content.messages
             if message.text
                 if message.own
-                    span.text-message.text-message_own= message.text
+                    span.message.text-message.text-message_own= message.text
+                        span.text-message-time= message.time
                 else
-                    span.text-message= message.text
+                    span.message.text-message= message.text
+                        span.text-message-time= message.time
             else if message.image
                 if message.own
-                    img.image-message.image-message_own(src=`../../../static/image.png`)
+                    div.message.image-message.image-message_own
+                        img(src=`../../../static/image.png`)
+                        span.image-message-time= message.time
                 else
-                    img.image-message(src=`../../../static/image.png`)
+                    div.message.image-message(src=`../../../static/image.png`)
+                        img(src=`../../../static/image.png`)
+                        span.image-message-time= message.time
