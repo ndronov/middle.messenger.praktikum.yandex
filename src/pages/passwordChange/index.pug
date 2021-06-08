@@ -1,0 +1,26 @@
+doctype html
+
+html
+    head
+        meta(charset="UTF-8")
+        title Изменение пароля
+        link(rel="stylesheet", href="./index.scss")
+    body
+        main.app
+            aside.aside-panel
+                button.back-button(type="button") &#8592;
+
+            form.settings-form#password-form
+                div.avatar
+
+                label.label(for="oldPassword") Старый пароль
+                    input.input(type="password", id="oldPassword", name="oldPassword", value="oldPassword")
+
+                label.label(for="newPassword") Новый пароль
+                    input.input(type="password", id="newPassword", name="newPassword", value="newPassword")
+
+                label.label(for="newPassword_confirmation") Повторите новый пароль
+                    input.input(type="password", id="newPassword_confirmation", name="newPassword_confirmation", value="newPassword")
+
+                button.submit-button(type="submit") Сохранить
+        script(src='./index.js')

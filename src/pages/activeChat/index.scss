@@ -1,0 +1,124 @@
+@import '../../common/styles/global';
+@import '../../common/styles/colors';
+@import '../../common/styles/chat';
+
+.active-chat {
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  padding: 0 20px;
+  font-size: 12px;
+  line-height: 12px;
+  color: $color_grey5;
+  background: $color_white;
+
+  .user-panel {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid $color_grey4;
+
+    .avatar {
+      width: 34px;
+    }
+
+    .name {
+      flex: 1;
+      font-size: 13px;
+      line-height: 13px;
+      font-weight: 600;
+      color: $color_black;
+    }
+  }
+
+  .chat-content {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+
+    .date {
+      align-self: center;
+      margin: 48px 0 30px 0;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .text-message {
+      max-width: 402px;
+      padding: 11px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: $color_black;
+      background-color: $color_grey2;
+      border-radius: 5px;
+    }
+
+    .text-message_own {
+      background-color: $color_light_blue;
+      align-self: flex-end;
+    }
+
+    .image-message {
+      position: relative;
+    }
+
+    .image-message_own {
+      align-self: flex-end;
+    }
+
+    .image-message-time {
+      position: absolute;
+      right: 11px;
+      bottom: 11px;
+      padding: 2px 7px;
+      font-weight: 500;
+      font-size: 9px;
+      line-height: 9px;
+      color: $color_white;
+      background: $color_grey5;
+      border-radius: 30px;
+    }
+
+    .text-message-time {
+      margin-top: 10px;
+      margin-left: 10px;
+      float: right;
+      font-weight: 500;
+      font-size: 9px;
+      line-height: 9px;
+      color: $color_grey5;
+    }
+  }
+
+  .message-sending-form {
+    height: 54px;
+    display: flex;
+    padding: 11px 0;
+    border-top: 1px solid $color_grey4;
+
+    .message-input {
+      flex: 1;
+      padding: 0 20px;
+      background-color: $color_grey3;
+      border-radius: 16px;
+
+      &::placeholder {
+        color: $color_grey5;
+      }
+    }
+
+    .submit-button {
+      width: 28px;
+      margin-left: 10px;
+      border-radius: 50%;
+      color: $color_white;
+      background-color: $color_blue;
+    }
+  }
+}

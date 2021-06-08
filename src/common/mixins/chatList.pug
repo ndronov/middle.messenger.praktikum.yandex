@@ -1,0 +1,12 @@
+mixin chatList(chats)
+    div.chats
+        each chat in chats
+            div.chat
+                div.avatar
+                div.content
+                    span.name= chat.name
+                    span.message= chat.message
+                div.additional-content
+                    span.time= chat.time
+                    if chat.notificationsNumber
+                        span.notifications-number= chat.notificationsNumber

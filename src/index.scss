@@ -1,0 +1,19 @@
+@import './common/styles/global';
+@import './common/styles/colors';
+
+body {
+  padding: 20px;
+  color: $color_black;
+}
+
+a {
+  color: inherit;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.page-link {
+  margin-bottom: 15px;
+}

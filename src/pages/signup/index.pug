@@ -1,0 +1,37 @@
+doctype html
+
+html
+    head
+        meta(charset="UTF-8")
+        title Регистрация
+        link(rel="stylesheet", href="./index.scss")
+    body
+        main.app
+            form.auth-form#signup-form
+                h1.title Регистрация
+                label.label(for="email") Почта
+                input.input(type="email", id="email", name="email")
+
+                label.label(for="login") Логин
+                input.input(type="text", id="login", name="login")
+
+                label.label(for="first_name") Имя
+                input.input(type="text", id="first_name", name="first_name")
+
+                label.label(for="second_name") Фамилия
+                input.input(type="text", id="second_name", name="second_name")
+
+                label.label(for="phone") Телефон
+                input.input(type="tel", id="phone", name="phone")
+
+                label.label(for="password") Пароль
+                input.input(type="password", id="password", name="password")
+
+                label.label(for="password_confirmation") Пароль (ещё раз)
+                input.input(type="password", id="password_confirmation", name="password_confirmation")
+
+                div.gap
+
+                button.submit-button(type="submit") Зарегистрироваться
+                a.auth-mode-switch-link(href="../login/index.pug") Войти
+        script(src='./index.js')

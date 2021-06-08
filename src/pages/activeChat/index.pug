@@ -1,0 +1,28 @@
+doctype html
+
+include ../../common/mixins/chatList.pug
+include ../../common/mixins/chatContent.pug
+include ../../common/mockData/chatListData.pug
+include ../../common/mockData/activeChatData.pug
+
+html
+    head
+        meta(charset="UTF-8")
+        title Список чатов
+        link(rel="stylesheet", href="./index.scss")
+    body
+        main.app
+            nav.navigation
+                a(href="../userSettings/index.pug").profile-link Профиль &rang;
+                button.search-button &#128269; Поиск
+                +chatList(chatListData)
+            div.active-chat
+                div.user-panel
+                    div.avatar
+                    div.name= activeChatData.userName
+                +chatContent(activeChatData.content)
+                form.message-sending-form#message-sending-form
+                    input.message-input(placeholder="Сообщение", type="text", id="message", name="message")
+                    button.submit-button(type="submit") &#8594;
+        script(src='./index.js')
+

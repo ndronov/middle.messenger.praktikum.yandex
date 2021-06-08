@@ -1,2 +1,5 @@
-# IDE
-/.idea/
+/.idea
+/node_modules
+/build
+/.parcel-serve
+/.parcel-cache
