@@ -15,6 +15,7 @@ const handleSubmit = (e: Event) => {
     }
   }
 
+  // eslint-disable-next-line no-console
   console.log('заполненные поля формы:', nonEmptyFields);
 };
 
@@ -22,6 +23,7 @@ const handleFormSubmit = (): void => {
   const form: HTMLFormElement = document.forms[0];
 
   if (!form) {
+    // eslint-disable-next-line no-console
     console.log('на странице нет доступных форм');
 
     return;
