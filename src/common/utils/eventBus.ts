@@ -1,4 +1,4 @@
-type Listener = () => void;
+type Listener = (data?: unknown) => void;
 
 class EventBus {
   listeners: Record<string, Listener[]>;
@@ -7,7 +7,7 @@ class EventBus {
     this.listeners = {};
   }
 
-  on(event: string, callback: Listener) {
+  on(event: string, callback: Listener): void {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -15,20 +15,22 @@ class EventBus {
     this.listeners[event].push(callback);
   }
 
-  off(event: string, callback: Listener) {
+  off(event: string, callback: Listener): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
 
-    this.listeners[event] = this.listeners[event].filter(l => l !== callback);
+    this.listeners[event] = this.listeners[event].filter((l) => l !== callback);
   }
 
-  emit(event: string, ...args: unknown[]) {
+  emit(event: string, data: unknown): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
 
-    this.listeners[event].forEach(listener => listener.apply(null, args));
+    this.listeners[event].forEach((listener) => {
+      listener(data);
+    });
   }
 }
 

@@ -18,32 +18,31 @@ const defaultMethod = Method.GET;
 const defaultTimeout = 5000;
 
 class HTTP {
-  get = (url: string, options: Options = {}) =>
+  get = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
     this.request(
       url,
       { ...options, method: Method.GET },
-    );
+    ));
 
-
-  post = (url: string, options: Options = {}) =>
+  post = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
     this.request(
       url,
       { ...options, method: Method.POST },
-    );
+    ));
 
-  put = (url: string, options: Options = {}) =>
+  put = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
     this.request(
       url,
       { ...options, method: Method.PUT },
-    );
+    ));
 
-  delete = (url: string, options: Options = {}) =>
+  delete = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
     this.request(
       url,
       { ...options, method: Method.DELETE },
-    );
+    ));
 
-  request = (url: string, options: Options) => {
+  request = (url: string, options: Options): Promise<XMLHttpRequest> => {
     const {
       method = defaultMethod,
       data,
@@ -58,7 +57,7 @@ class HTTP {
 
       xhr.open(method, requestUrl);
 
-      Object.keys(headers).forEach(key => {
+      Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
 
@@ -79,3 +78,5 @@ class HTTP {
     });
   };
 }
+
+export default HTTP;

@@ -1,5 +1,5 @@
 interface FormDataType {
-  entries: () =>  IterableIterator<[string, FormDataEntryValue]>;
+  entries: () => IterableIterator<[string, FormDataEntryValue]>;
 }
 
 const handleSubmit = (e: Event) => {
@@ -8,6 +8,7 @@ const handleSubmit = (e: Event) => {
   const formData = new FormData(e.target as HTMLFormElement) as unknown as FormDataType;
   const nonEmptyFields: Record<string, FormDataEntryValue> = {};
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const [fieldName, fieldValue] of formData.entries()) {
     if (fieldValue) {
       nonEmptyFields[fieldName] = fieldValue;
@@ -15,9 +16,9 @@ const handleSubmit = (e: Event) => {
   }
 
   console.log('заполненные поля формы:', nonEmptyFields);
-}
+};
 
-const handleFormSubmit = () => {
+const handleFormSubmit = (): void => {
   const form: HTMLFormElement = document.forms[0];
 
   if (!form) {
