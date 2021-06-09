@@ -3,6 +3,8 @@ interface FormDataType {
 }
 
 const handleSubmit = (e: Event) => {
+  e.preventDefault();
+
   const formData = new FormData(e.target as HTMLFormElement) as unknown as FormDataType;
   const nonEmptyFields: Record<string, FormDataEntryValue> = {};
 
@@ -13,7 +15,6 @@ const handleSubmit = (e: Event) => {
   }
 
   console.log('заполненные поля формы:', nonEmptyFields);
-  e.preventDefault();
 }
 
 const handleFormSubmit = () => {
