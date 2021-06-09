@@ -1,6 +1,10 @@
-const handleSubmit = (e) => {
-  const formData = new FormData(e.target);
-  const nonEmptyFields = {};
+interface FormDataType {
+  entries: () =>  IterableIterator<[string, FormDataEntryValue]>;
+}
+
+const handleSubmit = (e: Event) => {
+  const formData = new FormData(e.target as HTMLFormElement) as unknown as FormDataType;
+  const nonEmptyFields: Record<string, FormDataEntryValue> = {};
 
   for (const [fieldName, fieldValue] of formData.entries()) {
     if (fieldValue) {
@@ -13,7 +17,7 @@ const handleSubmit = (e) => {
 }
 
 const handleFormSubmit = () => {
-  const form = document.forms[0];
+  const form: HTMLFormElement = document.forms[0];
 
   if (!form) {
     console.log('на странице нет доступных форм');
