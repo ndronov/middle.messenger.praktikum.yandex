@@ -3,12 +3,12 @@
 @import '../../common/styles/chat';
 
 .active-chat-placeholder {
-  flex: 1;
   display: flex;
-  justify-content: center;
+  flex: 1;
   align-items: center;
+  justify-content: center;
+  color: $color_grey5;
   font-size: 12px;
   line-height: 12px;
-  color: $color_grey5;
   background: $color_white;
 }

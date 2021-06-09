@@ -3,20 +3,20 @@
 @import '../../common/styles/chat';
 
 .active-chat {
-  align-self: stretch;
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-flow: column;
+  align-self: stretch;
   padding: 0 20px;
+  color: $color_grey5;
   font-size: 12px;
   line-height: 12px;
-  color: $color_grey5;
   background: $color_white;
 
   .user-panel {
-    height: 54px;
     display: flex;
     align-items: center;
+    height: 54px;
     padding: 10px 0;
     border-bottom: 1px solid $color_grey4;
 
@@ -26,16 +26,16 @@
 
     .name {
       flex: 1;
+      color: $color_black;
+      font-weight: 600;
       font-size: 13px;
       line-height: 13px;
-      font-weight: 600;
-      color: $color_black;
     }
   }
 
   .chat-content {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-flow: column;
     align-items: flex-start;
 
@@ -51,17 +51,17 @@
     .text-message {
       max-width: 402px;
       padding: 11px;
+      color: $color_black;
       font-weight: 500;
       font-size: 12px;
       line-height: 15px;
-      color: $color_black;
       background-color: $color_grey2;
       border-radius: 5px;
     }
 
     .text-message_own {
-      background-color: $color_light_blue;
       align-self: flex-end;
+      background-color: $color_light_blue;
     }
 
     .image-message {
@@ -77,28 +77,28 @@
       right: 11px;
       bottom: 11px;
       padding: 2px 7px;
+      color: $color_white;
       font-weight: 500;
       font-size: 9px;
       line-height: 9px;
-      color: $color_white;
       background: $color_grey5;
       border-radius: 30px;
     }
 
     .text-message-time {
+      float: right;
       margin-top: 10px;
       margin-left: 10px;
-      float: right;
+      color: $color_grey5;
       font-weight: 500;
       font-size: 9px;
       line-height: 9px;
-      color: $color_grey5;
     }
   }
 
   .message-sending-form {
-    height: 54px;
     display: flex;
+    height: 54px;
     padding: 11px 0;
     border-top: 1px solid $color_grey4;
 
@@ -116,9 +116,9 @@
     .submit-button {
       width: 28px;
       margin-left: 10px;
-      border-radius: 50%;
       color: $color_white;
       background-color: $color_blue;
+      border-radius: 50%;
     }
   }
 }

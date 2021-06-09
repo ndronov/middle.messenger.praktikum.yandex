@@ -8,7 +8,8 @@
     "dev": "parcel serve ./src/index.pug --open --dist-dir .parcel-serve",
     "prestart": "rimraf build/*",
     "start": "parcel build ./src/index.pug --dist-dir build && node server",
-    "lint": "eslint --ext .ts src"
+    "lint": "eslint --ext .ts src",
+    "stylelint": "stylelint src/**/*.scss"
   },
   "repository": {
     "type": "git",

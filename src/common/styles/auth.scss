@@ -1,37 +1,37 @@
 @import './colors';
 
 .auth-form {
+  display: flex;
+  flex-flow: column;
   width: 340px;
   min-height: 450px;
   padding: 50px 30px 30px 30px;
-  display: flex;
-  flex-flow: column;
   background: $color_white;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
   border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
 
   .title {
     align-self: center;
-    font-size: 20px;
-    line-height: 20px;
     margin-bottom: 40px;
     color: $color_black;
+    font-size: 20px;
+    line-height: 20px;
   }
 
   .label {
     margin-top: 16px;
     margin-bottom: 8px;
+    color: $color-grey5;
     font-size: 9px;
     line-height: 9px;
-    color: $color-grey5;
   }
 
   .input {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    line-height: 13px;
-    font-weight: 500;
     color: $color_black;
+    font-weight: 500;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    line-height: 13px;
     border-bottom: 1px solid $color_blue;
 
     &:focus {
@@ -46,12 +46,13 @@
 
   .auth-mode-switch-link {
     align-self: center;
-    font-weight: 500;
     margin-top: 14px;
+    color: $color_blue;
+    font-weight: 500;
     font-size: 11px;
     line-height: 11px;
-    color: $color_blue;
     outline: none;
+
     &:focus {
       box-shadow: 0 0 2px 2px $color_grey5;
     }
@@ -61,12 +62,13 @@
 .submit-button {
   min-width: 280px;
   min-height: 37px;
-  font-family: 'Inter', sans-serif;
+  color: $color_white;
   font-size: 13px;
+  font-family: 'Inter', sans-serif;
   line-height: 13px;
   background-color: $color_blue;
-  color: $color_white;
   border-radius: 8px;
+
   &:focus {
     box-shadow: 0 0 2px 2px $color_grey5;
   }
