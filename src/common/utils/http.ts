@@ -9,7 +9,7 @@ enum Method {
 
 interface Options {
   method?: Method
-  data?: Record<string, string>,
+  data?: Record<string, unknown>,
   headers?: Record<string, string>,
   timeout?: number,
 }
