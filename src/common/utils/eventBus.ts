@@ -23,13 +23,13 @@ class EventBus {
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  emit(event: string, data: unknown): void {
+  emit(event: string, ...args: unknown[]): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
 
     this.listeners[event].forEach((listener) => {
-      listener(data);
+      listener(...args);
     });
   }
 }
