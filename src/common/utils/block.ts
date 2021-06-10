@@ -15,7 +15,7 @@ abstract class Block {
     FLOW_RENDER: 'flow:render',
   };
 
-  private _element: HTMLElement;
+  private element: HTMLElement;
 
   private readonly meta: Meta;
 
@@ -38,18 +38,14 @@ abstract class Block {
 
   private registerEvents() {
     this.eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    // eslint-disable-next-line no-underscore-dangle
-    this.eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    // eslint-disable-next-line no-underscore-dangle
-    this.eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-    // eslint-disable-next-line no-underscore-dangle
-    this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    this.eventBus.on(Block.EVENTS.FLOW_CDM, this.flowComponentDidMount.bind(this));
+    this.eventBus.on(Block.EVENTS.FLOW_CDU, this.flowComponentDidUpdate.bind(this));
+    this.eventBus.on(Block.EVENTS.FLOW_RENDER, this.flowRender.bind(this));
   }
 
   private createResources() {
     const { tagName } = this.meta;
-    // eslint-disable-next-line no-underscore-dangle
-    this._element = Block.createDocumentElement(tagName);
+    this.element = Block.createDocumentElement(tagName);
   }
 
   init(): void {
@@ -57,26 +53,24 @@ abstract class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  // eslint-disable-next-line no-underscore-dangle
-  _componentDidMount(): void {
+  private flowComponentDidMount(): void {
     this.componentDidMount();
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
   abstract componentDidMount(oldProps?: Props): void;
 
-  // eslint-disable-next-line no-underscore-dangle
-  _componentDidUpdate(oldProps: Props, newProps: Props): void {
-    const changed = this.componentDidUpdate(oldProps, newProps);
+  private flowComponentDidUpdate(oldProps: Props, newProps: Props): void {
+    const shouldUpdate = this.shouldComponentUpdate(oldProps, newProps);
 
-    if (changed) {
+    if (shouldUpdate) {
       this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
-  componentDidUpdate(oldProps: Props, newProps: Props): boolean {
-    // TODO добавить функция сравнения объектов
+  // eslint-disable-next-line class-methods-use-this
+  shouldComponentUpdate(oldProps: Props, newProps: Props): boolean {
+    // TODO добавить функцию сравнения объектов
     return !Object.is(oldProps, newProps);
   }
 
@@ -88,15 +82,8 @@ abstract class Block {
     Object.assign(this.props, nextProps);
   };
 
-  get element(): HTMLElement {
-    // eslint-disable-next-line no-underscore-dangle
-    return this._element;
-  }
-
-  // eslint-disable-next-line no-underscore-dangle
-  _render(): void {
-    // eslint-disable-next-line no-underscore-dangle
-    this._element.innerHTML = this.render() as unknown as string;
+  private flowRender(): void {
+    this.element.innerHTML = this.render() as unknown as string;
   }
 
   abstract render(): HTMLElement;
@@ -106,22 +93,18 @@ abstract class Block {
   }
 
   private makePropsProxy(rawProps: Props): Props {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
-
     const proxyConfig = {
       get(props: Props, propName: string) {
         const value = props[propName];
         return typeof value === 'function' ? value.bind(props) : value;
       },
 
-      set(props: Props, propName: string, value: unknown) {
+      set: (props: Props, propName: string, value: unknown) => {
         const oldProps = { ...props };
 
-        // eslint-disable-next-line no-param-reassign
-        props[propName] = value;
+        Object.assign(props, { [propName]: value });
 
-        self.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, props);
+        this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, props);
 
         return true;
       },
@@ -134,7 +117,6 @@ abstract class Block {
     return new Proxy(rawProps, proxyConfig);
   }
 
-  // eslint-disable-next-line no-underscore-dangle
   static createDocumentElement(tagName: string): HTMLElement {
     return document.createElement(tagName);
   }
