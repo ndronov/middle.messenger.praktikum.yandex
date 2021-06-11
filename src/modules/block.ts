@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import EventBus from './eventBus';
 import htmlToDOM from '../utils/htmlToDOM';
 
@@ -6,6 +7,7 @@ export type Props = Record<string, unknown>;
 interface Meta {
   tagName: string;
   props: Props;
+  componentId: string;
 }
 
 abstract class Block {
@@ -29,6 +31,7 @@ abstract class Block {
     this.meta = {
       tagName,
       props,
+      componentId: uuidv4(),
     };
 
     this.props = this.makePropsProxy(props);
