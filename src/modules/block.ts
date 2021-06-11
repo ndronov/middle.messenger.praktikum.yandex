@@ -1,6 +1,7 @@
 import EventBus from './eventBus';
+import htmlToDOM from '../utils/htmlToDOM';
 
-type Props = Record<string, unknown>;
+export type Props = Record<string, unknown>;
 
 interface Meta {
   tagName: string;
@@ -19,7 +20,7 @@ abstract class Block {
 
   private readonly meta: Meta;
 
-  private readonly props: Props;
+  protected readonly props: Props;
 
   private readonly eventBus: EventBus;
 
@@ -83,10 +84,10 @@ abstract class Block {
   };
 
   private flowRender(): void {
-    this.element.innerHTML = this.render() as unknown as string;
+    this.element = htmlToDOM(this.render());
   }
 
-  abstract render(): HTMLElement;
+  abstract render(): string;
 
   getContent(): HTMLElement {
     return this.element;
