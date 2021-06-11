@@ -1,0 +1,16 @@
+@import '../../common/styles/colors';
+
+.submit-button {
+  min-width: 280px;
+  min-height: 37px;
+  color: $color_white;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  line-height: 13px;
+  background-color: $color_blue;
+  border-radius: 8px;
+
+  &:focus {
+    box-shadow: 0 0 2px 2px $color_grey5;
+  }
+}

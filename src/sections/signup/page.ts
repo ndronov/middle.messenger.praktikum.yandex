@@ -40,8 +40,6 @@ class SignupPage extends Block {
   // eslint-disable-next-line class-methods-use-this
   componentDidMount(oldProps?: Props): void {
     // TODO реализовать метод
-    // eslint-disable-next-line no-console
-    console.log('componentDidMount:', oldProps);
   }
 
   render(): string {

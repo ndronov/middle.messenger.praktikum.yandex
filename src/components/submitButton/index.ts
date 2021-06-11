@@ -3,10 +3,10 @@ import pug from 'pug';
 import Block, { Props } from '../../modules/block';
 
 const template = `
-button(class=className, id=id).some-class= child
+button.submit-button(type="submit")= label
 `;
 
-class Button extends Block {
+class SubmitButton extends Block {
   constructor(props: Props) {
     super('button', props);
   }
@@ -14,6 +14,8 @@ class Button extends Block {
   // eslint-disable-next-line class-methods-use-this
   componentDidMount(oldProps?: Props): void {
     // TODO реализовать метод
+    // eslint-disable-next-line no-console
+
   }
 
   render(): string {
@@ -21,4 +23,4 @@ class Button extends Block {
   }
 }
 
-export default Button;
+export default SubmitButton;

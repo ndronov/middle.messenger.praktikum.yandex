@@ -1,10 +1,6 @@
-import Button from '../../components/button';
+import Page from './page';
 import renderDOM from '../../utils/renderDOM';
 
-const button = new Button({
-  className: 'some-custom-class',
-  child: 'Click it',
-  id: 'my-button',
-});
+const page = new Page();
 
-renderDOM('.app', button);
+renderDOM('.app', page);

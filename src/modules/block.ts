@@ -24,14 +24,15 @@ abstract class Block {
 
   private readonly eventBus: EventBus;
 
-  protected constructor(tagName = 'div', props = {}) {
-    this.eventBus = new EventBus();
+  protected constructor(tagName = 'div', initialProps?: Props) {
+    const props = initialProps || {};
     this.meta = {
       tagName,
       props,
     };
 
     this.props = this.makePropsProxy(props);
+    this.eventBus = new EventBus();
 
     this.registerEvents();
     this.eventBus.emit(Block.EVENTS.INIT);
@@ -84,7 +85,29 @@ abstract class Block {
   };
 
   private flowRender(): void {
-    this.element = htmlToDOM(this.render());
+    const componentTemplate = htmlToDOM(this.render());
+
+    Array.from(componentTemplate.attributes).forEach(({ name, value }) => {
+      this.element.setAttribute(name, value);
+    });
+
+    this.element.innerHTML = '';
+
+    componentTemplate.childNodes.forEach((childNode) => {
+      setTimeout(() => this.element.append(childNode));
+    });
+
+    this.renderChildComponents();
+  }
+
+  private renderChildComponents(): void {
+    setTimeout(() => {
+      const childComponents = this.element.querySelectorAll('[data-component]');
+
+      childComponents.forEach((childComponent) => {
+        // TODO render childComponents
+      });
+    });
   }
 
   abstract render(): string;
