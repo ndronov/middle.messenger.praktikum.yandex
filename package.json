@@ -22,9 +22,8 @@
   },
   "homepage": "https://github.com/ndronov/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
-    "@types/pug": "^2.0.4",
     "express": "^4.17.1",
-    "pug": "^2.0.4"
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "@parcel/transformer-pug": "^2.0.0-beta.2",
