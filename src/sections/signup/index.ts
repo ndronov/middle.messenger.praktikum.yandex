@@ -1,5 +1,5 @@
 import Page from './page';
-import renderDOM from '../../utils/renderDOM';
+import renderBlock from '../../utils/renderBlock';
 
 const page = new Page({
   // TODO fix props
@@ -8,4 +8,4 @@ const page = new Page({
   id: 'my-button',
 });
 
-renderDOM('.app', page);
+renderBlock('.app', page);

@@ -4,19 +4,22 @@ import Block, { Props } from '../../modules/block';
 import './index.scss';
 
 const template = `
-button.submit-button(type="submit")= label
+label.label= label
+  input.input(type=type, name=inputName)
 `;
 
-class SubmitButton extends Block {
+class Input extends Block {
   constructor(props: Props) {
-    super('button', props);
+    super(
+      'label',
+      { ...props, eventTargetSelector: 'input' },
+    );
   }
 
   // eslint-disable-next-line class-methods-use-this
   componentDidMount(oldProps?: Props): void {
     // TODO реализовать метод
     // eslint-disable-next-line no-console
-
   }
 
   render(): string {
@@ -24,4 +27,4 @@ class SubmitButton extends Block {
   }
 }
 
-export default SubmitButton;
+export default Input;

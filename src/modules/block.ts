@@ -1,14 +1,25 @@
 import { v4 as uuidv4 } from 'uuid';
 import EventBus from './eventBus';
 import htmlToDOM from '../utils/htmlToDOM';
+import renderElement from '../utils/renderElement';
+import getEventNameByHandlerPropName from '../utils/getEventNameByHandlerPropName';
+
+const events = ['onBlur', 'onFocus', 'onSubmit'];
 
 export type Props = Record<string, unknown>;
+type Template = (tagName: string) => string;
 
 interface Meta {
   tagName: string;
   props: Props;
   componentId: string;
+  // TODO оставить ?
+  template: Template;
+  root?: string;
+  eventTargetSelector?: string;
 }
+
+type ChildrenType = Record<string, Block>;
 
 abstract class Block {
   static EVENTS = {
@@ -16,6 +27,8 @@ abstract class Block {
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
+    FLOW_REGISTER_HANDLERS: 'flow:register-handlers',
+    FLOW_UNREGISTER_HANDLERS: 'flow:unregister-handlers',
   };
 
   private element: HTMLElement;
@@ -26,11 +39,19 @@ abstract class Block {
 
   private readonly eventBus: EventBus;
 
+  private readonly children: ChildrenType = {};
+
   protected constructor(tagName = 'div', initialProps?: Props) {
-    const props = initialProps || {};
+    const {
+      root, template, eventTargetSelector, ...props
+    } = initialProps || {};
+
     this.meta = {
       tagName,
       props,
+      template: template as Template,
+      root: root as string,
+      eventTargetSelector: eventTargetSelector as string,
       componentId: uuidv4(),
     };
 
@@ -38,7 +59,10 @@ abstract class Block {
     this.eventBus = new EventBus();
 
     this.registerEvents();
-    this.eventBus.emit(Block.EVENTS.INIT);
+
+    if (root) {
+      this.eventBus.emit(Block.EVENTS.INIT);
+    }
   }
 
   private registerEvents() {
@@ -46,15 +70,21 @@ abstract class Block {
     this.eventBus.on(Block.EVENTS.FLOW_CDM, this.flowComponentDidMount.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_CDU, this.flowComponentDidUpdate.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this.flowRender.bind(this));
+    this.eventBus.on(Block.EVENTS.FLOW_REGISTER_HANDLERS, this.flowRegisterHandlers.bind(this));
+    this.eventBus.on(Block.EVENTS.FLOW_UNREGISTER_HANDLERS, this.flowUnregisterHandlers.bind(this));
   }
 
-  private createResources() {
+  private createResources(placeholderFromParent?: Element) {
     const { tagName } = this.meta;
     this.element = Block.createDocumentElement(tagName);
+
+    if (placeholderFromParent) {
+      placeholderFromParent.replaceWith(this.element);
+    }
   }
 
-  init(): void {
-    this.createResources();
+  init(placeholderFromParent?: Element): void {
+    this.createResources(placeholderFromParent);
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
@@ -69,6 +99,7 @@ abstract class Block {
     const shouldUpdate = this.shouldComponentUpdate(oldProps, newProps);
 
     if (shouldUpdate) {
+      this.eventBus.emit(Block.EVENTS.FLOW_UNREGISTER_HANDLERS);
       this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
     }
   }
@@ -87,36 +118,101 @@ abstract class Block {
     Object.assign(this.props, nextProps);
   };
 
+  renderToRoot() {
+    if (!this.meta.root) {
+      throw new Error('Для блока не указан корневой элемент');
+    }
+
+    const rootElement = document.querySelector(this.meta.root);
+
+    if (!rootElement) {
+      throw new Error('Для блока не найден корневой элемент');
+    }
+
+    rootElement.appendChild(this.content);
+  }
+
   private flowRender(): void {
     const componentTemplate = htmlToDOM(this.render());
-
-    Array.from(componentTemplate.attributes).forEach(({ name, value }) => {
-      this.element.setAttribute(name, value);
-    });
-
-    this.element.innerHTML = '';
-
-    componentTemplate.childNodes.forEach((childNode) => {
-      setTimeout(() => this.element.append(childNode));
-    });
+    renderElement(componentTemplate, this.element);
 
     this.renderChildComponents();
+
+    setTimeout(() => {
+      this.eventBus.emit(Block.EVENTS.FLOW_REGISTER_HANDLERS);
+    });
   }
 
   private renderChildComponents(): void {
     setTimeout(() => {
-      const childComponents = this.element.querySelectorAll('[data-component]');
+      const childComponentPlaceholders = this.element.querySelectorAll('[data-component-id]');
+      childComponentPlaceholders.forEach((placeholder) => {
+        const id = placeholder.getAttribute('data-component-id');
 
-      childComponents.forEach((childComponent) => {
-        // TODO render childComponents
+        if (!id) {
+          throw new Error('Не найден ID компонента');
+        }
+
+        const childComponent = this.children[id];
+
+        if (!childComponent) {
+          throw new Error('Не найден экземпляр компонента');
+        }
+
+        childComponent.init(placeholder);
       });
     });
   }
 
   abstract render(): string;
 
-  getContent(): HTMLElement {
-    return this.element;
+  private flowRegisterHandlers() {
+    this.eventHandlersProps.forEach((handlerPropName) => {
+      const eventName = getEventNameByHandlerPropName(handlerPropName);
+      const handler = this.props[handlerPropName] as EventListenerOrEventListenerObject;
+
+      this.eventTarget.addEventListener(eventName, handler);
+    });
+  }
+
+  private flowUnregisterHandlers() {
+    this.eventHandlersProps.forEach((handlerPropName) => {
+      const eventName = getEventNameByHandlerPropName(handlerPropName);
+      const handler = this.props[handlerPropName] as EventListenerOrEventListenerObject;
+
+      this.eventTarget.removeEventListener(eventName, handler);
+    });
+  }
+
+  get eventHandlersProps(): string[] {
+    return Object.keys(this.props).filter((prop) => events.includes(prop));
+  }
+
+  // TODO оставить ?
+  get template(): string {
+    const { template, tagName } = this.meta;
+
+    return template(tagName);
+  }
+
+  get eventTarget(): HTMLElement {
+    const { eventTargetSelector } = this.meta;
+
+    if (!eventTargetSelector) {
+      return this.element;
+    }
+
+    const eventTarget = this.element.querySelector(eventTargetSelector) as HTMLElement;
+
+    return eventTarget || this.element;
+  }
+
+  get content(): HTMLElement {
+    return this.element as HTMLElement;
+  }
+
+  get id(): string {
+    return this.meta.componentId;
   }
 
   private makePropsProxy(rawProps: Props): Props {
@@ -149,11 +245,17 @@ abstract class Block {
   }
 
   show(): void {
-    this.getContent().style.display = 'block';
+    this.content.style.display = 'block';
   }
 
   hide(): void {
-    this.getContent().style.display = 'none';
+    this.content.style.display = 'none';
+  }
+
+  addChildComponent(...childComponents: Block[]): void {
+    childComponents.forEach((block) => {
+      this.children[block.id] = block;
+    });
   }
 }
 

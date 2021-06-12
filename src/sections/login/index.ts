@@ -1,6 +1,5 @@
 import Page from './page';
-import renderDOM from '../../utils/renderDOM';
 
-const page = new Page();
+const page = new Page('.app');
 
-renderDOM('.app', page);
+page.renderToRoot();
