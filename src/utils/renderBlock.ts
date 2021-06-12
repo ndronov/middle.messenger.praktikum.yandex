@@ -1,5 +1,6 @@
 import Block from '../modules/block';
 
+// TODO удалить
 const renderBlock = (rootSelector: string, block: Block): void => {
   const rootElement = document.querySelector(rootSelector);
 
