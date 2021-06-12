@@ -156,7 +156,7 @@ abstract class Block {
         const childComponent = this.children[id];
 
         if (!childComponent) {
-          throw new Error('Не найден экземпляр компонента');
+          throw new Error(`Не найден экземпляр компонента ${id}`);
         }
 
         childComponent.init(placeholder);
@@ -204,7 +204,11 @@ abstract class Block {
 
     const eventTarget = this.element.querySelector(eventTargetSelector) as HTMLElement;
 
-    return eventTarget || this.element;
+    if (!eventTarget) {
+      throw new Error(`Не обнаружен элемент для обработки событий компонента ${this.id}`);
+    }
+
+    return eventTarget;
   }
 
   get content(): HTMLElement {

@@ -9,7 +9,9 @@ form.auth-form#login-form
   h1.title Вход
   login-input(data-component-id=loginInput.id)
   password-input(data-component-id=passwordInput.id)
+
   div.gap
+
   submit-button(data-component-id=submitButton.id)
   a.auth-mode-switch-link(href="../signup/index.pug") Нет аккаунта?
 `;
