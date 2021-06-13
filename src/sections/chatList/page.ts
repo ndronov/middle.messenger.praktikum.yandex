@@ -2,7 +2,7 @@
 import pug from 'pug';
 import Component from '../../modules/component';
 import Chats from '../../components/chats';
-import mockChats from './mockChats';
+import mockChats from '../../mockData/mockChats';
 
 const template = `
 div.container

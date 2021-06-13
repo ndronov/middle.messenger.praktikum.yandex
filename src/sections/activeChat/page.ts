@@ -3,8 +3,8 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import Chats from '../../components/chats';
 import ChatContent from '../../components/chatContent';
-import mockChats from './mockChats';
-import mockActiveChat from './mockActiveChat';
+import mockChats from '../../mockData/mockChats';
+import mockActiveChat from '../../mockData/mockActiveChat';
 
 const template = `
 div.container

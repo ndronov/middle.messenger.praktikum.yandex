@@ -1,5 +1,5 @@
 // @ts-ignore
-import image from 'url:../../../static/camera.png';
+import image from 'url:./messageImage.png';
 
 const mockActiveChat = {
   userName: 'Вадим',
