@@ -4,10 +4,10 @@
   "description": "Messenger application",
   "scripts": {
     "prebuild": "rimraf build/*",
-    "build": "parcel build ./src/index.pug --dist-dir build",
-    "dev": "parcel serve ./src/index.pug --open --dist-dir .parcel-serve",
+    "build": "parcel build ./src/index.html --dist-dir build",
+    "dev": "parcel serve ./src/index.html --open --dist-dir .parcel-serve",
     "prestart": "rimraf build/*",
-    "start": "parcel build ./src/index.pug --dist-dir build && node server",
+    "start": "parcel build ./src/index.html --dist-dir build && node server",
     "lint": "eslint --ext .ts src",
     "stylelint": "stylelint src/**/*.scss"
   },
