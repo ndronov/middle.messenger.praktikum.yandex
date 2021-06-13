@@ -3,6 +3,8 @@ import pug from 'pug';
 import Component, { Props } from '../../modules/component';
 import './index.scss';
 
+// TODO добавить валидацию
+
 const template = `
 form.message-sending-form#message-sending-form
   input.message-input(placeholder="Сообщение", type="text", id="message", name="message")
