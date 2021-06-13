@@ -3,8 +3,10 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import Chats from '../../components/chats';
 import ChatContent from '../../components/chatContent';
+import MessageSendingForm from '../../components/messageSendingForm';
 import mockChats from '../../mockData/mockChats';
 import mockActiveChat from '../../mockData/mockActiveChat';
+import handleFormSubmit from '../../utils/handleFormSubmit';
 
 const template = `
 div.container
@@ -17,9 +19,7 @@ div.container
       div.avatar
       div.name= userName
     chat-content(data-component-id=chatContent.id)
-    form.message-sending-form#message-sending-form
-      input.message-input(placeholder="Сообщение", type="text", id="message", name="message")
-      button.submit-button(type="submit") &#8594;
+    message-sending-form(data-component-id=messageSendingForm.id)
 `;
 
 class ActiveChat extends Component {
@@ -32,10 +32,15 @@ class ActiveChat extends Component {
       content: mockActiveChat.content,
     });
 
+    const messageSendingForm = new MessageSendingForm({
+      onSubmit: handleFormSubmit,
+    });
+
     super('div', {
       root,
       chats,
       chatContent,
+      messageSendingForm,
     });
   }
 
@@ -44,6 +49,7 @@ class ActiveChat extends Component {
       chats: this.props.chats,
       userName: mockActiveChat.userName,
       chatContent: this.props.chatContent,
+      messageSendingForm: this.props.messageSendingForm,
     });
   }
 }
