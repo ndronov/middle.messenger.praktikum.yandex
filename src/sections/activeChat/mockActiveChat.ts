@@ -1,3 +1,6 @@
+// @ts-ignore
+import image from 'url:../../../static/camera.png';
+
 const mockActiveChat = {
   userName: 'Вадим',
   content: {
@@ -12,7 +15,7 @@ const mockActiveChat = {
       {
         format: 'image',
         own: false,
-        image: '/camera.png',
+        image,
         time: '11:56',
       },
       {
