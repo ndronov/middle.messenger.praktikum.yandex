@@ -1,0 +1,39 @@
+@import './colors';
+
+.auth-form {
+  display: flex;
+  flex-flow: column;
+  width: 340px;
+  min-height: 450px;
+  padding: 50px 30px 30px 30px;
+  background: $color_white;
+  border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+
+  .title {
+    align-self: center;
+    margin-bottom: 40px;
+    color: $color_black;
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .gap {
+    flex: 1;
+    min-height: 40px;
+  }
+
+  .auth-mode-switch-link {
+    align-self: center;
+    margin-top: 14px;
+    color: $color_blue;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 11px;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0 0 2px 2px $color_grey5;
+    }
+  }
+}

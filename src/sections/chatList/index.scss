@@ -1,14 +1,2 @@
-@import '../../common/styles/global';
-@import '../../common/styles/colors';
-@import '../../common/styles/chat';
-
-.active-chat-placeholder {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  color: $color_grey5;
-  font-size: 12px;
-  line-height: 12px;
-  background: $color_white;
-}
+@import '../../styles/global';
+@import '../../styles/chat';

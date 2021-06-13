@@ -1,6 +1,7 @@
 // @ts-ignore
 import pug from 'pug';
 import Component, { Props } from '../../modules/component';
+import './index.scss';
 
 const template = `
 div.chats
