@@ -26,6 +26,7 @@ class LoginPage extends Component {
       inputName: 'login',
       pattern: validation.login.pattern,
       error: validation.login.error,
+      className: 'label',
     });
 
     const passwordInput = new Input({
@@ -34,6 +35,7 @@ class LoginPage extends Component {
       inputName: 'password',
       pattern: validation.password.pattern,
       error: validation.password.error,
+      className: 'label',
     });
 
     const submitButton = new SubmitButton({

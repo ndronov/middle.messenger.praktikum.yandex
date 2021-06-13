@@ -31,6 +31,7 @@ class SignupPage extends Component {
       inputName: 'email',
       pattern: validation.email.pattern,
       error: validation.email.error,
+      className: 'label',
     });
 
     const loginInput = new Input({
@@ -39,6 +40,7 @@ class SignupPage extends Component {
       inputName: 'login',
       pattern: validation.login.pattern,
       error: validation.login.error,
+      className: 'label',
     });
 
     const firstNameInput = new Input({
@@ -47,6 +49,7 @@ class SignupPage extends Component {
       inputName: 'first_name',
       pattern: validation.name.pattern,
       error: validation.name.error,
+      className: 'label',
     });
 
     const secondNameInput = new Input({
@@ -55,6 +58,7 @@ class SignupPage extends Component {
       inputName: 'second_name',
       pattern: validation.name.pattern,
       error: validation.name.error,
+      className: 'label',
     });
 
     const phoneInput = new Input({
@@ -63,6 +67,7 @@ class SignupPage extends Component {
       inputName: 'phone',
       pattern: validation.phone.pattern,
       error: validation.phone.error,
+      className: 'label',
     });
 
     const passwordInput = new Input({
@@ -71,6 +76,7 @@ class SignupPage extends Component {
       inputName: 'password',
       pattern: validation.password.pattern,
       error: validation.password.error,
+      className: 'label',
     });
 
     const passwordConfirmationInput = new Input({
@@ -79,6 +85,7 @@ class SignupPage extends Component {
       inputName: 'password_confirmation',
       pattern: validation.password.pattern,
       error: validation.password.error,
+      className: 'label',
     });
 
     const submitButton = new SubmitButton({

@@ -18,6 +18,29 @@
     line-height: 20px;
   }
 
+  .label {
+    display: flex;
+    flex-flow: column;
+    margin-top: 16px;
+    color: $color-grey5;
+    font-size: 9px;
+    line-height: 9px;
+
+    .input {
+      margin-top: 8px;
+      color: $color_black;
+      font-weight: 500;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      line-height: 13px;
+      border-bottom: 1px solid $color_blue;
+
+      &:focus {
+        border-bottom-style: dashed;
+      }
+    }
+  }
+
   .gap {
     flex: 1;
     min-height: 40px;
