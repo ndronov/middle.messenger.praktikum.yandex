@@ -1,6 +1,6 @@
 // @ts-ignore
 import pug from 'pug';
-import Block, { Props } from '../../modules/block';
+import Component, { Props } from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
 import handleFormSubmit from '../../utils/handleFormSubmit';
@@ -18,7 +18,7 @@ form.auth-form#login-form(novalidate="")
   a.auth-mode-switch-link(href="../signup/index.pug") Нет аккаунта?
 `;
 
-class LoginPage extends Block {
+class LoginPage extends Component {
   constructor(root: string) {
     const loginInput = new Input({
       label: 'Логин',

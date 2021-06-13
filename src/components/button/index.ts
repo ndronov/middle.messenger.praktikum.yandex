@@ -1,12 +1,12 @@
 // @ts-ignore
 import pug from 'pug';
-import Block, { Props } from '../../modules/block';
+import Component, { Props } from '../../modules/component';
 
 const template = `
 button(class=className, id=id).some-class= child
 `;
 
-class Button extends Block {
+class Button extends Component {
   constructor(props: Props) {
     super('button', props);
   }

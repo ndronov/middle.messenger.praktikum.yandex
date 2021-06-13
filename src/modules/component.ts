@@ -8,6 +8,7 @@ import getEventNameByHandlerPropName from '../utils/getEventNameByHandlerPropNam
 const events = ['onSubmit'];
 
 export type Props = Record<string, unknown>;
+// TODO оставить ?
 type Template = (tagName: string) => string;
 
 interface Meta {
@@ -20,10 +21,10 @@ interface Meta {
   eventTargetSelector?: string;
 }
 
-type ChildrenType = Record<string, Block>;
+type ChildrenType = Record<string, Component>;
 type InnerHandlers = Record<string, EventListener>;
 
-abstract class Block {
+abstract class Component {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -68,30 +69,33 @@ abstract class Block {
     this.registerChildComponents();
 
     if (root) {
-      this.eventBus.emit(Block.EVENTS.INIT);
+      this.eventBus.emit(Component.EVENTS.INIT);
     }
   }
 
   private registerEvents() {
-    this.eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    this.eventBus.on(Block.EVENTS.FLOW_CDM, this.flowComponentDidMount.bind(this));
-    this.eventBus.on(Block.EVENTS.FLOW_CDU, this.flowComponentDidUpdate.bind(this));
-    this.eventBus.on(Block.EVENTS.FLOW_RENDER, this.flowRender.bind(this));
-    this.eventBus.on(Block.EVENTS.FLOW_REGISTER_HANDLERS, this.flowRegisterHandlers.bind(this));
-    this.eventBus.on(Block.EVENTS.FLOW_UNREGISTER_HANDLERS, this.flowUnregisterHandlers.bind(this));
+    this.eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
+    this.eventBus.on(Component.EVENTS.FLOW_CDM, this.flowComponentDidMount.bind(this));
+    this.eventBus.on(Component.EVENTS.FLOW_CDU, this.flowComponentDidUpdate.bind(this));
+    this.eventBus.on(Component.EVENTS.FLOW_RENDER, this.flowRender.bind(this));
+    this.eventBus.on(Component.EVENTS.FLOW_REGISTER_HANDLERS, this.flowRegisterHandlers.bind(this));
     this.eventBus.on(
-      Block.EVENTS.FLOW_REGISTER_INNER_HANDLERS,
+      Component.EVENTS.FLOW_UNREGISTER_HANDLERS,
+      this.flowUnregisterHandlers.bind(this),
+    );
+    this.eventBus.on(
+      Component.EVENTS.FLOW_REGISTER_INNER_HANDLERS,
       this.flowRegisterInnerHandlers.bind(this),
     );
     this.eventBus.on(
-      Block.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS,
+      Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS,
       this.flowUnregisterInnerHandlers.bind(this),
     );
   }
 
   private createResources(placeholderFromParent?: Element) {
     const { tagName } = this.meta;
-    this.element = Block.createDocumentElement(tagName);
+    this.element = Component.createDocumentElement(tagName);
 
     if (placeholderFromParent) {
       placeholderFromParent.replaceWith(this.element);
@@ -100,12 +104,12 @@ abstract class Block {
 
   init(placeholderFromParent?: Element): void {
     this.createResources(placeholderFromParent);
-    this.eventBus.emit(Block.EVENTS.FLOW_CDM);
+    this.eventBus.emit(Component.EVENTS.FLOW_CDM);
   }
 
   private flowComponentDidMount(): void {
     this.componentDidMount();
-    this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
+    this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
   }
 
   abstract componentDidMount(oldProps?: Props): void;
@@ -114,9 +118,9 @@ abstract class Block {
     const shouldUpdate = this.shouldComponentUpdate(oldProps, newProps);
 
     if (shouldUpdate) {
-      this.eventBus.emit(Block.EVENTS.FLOW_UNREGISTER_HANDLERS);
-      this.eventBus.emit(Block.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS);
-      this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
+      this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_HANDLERS);
+      this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS);
+      this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
     }
   }
 
@@ -155,8 +159,8 @@ abstract class Block {
     this.renderChildComponents();
 
     setTimeout(() => {
-      this.eventBus.emit(Block.EVENTS.FLOW_REGISTER_HANDLERS);
-      this.eventBus.emit(Block.EVENTS.FLOW_REGISTER_INNER_HANDLERS);
+      this.eventBus.emit(Component.EVENTS.FLOW_REGISTER_HANDLERS);
+      this.eventBus.emit(Component.EVENTS.FLOW_REGISTER_INNER_HANDLERS);
     });
   }
 
@@ -268,7 +272,7 @@ abstract class Block {
 
         Object.assign(props, { [propName]: value });
 
-        this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, props);
+        this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, props);
 
         return true;
       },
@@ -293,15 +297,15 @@ abstract class Block {
     this.content.style.display = 'none';
   }
 
-  registerChildComponents() {
+  registerChildComponents(): void {
     Object.keys(this.props).forEach((propName) => {
       const prop = this.props[propName];
 
-      if (prop instanceof Block) {
+      if (prop instanceof Component) {
         this.children[prop.id] = prop;
       }
     });
   }
 }
 
-export default Block;
+export default Component;

@@ -1,13 +1,13 @@
 // @ts-ignore
 import pug from 'pug';
-import Block, { Props } from '../../modules/block';
+import Component, { Props } from '../../modules/component';
 import './index.scss';
 
 const template = `
 button.submit-button(type="submit")= label
 `;
 
-class SubmitButton extends Block {
+class SubmitButton extends Component {
   constructor(props: Props) {
     super('button', props);
   }

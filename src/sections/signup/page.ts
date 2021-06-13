@@ -1,6 +1,6 @@
 // @ts-ignore
 import pug from 'pug';
-import Block, { Props } from '../../modules/block';
+import Component, { Props } from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
 import handleFormSubmit from '../../utils/handleFormSubmit';
@@ -23,7 +23,7 @@ form.auth-form#signup-form(novalidate="")
   a.auth-mode-switch-link(href="../login/index.pug") Войти
 `;
 
-class SignupPage extends Block {
+class SignupPage extends Component {
   constructor(root: string) {
     const emailInput = new Input({
       label: 'Почта',
