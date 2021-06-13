@@ -7,6 +7,7 @@ import MessageSendingForm from '../../components/messageSendingForm';
 import mockChats from '../../mockData/mockChats';
 import mockActiveChat from '../../mockData/mockActiveChat';
 import handleFormSubmit from '../../utils/handleFormSubmit';
+import validation from './validation';
 
 const template = `
 div.container
@@ -33,6 +34,7 @@ class ActiveChat extends Component {
     });
 
     const messageSendingForm = new MessageSendingForm({
+      validation,
       onSubmit: handleFormSubmit,
     });
 

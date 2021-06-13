@@ -3,8 +3,14 @@ import pug from 'pug';
 import Component, { Props } from '../../modules/component';
 import './index.scss';
 
-const template = `
-label.label= label
+// TODO доработать
+
+const defaultTemplate = `
+input(placeholder=placeholder, type=type, name=inputName, class=className)
+`;
+
+const labeledTemplate = `
+label(class=className).label= label
   input.input(type=type, name=inputName)
   span.error= error
 `;
@@ -12,8 +18,11 @@ label.label= label
 class Input extends Component {
   constructor(props: Props) {
     super(
-      'label',
-      { ...props, eventTargetSelector: 'input' },
+      props.label ? 'label' : 'input',
+      {
+        ...props,
+        eventTargetSelector: props.label ? 'input' : null,
+      },
     );
   }
 
@@ -33,11 +42,18 @@ class Input extends Component {
   }
 
   showError(): void {
-    this.errorElement.style.display = 'block';
+    if (this.props.label) {
+      this.errorElement.style.display = 'block';
+      return;
+    }
+
+    console.log(this.props.error);
   }
 
   hideError(): void {
-    this.errorElement.style.display = 'none';
+    if (this.props.label) {
+      this.errorElement.style.display = 'none';
+    }
   }
 
   handleFocus(): void {
@@ -55,8 +71,12 @@ class Input extends Component {
     }
   }
 
+  get template(): string {
+    return this.props.label ? labeledTemplate : defaultTemplate;
+  }
+
   render(): string {
-    return pug.render(template, this.props);
+    return pug.render(this.template, this.props);
   }
 }
 

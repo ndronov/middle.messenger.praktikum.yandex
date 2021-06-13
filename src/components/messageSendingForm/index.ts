@@ -1,23 +1,39 @@
 // @ts-ignore
 import pug from 'pug';
 import Component, { Props } from '../../modules/component';
+import Input from '../input';
 import './index.scss';
 
-// TODO добавить валидацию
+// TODO вынести
+interface Validation {
+  pattern: RegExp;
+  error: string;
+}
 
 const template = `
 form.message-sending-form#message-sending-form
-  input.message-input(placeholder="Сообщение", type="text", id="message", name="message")
-  button.submit-button(type="submit") &#8594;
+  message-input(data-component-id=messageInput.id)
+  button.message-sending-button(type="submit") &#8594;
 `;
 
 class MessageSendingForm extends Component {
   constructor(props: Props) {
-    super('form', props);
+    const validation = props.validation as Validation;
+    const messageInput = new Input({
+      className: 'message-input',
+      type: 'text',
+      inputName: 'message',
+      placeholder: 'Сообщение',
+      ...validation,
+    });
+
+    super('form', { ...props, messageInput });
   }
 
   render(): string {
-    return pug.render(template, this.props);
+    return pug.render(template, {
+      messageInput: this.props.messageInput,
+    });
   }
 }
 
