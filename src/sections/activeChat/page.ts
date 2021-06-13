@@ -17,7 +17,7 @@ div.container
   div.active-chat
     div.user-panel
       div.avatar
-      div.name= userName
+      div.user-name= userName
     chat-content(data-component-id=chatContent.id)
     message-sending-form(data-component-id=messageSendingForm.id)
 `;
