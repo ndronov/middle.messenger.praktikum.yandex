@@ -5,7 +5,7 @@ interface FormDataType {
 const handleFormSubmit = (e: Event): void => {
   e.preventDefault();
 
-  const formData = new FormData(e.target as HTMLFormElement) as unknown as FormDataType;
+  const formData = new FormData(e.target as HTMLFormElement) as FormDataType;
   const nonEmptyFields: Record<string, FormDataEntryValue> = {};
 
   Array.from(formData.entries()).forEach(([fieldName, fieldValue]) => {
