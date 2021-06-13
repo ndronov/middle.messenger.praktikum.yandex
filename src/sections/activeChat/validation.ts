@@ -1,6 +1,6 @@
 const validation = {
-  pattern: /^(?!.*__proto__).*$/i,
-  error: '__proto__ - запрещённое слово',
+  pattern: /^(?!.*angular).*$/i,
+  error: 'angular - запрещённое слово',
 };
 
 export default validation;
