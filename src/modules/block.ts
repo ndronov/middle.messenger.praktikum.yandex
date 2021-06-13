@@ -4,7 +4,8 @@ import htmlToDOM from '../utils/htmlToDOM';
 import renderElement from '../utils/renderElement';
 import getEventNameByHandlerPropName from '../utils/getEventNameByHandlerPropName';
 
-const events = ['onBlur', 'onFocus', 'onSubmit'];
+// TODO переименовать
+const events = ['onSubmit'];
 
 export type Props = Record<string, unknown>;
 type Template = (tagName: string) => string;
@@ -64,6 +65,7 @@ abstract class Block {
     this.eventBus = new EventBus();
 
     this.registerEvents();
+    this.registerChildComponents();
 
     if (root) {
       this.eventBus.emit(Block.EVENTS.INIT);
@@ -291,9 +293,13 @@ abstract class Block {
     this.content.style.display = 'none';
   }
 
-  addChildComponent(...childComponents: Block[]): void {
-    childComponents.forEach((block) => {
-      this.children[block.id] = block;
+  registerChildComponents() {
+    Object.keys(this.props).forEach((propName) => {
+      const prop = this.props[propName];
+
+      if (prop instanceof Block) {
+        this.children[prop.id] = prop;
+      }
     });
   }
 }

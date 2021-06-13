@@ -97,17 +97,6 @@ class SignupPage extends Block {
       submitButton,
       onSubmit: handleFormSubmit,
     });
-
-    this.addChildComponent(
-      emailInput,
-      loginInput,
-      firstNameInput,
-      secondNameInput,
-      phoneInput,
-      passwordInput,
-      passwordConfirmationInput,
-      submitButton,
-    );
   }
 
   // eslint-disable-next-line class-methods-use-this

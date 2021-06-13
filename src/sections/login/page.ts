@@ -47,8 +47,6 @@ class LoginPage extends Block {
       submitButton,
       onSubmit: handleFormSubmit,
     });
-
-    this.addChildComponent(loginInput, passwordInput, submitButton);
   }
 
   // eslint-disable-next-line class-methods-use-this
