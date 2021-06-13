@@ -6,6 +6,7 @@ import './index.scss';
 const template = `
 label.label= label
   input.input(type=type, name=inputName)
+  span.error= error
 `;
 
 class Input extends Block {
@@ -16,10 +17,42 @@ class Input extends Block {
     );
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  componentDidMount(oldProps?: Props): void {
-    // TODO реализовать метод
-    // eslint-disable-next-line no-console
+  componentDidMount(): void {
+    if (this.props.pattern) {
+      this.setValidationFlow();
+    }
+  }
+
+  setValidationFlow(): void {
+    this.setInnerHandler('blur', this.handleBlur.bind(this));
+    this.setInnerHandler('focus', this.handleFocus.bind(this));
+  }
+
+  get errorElement(): HTMLElement {
+    return this.content.querySelector('.error') as HTMLElement;
+  }
+
+  showError(): void {
+    this.errorElement.style.display = 'block';
+  }
+
+  hideError(): void {
+    this.errorElement.style.display = 'none';
+  }
+
+  handleFocus(): void {
+    this.hideError();
+  }
+
+  handleBlur(): void {
+    const { value } = this.eventTarget as HTMLInputElement;
+    const pattern = this.props.pattern as RegExp;
+
+    if (pattern.test(value) || !value) {
+      this.hideError();
+    } else {
+      this.showError();
+    }
   }
 
   render(): string {

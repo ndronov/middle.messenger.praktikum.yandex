@@ -3,9 +3,11 @@ import pug from 'pug';
 import Block, { Props } from '../../modules/block';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
+import handleFormSubmit from '../../utils/handleFormSubmit';
+import validation from './validation';
 
 const template = `
-form.auth-form#signup-form
+form.auth-form#signup-form(novalidate="")
   h1.title Регистрация
   email-input(data-component-id=emailInput.id)
   login-input(data-component-id=loginInput.id)
@@ -21,68 +23,62 @@ form.auth-form#signup-form
   a.auth-mode-switch-link(href="../login/index.pug") Войти
 `;
 
-const handleSubmit = (e: Event) => {
-  console.log('form submit:', e);
-  e.preventDefault();
-};
-
 class SignupPage extends Block {
   constructor(root: string) {
     const emailInput = new Input({
       label: 'Почта',
       type: 'text',
       inputName: 'email',
-      // TODO реализовать валидацию
-      onFocus: (e) => console.log('emailInput focus:', e),
-      onBlur: (e) => console.log('emailInput blur:', e),
+      pattern: validation.email.pattern,
+      error: validation.email.error,
     });
 
     const loginInput = new Input({
       label: 'Логин',
       type: 'text',
       inputName: 'login',
-      onFocus: (e) => console.log('loginInput focus:', e),
-      onBlur: (e) => console.log('loginInput blur:', e),
+      pattern: validation.login.pattern,
+      error: validation.login.error,
     });
 
     const firstNameInput = new Input({
       label: 'Имя',
       type: 'text',
       inputName: 'first_name',
-      onFocus: (e) => console.log('firstNameInput focus:', e),
-      onBlur: (e) => console.log('firstNameInput blur:', e),
+      pattern: validation.name.pattern,
+      error: validation.name.error,
     });
 
     const secondNameInput = new Input({
       label: 'Фамилия',
       type: 'text',
       inputName: 'second_name',
-      onFocus: (e) => console.log('secondNameInput focus:', e),
-      onBlur: (e) => console.log('secondNameInput blur:', e),
+      pattern: validation.name.pattern,
+      error: validation.name.error,
     });
 
     const phoneInput = new Input({
       label: 'Телефон',
       type: 'tel',
       inputName: 'phone',
-      onFocus: (e) => console.log('phoneInput focus:', e),
-      onBlur: (e) => console.log('phoneInput blur:', e),
+      pattern: validation.phone.pattern,
+      error: validation.phone.error,
     });
 
     const passwordInput = new Input({
       label: 'Пароль',
       type: 'password',
       inputName: 'password',
-      onFocus: (e) => console.log('passwordInput focus:', e),
-      onBlur: (e) => console.log('passwordInput blur:', e),
+      pattern: validation.password.pattern,
+      error: validation.password.error,
     });
 
     const passwordConfirmationInput = new Input({
       label: 'Пароль (ещё раз)',
       type: 'password',
       inputName: 'password_confirmation',
-      onFocus: (e) => console.log('passwordConfirmationInput focus:', e),
-      onBlur: (e) => console.log('passwordConfirmationInput blur:', e),
+      pattern: validation.password.pattern,
+      error: validation.password.error,
     });
 
     const submitButton = new SubmitButton({
@@ -99,7 +95,7 @@ class SignupPage extends Block {
       passwordInput,
       passwordConfirmationInput,
       submitButton,
-      onSubmit: handleSubmit,
+      onSubmit: handleFormSubmit,
     });
 
     this.addChildComponent(

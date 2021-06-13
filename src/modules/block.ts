@@ -20,6 +20,7 @@ interface Meta {
 }
 
 type ChildrenType = Record<string, Block>;
+type InnerHandlers = Record<string, EventListener>;
 
 abstract class Block {
   static EVENTS = {
@@ -29,6 +30,8 @@ abstract class Block {
     FLOW_RENDER: 'flow:render',
     FLOW_REGISTER_HANDLERS: 'flow:register-handlers',
     FLOW_UNREGISTER_HANDLERS: 'flow:unregister-handlers',
+    FLOW_REGISTER_INNER_HANDLERS: 'flow:register-inner-handlers',
+    FLOW_UNREGISTER_INNER_HANDLERS: 'flow:unregister-inner-handlers',
   };
 
   private element: HTMLElement;
@@ -40,6 +43,8 @@ abstract class Block {
   private readonly eventBus: EventBus;
 
   private readonly children: ChildrenType = {};
+
+  private readonly innerHandlers: InnerHandlers = {};
 
   protected constructor(tagName = 'div', initialProps?: Props) {
     const {
@@ -72,6 +77,14 @@ abstract class Block {
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this.flowRender.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_REGISTER_HANDLERS, this.flowRegisterHandlers.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_UNREGISTER_HANDLERS, this.flowUnregisterHandlers.bind(this));
+    this.eventBus.on(
+      Block.EVENTS.FLOW_REGISTER_INNER_HANDLERS,
+      this.flowRegisterInnerHandlers.bind(this),
+    );
+    this.eventBus.on(
+      Block.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS,
+      this.flowUnregisterInnerHandlers.bind(this),
+    );
   }
 
   private createResources(placeholderFromParent?: Element) {
@@ -100,6 +113,7 @@ abstract class Block {
 
     if (shouldUpdate) {
       this.eventBus.emit(Block.EVENTS.FLOW_UNREGISTER_HANDLERS);
+      this.eventBus.emit(Block.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS);
       this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
     }
   }
@@ -118,15 +132,15 @@ abstract class Block {
     Object.assign(this.props, nextProps);
   };
 
-  renderToRoot() {
+  renderToRoot(): void {
     if (!this.meta.root) {
-      throw new Error('Для блока не указан корневой элемент');
+      throw new Error('Для компонента не указан корневой элемент');
     }
 
     const rootElement = document.querySelector(this.meta.root);
 
     if (!rootElement) {
-      throw new Error('Для блока не найден корневой элемент');
+      throw new Error('Для компонента не найден корневой элемент');
     }
 
     rootElement.appendChild(this.content);
@@ -140,6 +154,7 @@ abstract class Block {
 
     setTimeout(() => {
       this.eventBus.emit(Block.EVENTS.FLOW_REGISTER_HANDLERS);
+      this.eventBus.emit(Block.EVENTS.FLOW_REGISTER_INNER_HANDLERS);
     });
   }
 
@@ -169,7 +184,7 @@ abstract class Block {
   private flowRegisterHandlers() {
     this.eventHandlersProps.forEach((handlerPropName) => {
       const eventName = getEventNameByHandlerPropName(handlerPropName);
-      const handler = this.props[handlerPropName] as EventListenerOrEventListenerObject;
+      const handler = this.props[handlerPropName] as EventListener;
 
       this.eventTarget.addEventListener(eventName, handler);
     });
@@ -178,7 +193,27 @@ abstract class Block {
   private flowUnregisterHandlers() {
     this.eventHandlersProps.forEach((handlerPropName) => {
       const eventName = getEventNameByHandlerPropName(handlerPropName);
-      const handler = this.props[handlerPropName] as EventListenerOrEventListenerObject;
+      const handler = this.props[handlerPropName] as EventListener;
+
+      this.eventTarget.removeEventListener(eventName, handler);
+    });
+  }
+
+  setInnerHandler(event: string, handler: EventListener): void {
+    this.innerHandlers[event] = handler;
+  }
+
+  private flowRegisterInnerHandlers() {
+    Object.keys(this.innerHandlers).forEach((eventName) => {
+      const handler = this.innerHandlers[eventName];
+
+      this.eventTarget.addEventListener(eventName, handler);
+    });
+  }
+
+  private flowUnregisterInnerHandlers() {
+    Object.keys(this.innerHandlers).forEach((eventName) => {
+      const handler = this.innerHandlers[eventName];
 
       this.eventTarget.removeEventListener(eventName, handler);
     });

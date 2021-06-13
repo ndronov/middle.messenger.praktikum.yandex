@@ -3,9 +3,11 @@ import pug from 'pug';
 import Block, { Props } from '../../modules/block';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
+import handleFormSubmit from '../../utils/handleFormSubmit';
+import validation from './validation';
 
 const template = `
-form.auth-form#login-form
+form.auth-form#login-form(novalidate="")
   h1.title Вход
   login-input(data-component-id=loginInput.id)
   password-input(data-component-id=passwordInput.id)
@@ -16,28 +18,22 @@ form.auth-form#login-form
   a.auth-mode-switch-link(href="../signup/index.pug") Нет аккаунта?
 `;
 
-const handleSubmit = (e: Event) => {
-  console.log('form submit:', e);
-  e.preventDefault();
-};
-
 class LoginPage extends Block {
   constructor(root: string) {
     const loginInput = new Input({
       label: 'Логин',
       type: 'text',
       inputName: 'login',
-      // TODO реализовать валидацию
-      onFocus: (e) => console.log('loginInput focus:', e),
-      onBlur: (e) => console.log('loginInput blur:', e),
+      pattern: validation.login.pattern,
+      error: validation.login.error,
     });
 
     const passwordInput = new Input({
       label: 'Пароль',
       type: 'password',
       inputName: 'password',
-      onFocus: (e) => console.log('passwordInput focus:', e),
-      onBlur: (e) => console.log('passwordInput blur:', e),
+      pattern: validation.password.pattern,
+      error: validation.password.error,
     });
 
     const submitButton = new SubmitButton({
@@ -49,7 +45,7 @@ class LoginPage extends Block {
       loginInput,
       passwordInput,
       submitButton,
-      onSubmit: handleSubmit,
+      onSubmit: handleFormSubmit,
     });
 
     this.addChildComponent(loginInput, passwordInput, submitButton);
