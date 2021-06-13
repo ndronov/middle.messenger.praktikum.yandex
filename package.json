@@ -6,8 +6,8 @@
     "prebuild": "rimraf build/*",
     "build": "parcel build ./src/index.html --dist-dir build",
     "dev": "parcel serve ./src/index.html --open --dist-dir .parcel-serve",
-    "prestart": "rimraf build/*",
-    "start": "parcel build ./src/index.html --dist-dir build && node server",
+    "start": "npm run build && node server",
+    "server": "node server",
     "lint": "eslint --ext .ts src",
     "stylelint": "stylelint src/**/*.scss"
   },
@@ -44,8 +44,5 @@
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.19.0",
     "typescript": "^4.3.2"
-  },
-  "engines": {
-    "node": ">=14.17.0"
   }
 }
