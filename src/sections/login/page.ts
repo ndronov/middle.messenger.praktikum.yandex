@@ -7,7 +7,7 @@ import handleFormSubmit from '../../utils/handleFormSubmit';
 import validation from './validation';
 
 const template = `
-form.auth-form#login-form(novalidate="")
+form.auth-form(novalidate="")
   h1.title Вход
   login-input(data-component-id=loginInput.id)
   password-input(data-component-id=passwordInput.id)

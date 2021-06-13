@@ -100,6 +100,8 @@ abstract class Component {
     if (placeholderFromParent) {
       placeholderFromParent.replaceWith(this.element);
     }
+
+    this.element.id = this.id;
   }
 
   init(placeholderFromParent?: Element): void {
@@ -152,6 +154,7 @@ abstract class Component {
       throw new Error('Для компонента не найден корневой элемент');
     }
 
+    rootElement.innerHTML = '';
     rootElement.appendChild(this.content);
   }
 

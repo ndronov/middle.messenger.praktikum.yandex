@@ -7,7 +7,7 @@ import handleFormSubmit from '../../utils/handleFormSubmit';
 import validation from './validation';
 
 const template = `
-form.auth-form#signup-form(novalidate="")
+form.auth-form(novalidate="")
   h1.title Регистрация
   email-input(data-component-id=emailInput.id)
   login-input(data-component-id=loginInput.id)
