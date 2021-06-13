@@ -4,19 +4,14 @@ import htmlToDOM from '../utils/htmlToDOM';
 import renderElement from '../utils/renderElement';
 import getEventNameByHandlerPropName from '../utils/getEventNameByHandlerPropName';
 
-// TODO переименовать
-const events = ['onSubmit'];
+const eventHandlerPropNames = ['onSubmit'];
 
 export type Props = Record<string, unknown>;
-// TODO оставить ?
-type Template = (tagName: string) => string;
 
 interface Meta {
   tagName: string;
   props: Props;
   componentId: string;
-  // TODO оставить ?
-  template: Template;
   root?: string;
   eventTargetSelector?: string;
 }
@@ -56,7 +51,6 @@ abstract class Component {
     this.meta = {
       tagName,
       props,
-      template: template as Template,
       root: root as string,
       eventTargetSelector: eventTargetSelector as string,
       componentId: uuidv4(),
@@ -232,14 +226,7 @@ abstract class Component {
   }
 
   get eventHandlersProps(): string[] {
-    return Object.keys(this.props).filter((prop) => events.includes(prop));
-  }
-
-  // TODO оставить ?
-  get template(): string {
-    const { template, tagName } = this.meta;
-
-    return template(tagName);
+    return Object.keys(this.props).filter((propName) => eventHandlerPropNames.includes(propName));
   }
 
   get eventTarget(): HTMLElement {

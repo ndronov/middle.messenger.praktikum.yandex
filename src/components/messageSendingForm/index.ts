@@ -1,14 +1,9 @@
 // @ts-ignore
 import pug from 'pug';
 import Component, { Props } from '../../modules/component';
+import { Validation } from '../../types';
 import Input from '../input';
 import './index.scss';
-
-// TODO вынести
-interface Validation {
-  pattern: RegExp;
-  error: string;
-}
 
 const template = `
 form.message-sending-form#message-sending-form
@@ -16,9 +11,13 @@ form.message-sending-form#message-sending-form
   button.message-sending-button(type="submit") &#8594;
 `;
 
+interface MessageSendingFormProps extends Props {
+  validation: Validation;
+}
+
 class MessageSendingForm extends Component {
-  constructor(props: Props) {
-    const validation = props.validation as Validation;
+  constructor(props: MessageSendingFormProps) {
+    const { validation } = props;
     const messageInput = new Input({
       className: 'message-input',
       type: 'text',
