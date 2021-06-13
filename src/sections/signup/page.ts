@@ -1,6 +1,6 @@
 // @ts-ignore
 import pug from 'pug';
-import Component, { Props } from '../../modules/component';
+import Component from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
 import handleFormSubmit from '../../utils/handleFormSubmit';
@@ -97,11 +97,6 @@ class SignupPage extends Component {
       submitButton,
       onSubmit: handleFormSubmit,
     });
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  componentDidMount(oldProps?: Props): void {
-    // TODO реализовать метод
   }
 
   render(): string {

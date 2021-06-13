@@ -112,7 +112,10 @@ abstract class Component {
     this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
   }
 
-  abstract componentDidMount(oldProps?: Props): void;
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
+  componentDidMount(_oldProps?: Props): void {
+    // TODO реализовать или удалить
+  }
 
   private flowComponentDidUpdate(oldProps: Props, newProps: Props): void {
     const shouldUpdate = this.shouldComponentUpdate(oldProps, newProps);

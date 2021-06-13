@@ -1,6 +1,6 @@
 // @ts-ignore
 import pug from 'pug';
-import Component, { Props } from '../../modules/component';
+import Component from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
 import handleFormSubmit from '../../utils/handleFormSubmit';
@@ -49,12 +49,6 @@ class LoginPage extends Component {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  componentDidMount(oldProps?: Props): void {
-    // TODO реализовать метод
-  }
-
-  // eslint-disable-next-line class-methods-use-this
   render(): string {
     return pug.render(template, {
       loginInput: this.props.loginInput,
