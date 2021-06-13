@@ -10,6 +10,9 @@
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended"
   ],
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off"
+  },
   "env": {
     "es6": true
   }
