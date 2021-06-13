@@ -16,11 +16,11 @@ div.chat-content
         else if message.image
             if message.own
                 div.message.image-message.image-message_own
-                    img(src="../../../static/image.png")
+                    img(src=message.image)
                     time.image-message-time= message.time
             else
-                div.message.image-message(src="../../../static/image.png")
-                    img(src="../../../static/image.png")
+                div.message.image-message
+                    img(src=message.image)
                     time.image-message-time= message.time
 `;
 

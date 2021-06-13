@@ -12,7 +12,7 @@ const mockActiveChat = {
       {
         format: 'image',
         own: false,
-        image: 'image.png',
+        image: '/camera.png',
         time: '11:56',
       },
       {
