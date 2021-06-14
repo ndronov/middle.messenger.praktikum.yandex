@@ -1,7 +1,7 @@
 // @ts-ignore
 import pug from 'pug';
-import Component, { Props } from '../../modules/component';
-import { ValidationMap } from '../../types';
+import Component from '../../modules/component';
+import { FormProps } from '../../types';
 import Input from '../input';
 import './index.scss';
 
@@ -19,7 +19,7 @@ form.user-settings-form#user-settings
   button.submit-button(type="submit") Сохранить
 `;
 
-interface UserSettingsType {
+interface UserSettingsValues {
   email?: string;
   login?: string;
   first_name?: string;
@@ -28,13 +28,8 @@ interface UserSettingsType {
   phone?: string;
 }
 
-interface UserSettingsFormProps extends Props {
-  values: UserSettingsType;
-  validation: ValidationMap;
-}
-
 class UserSettingsForm extends Component {
-  constructor(props: UserSettingsFormProps) {
+  constructor(props: FormProps<UserSettingsValues>) {
     const { validation, values } = props;
 
     const emailInput = new Input({

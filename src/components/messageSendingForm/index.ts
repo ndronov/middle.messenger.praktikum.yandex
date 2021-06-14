@@ -1,7 +1,7 @@
 // @ts-ignore
 import pug from 'pug';
-import Component, { Props } from '../../modules/component';
-import { ValidationMap } from '../../types';
+import Component from '../../modules/component';
+import { FormProps } from '../../types';
 import Input from '../input';
 import './index.scss';
 
@@ -11,12 +11,8 @@ form.message-sending-form#message-sending-form
   button.message-sending-button(type="submit") &#8594;
 `;
 
-interface MessageSendingFormProps extends Props {
-  validation: ValidationMap;
-}
-
 class MessageSendingForm extends Component {
-  constructor(props: MessageSendingFormProps) {
+  constructor(props: FormProps) {
     const { validation } = props;
     const messageInput = new Input({
       className: 'message-input',
