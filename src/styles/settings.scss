@@ -1,7 +1,5 @@
 @import './colors';
 
-// TODO перенести стили
-
 .aside-panel {
   display: flex;
   align-items: center;
@@ -35,7 +33,7 @@
     aspect-ratio: 1;
   }
 
-  .label {
+  .settings-input-field {
     position: relative;
     display: flex;
     align-items: center;

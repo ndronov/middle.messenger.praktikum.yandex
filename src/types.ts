@@ -8,6 +8,6 @@ export interface Validation {
 export type ValidationMap = Record<string, Validation>;
 
 export interface FormProps<V = unknown> extends ComponentProps {
-  values: V;
-  validation: ValidationMap;
+  values?: V;
+  validation?: ValidationMap;
 }

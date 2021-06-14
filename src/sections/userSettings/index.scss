@@ -1,22 +1,2 @@
 @import '../../styles/global';
 @import '../../styles/settings';
-
-// TODO ?
-
-.aside-panel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 100%;
-  background-color: $color_grey1;
-  border-right: 1px solid $color_grey4;
-
-  .back-button {
-    width: 28px;
-    color: $color_white;
-    background-color: $color_blue;
-    border-radius: 50%;
-    aspect-ratio: 1;
-  }
-}

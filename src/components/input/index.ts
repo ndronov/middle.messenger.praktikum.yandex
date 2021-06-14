@@ -6,7 +6,7 @@ import './index.scss';
 
 const template = `
 label(class=className)= label
-  input.input(type=type, name=inputName, placeholder=placeholder, value=value)
+  input.input(type=type, name=inputName, placeholder=placeholder, value=value, accept=accept)
   span.error= error
 `;
 
