@@ -1,6 +1,7 @@
 // @ts-ignore
 import pug from 'pug';
-import Component, { Props } from '../../modules/component';
+import Component from '../../modules/component';
+import { ComponentProps } from '../../types';
 import './index.scss';
 
 const template = `
@@ -10,7 +11,7 @@ label(class=className)= label
 `;
 
 class Input extends Component {
-  constructor(props: Props) {
+  constructor(props: ComponentProps) {
     super(
       'label',
       {

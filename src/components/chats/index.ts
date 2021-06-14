@@ -1,6 +1,7 @@
 // @ts-ignore
 import pug from 'pug';
-import Component, { Props } from '../../modules/component';
+import Component from '../../modules/component';
+import { ComponentProps } from '../../types';
 import './index.scss';
 
 const template = `
@@ -18,7 +19,7 @@ div.chats
 `;
 
 class Chats extends Component {
-  constructor(props: Props) {
+  constructor(props: ComponentProps) {
     super('div', props);
   }
 

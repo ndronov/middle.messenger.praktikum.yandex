@@ -3,14 +3,13 @@ import EventBus from './eventBus';
 import htmlToDOM from '../utils/htmlToDOM';
 import renderElement from '../utils/renderElement';
 import getEventNameByHandlerPropName from '../utils/getEventNameByHandlerPropName';
+import { ComponentProps } from '../types';
 
 const eventHandlerPropNames = ['onSubmit'];
 
-export type Props = Record<string, unknown>;
-
 interface Meta {
   tagName: string;
-  props: Props;
+  props: ComponentProps;
   componentId: string;
   root?: string;
   eventTargetSelector?: string;
@@ -35,7 +34,7 @@ abstract class Component {
 
   private readonly meta: Meta;
 
-  protected readonly props: Props;
+  protected readonly props: ComponentProps;
 
   private readonly eventBus: EventBus;
 
@@ -43,7 +42,7 @@ abstract class Component {
 
   private readonly innerHandlers: InnerHandlers = {};
 
-  protected constructor(tagName = 'div', initialProps?: Props) {
+  protected constructor(tagName = 'div', initialProps?: ComponentProps) {
     const {
       root, template, eventTargetSelector, ...props
     } = initialProps || {};
@@ -109,11 +108,11 @@ abstract class Component {
   }
 
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
-  componentDidMount(_oldProps?: Props): void {
+  componentDidMount(_oldProps?: ComponentProps): void {
     // TODO реализовать или удалить
   }
 
-  private flowComponentDidUpdate(oldProps: Props, newProps: Props): void {
+  private flowComponentDidUpdate(oldProps: ComponentProps, newProps: ComponentProps): void {
     const shouldUpdate = this.shouldComponentUpdate(oldProps, newProps);
 
     if (shouldUpdate) {
@@ -124,12 +123,12 @@ abstract class Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  shouldComponentUpdate(oldProps: Props, newProps: Props): boolean {
+  shouldComponentUpdate(oldProps: ComponentProps, newProps: ComponentProps): boolean {
     // TODO добавить функцию сравнения объектов
     return !Object.is(oldProps, newProps);
   }
 
-  setProps = (nextProps: Props): void => {
+  setProps = (nextProps: ComponentProps): void => {
     if (!nextProps) {
       return;
     }
@@ -253,14 +252,14 @@ abstract class Component {
     return this.meta.componentId;
   }
 
-  private makePropsProxy(rawProps: Props): Props {
+  private makePropsProxy(rawProps: ComponentProps): ComponentProps {
     const proxyConfig = {
-      get(props: Props, propName: string) {
+      get(props: ComponentProps, propName: string) {
         const value = props[propName];
         return typeof value === 'function' ? value.bind(props) : value;
       },
 
-      set: (props: Props, propName: string, value: unknown) => {
+      set: (props: ComponentProps, propName: string, value: unknown) => {
         const oldProps = { ...props };
 
         Object.assign(props, { [propName]: value });
