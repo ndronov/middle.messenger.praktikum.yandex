@@ -4,7 +4,7 @@ const mockUserSettings = {
   first_name: 'Иван',
   second_name: 'Иванов',
   display_name: 'Иван',
-  phone: '+7 (909) 967 3030',
+  phone: '+79099673030',
 };
 
 export default mockUserSettings;
