@@ -7,7 +7,7 @@ import MessageSendingForm from '../../components/messageSendingForm';
 import mockChats from '../../mockData/mockChats';
 import mockActiveChat from '../../mockData/mockActiveChat';
 import handleFormSubmit from '../../utils/handleFormSubmit';
-import validation from './validation';
+import validation from '../../validation/chatValidationMap';
 
 const template = `
 div.container

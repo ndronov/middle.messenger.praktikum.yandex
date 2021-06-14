@@ -1,7 +1,7 @@
 // @ts-ignore
 import pug from 'pug';
 import Component, { Props } from '../../modules/component';
-import { Validation } from '../../types';
+import { ValidationMap } from '../../types';
 import Input from '../input';
 import './index.scss';
 
@@ -12,7 +12,7 @@ form.message-sending-form#message-sending-form
 `;
 
 interface MessageSendingFormProps extends Props {
-  validation: Validation;
+  validation: ValidationMap;
 }
 
 class MessageSendingForm extends Component {
@@ -23,10 +23,13 @@ class MessageSendingForm extends Component {
       type: 'text',
       inputName: 'message',
       placeholder: 'Сообщение',
-      ...validation,
+      ...validation.message,
     });
 
-    super('form', { ...props, messageInput });
+    super(
+      'form',
+      { ...props, messageInput },
+    );
   }
 
   render(): string {

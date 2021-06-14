@@ -1,4 +1,4 @@
-const validation = {
+const userSettingValidationMap = {
   email: {
     pattern: /.+@.+\..+/i,
     error: 'Некорректный адрес',
@@ -21,4 +21,4 @@ const validation = {
   },
 };
 
-export default validation;
+export default userSettingValidationMap;

@@ -3,8 +3,8 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
+import validation from '../../validation/userSettingsValidationMap';
 import handleFormSubmit from '../../utils/handleFormSubmit';
-import validation from './validation';
 
 const template = `
 form.auth-form(novalidate="")
@@ -29,63 +29,56 @@ class SignupPage extends Component {
       label: 'Почта',
       type: 'text',
       inputName: 'email',
-      pattern: validation.email.pattern,
-      error: validation.email.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.email,
     });
 
     const loginInput = new Input({
       label: 'Логин',
       type: 'text',
       inputName: 'login',
-      pattern: validation.login.pattern,
-      error: validation.login.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.login,
     });
 
     const firstNameInput = new Input({
       label: 'Имя',
       type: 'text',
       inputName: 'first_name',
-      pattern: validation.name.pattern,
-      error: validation.name.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.name,
     });
 
     const secondNameInput = new Input({
       label: 'Фамилия',
       type: 'text',
       inputName: 'second_name',
-      pattern: validation.name.pattern,
-      error: validation.name.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.name,
     });
 
     const phoneInput = new Input({
       label: 'Телефон',
       type: 'tel',
       inputName: 'phone',
-      pattern: validation.phone.pattern,
-      error: validation.phone.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.phone,
     });
 
     const passwordInput = new Input({
       label: 'Пароль',
       type: 'password',
       inputName: 'password',
-      pattern: validation.password.pattern,
-      error: validation.password.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.password,
     });
 
     const passwordConfirmationInput = new Input({
       label: 'Пароль (ещё раз)',
       type: 'password',
       inputName: 'password_confirmation',
-      pattern: validation.password.pattern,
-      error: validation.password.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.password,
     });
 
     const submitButton = new SubmitButton({

@@ -3,8 +3,8 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
+import validation from '../../validation/userSettingsValidationMap';
 import handleFormSubmit from '../../utils/handleFormSubmit';
-import validation from './validation';
 
 const template = `
 form.auth-form(novalidate="")
@@ -24,18 +24,16 @@ class LoginPage extends Component {
       label: 'Логин',
       type: 'text',
       inputName: 'login',
-      pattern: validation.login.pattern,
-      error: validation.login.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.login,
     });
 
     const passwordInput = new Input({
       label: 'Пароль',
       type: 'password',
       inputName: 'password',
-      pattern: validation.password.pattern,
-      error: validation.password.error,
-      className: 'label',
+      className: 'auth-form-field',
+      ...validation.password,
     });
 
     const submitButton = new SubmitButton({
