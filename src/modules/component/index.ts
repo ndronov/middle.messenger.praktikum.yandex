@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import EventBus from '../eventBus';
 import htmlToDOM from './htmlToDOM';
 import renderElement from './renderElement';
+import equal from './equal';
 import getEventNameByHandlerPropName from './getEventNameByHandlerPropName';
 import { ComponentProps, ValidationOptions } from '../../types';
 
@@ -132,8 +133,7 @@ abstract class Component {
 
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(oldProps: ComponentProps, newProps: ComponentProps): boolean {
-    // TODO добавить функцию сравнения объектов
-    return !Object.is(oldProps, newProps);
+    return !equal(oldProps, newProps);
   }
 
   setProps = (nextProps: ComponentProps): void => {

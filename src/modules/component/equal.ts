@@ -1,4 +1,4 @@
-const equals = (a: unknown, b: unknown): boolean => {
+const equal = (a: unknown, b: unknown): boolean => {
   if (a === b) {
     return true;
   }
@@ -29,4 +29,4 @@ const equals = (a: unknown, b: unknown): boolean => {
   return keysA.every((k: string) => equals(a[k], b[k]));
 };
 
-export default equals;
+export default equal;
