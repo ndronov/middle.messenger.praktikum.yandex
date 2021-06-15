@@ -15,7 +15,7 @@ form.auth-form(novalidate="")
   div.gap
 
   submit-button(data-component-id=submitButton.id)
-  a.auth-mode-switch-link(href="../signup/index.pug") Нет аккаунта?
+  a.auth-mode-switch-link(href="../signup/index.html") Нет аккаунта?
 `;
 
 class LoginPage extends Component {

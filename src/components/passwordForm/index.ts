@@ -12,7 +12,7 @@ form.settings-form#user-settings(novalidate="")
 
   old-password-input(data-component-id=oldPasswordInput.id)
   new-password-input(data-component-id=newPasswordInput.id)
-  new-password-Confirmation-input(data-component-id=newPasswordConfirmationInput.id)
+  new-password-confirmation-input(data-component-id=newPasswordConfirmationInput.id)
 
   submit-button(data-component-id=submitButton.id)
 `;
@@ -20,10 +20,12 @@ form.settings-form#user-settings(novalidate="")
 interface PasswordFormValues {
   oldPassword?: string;
   newPassword?: string;
-  newPassword_confirmation?: string;
+  newPasswordConfirmation?: string;
 }
 
 class PasswordForm extends Component {
+  protected readonly props: FormProps<PasswordFormValues>;
+
   constructor(props: FormProps<PasswordFormValues>) {
     const { validation, values } = props;
 
@@ -48,8 +50,8 @@ class PasswordForm extends Component {
     const newPasswordConfirmationInput = new Input({
       type: 'password',
       label: 'Повторите новый пароль',
-      inputName: 'newPassword_confirmation',
-      value: values?.newPassword_confirmation,
+      inputName: 'newPasswordConfirmation',
+      value: values?.newPasswordConfirmation,
       className: 'settings-input-field',
       ...validation?.password,
     });

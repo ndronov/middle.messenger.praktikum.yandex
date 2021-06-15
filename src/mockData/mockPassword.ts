@@ -1,7 +1,7 @@
 const mockPassword = {
   oldPassword: 'одночасье',
   newPassword: 'перспективы',
-  newPassword_confirmation: 'перспективы',
+  newPasswordConfirmation: 'перспективы',
 };
 
 export default mockPassword;

@@ -11,10 +11,14 @@ form.message-sending-form#message-sending-form(novalidate="")
   button.message-sending-button(type="submit") &#8594;
 `;
 
-class MessageSendingForm extends Component {
-  protected readonly props: FormProps;
+interface MessageSendingFormValues {
+  message?: string;
+}
 
-  constructor(props: FormProps) {
+class MessageSendingForm extends Component {
+  protected readonly props: FormProps<MessageSendingFormValues>;
+
+  constructor(props: FormProps<MessageSendingFormValues>) {
     const { validation } = props;
     const messageInput = new Input({
       className: 'message-input',

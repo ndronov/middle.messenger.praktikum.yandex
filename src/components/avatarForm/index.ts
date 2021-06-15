@@ -17,6 +17,8 @@ div.modal-backdrop
 `;
 
 class AvatarForm extends Component {
+  protected readonly props: FormProps;
+
   constructor(props: FormProps) {
     const submitButton = new SubmitButton({
       label: 'Поменять',

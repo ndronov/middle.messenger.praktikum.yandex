@@ -26,17 +26,19 @@ form.settings-form#user-settings(novalidate="")
       a.link.exit-link(href="#") Выйти
 `;
 
-interface UserSettingsValues {
+interface UserSettingsFormValues {
   email?: string;
   login?: string;
-  first_name?: string;
-  second_name?: string;
-  display_name?: string;
+  firstName?: string;
+  secondName?: string;
+  displayName?: string;
   phone?: string;
 }
 
 class UserSettingsForm extends Component {
-  constructor(props: FormProps<UserSettingsValues>) {
+  protected readonly props: FormProps<UserSettingsFormValues>;
+
+  constructor(props: FormProps<UserSettingsFormValues>) {
     const { validation, values } = props;
 
     const emailInput = new Input({
@@ -60,8 +62,8 @@ class UserSettingsForm extends Component {
     const firstNameInput = new Input({
       type: 'text',
       label: 'Имя',
-      inputName: 'first_name',
-      value: values?.first_name,
+      inputName: 'firstName',
+      value: values?.firstName,
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -69,8 +71,8 @@ class UserSettingsForm extends Component {
     const secondNameInput = new Input({
       type: 'text',
       label: 'Фамилия',
-      inputName: 'second_name',
-      value: values?.second_name,
+      inputName: 'secondName',
+      value: values?.secondName,
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -78,8 +80,8 @@ class UserSettingsForm extends Component {
     const displayNameInput = new Input({
       type: 'text',
       label: 'Имя в чате',
-      inputName: 'display_name',
-      value: values?.display_name,
+      inputName: 'displayName',
+      value: values?.displayName,
       className: 'settings-input-field',
       ...validation?.name,
     });

@@ -7,7 +7,7 @@ import mockChats from '../../mockData/mockChats';
 const template = `
 div.container
   nav.navigation
-    a(href="#").profile-link Профиль &rang;
+    a(href="../userSettings/index.html").profile-link Профиль &rang;
     button.search-button &#128269; Поиск
     chats(data-component-id=chats.id)
   div.active-chat-placeholder Выберите чат, чтобы отправить сообщение

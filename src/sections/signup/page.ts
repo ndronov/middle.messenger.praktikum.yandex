@@ -20,7 +20,7 @@ form.auth-form(novalidate="")
   div.gap
 
   submit-button(data-component-id=submitButton.id)
-  a.auth-mode-switch-link(href="../login/index.pug") Войти
+  a.auth-mode-switch-link(href="../login/index.html") Войти
 `;
 
 class SignupPage extends Component {
@@ -44,7 +44,7 @@ class SignupPage extends Component {
     const firstNameInput = new Input({
       label: 'Имя',
       type: 'text',
-      inputName: 'first_name',
+      inputName: 'firstName',
       className: 'auth-form-field',
       ...validation.name,
     });
@@ -52,7 +52,7 @@ class SignupPage extends Component {
     const secondNameInput = new Input({
       label: 'Фамилия',
       type: 'text',
-      inputName: 'second_name',
+      inputName: 'secondName',
       className: 'auth-form-field',
       ...validation.name,
     });
@@ -76,7 +76,7 @@ class SignupPage extends Component {
     const passwordConfirmationInput = new Input({
       label: 'Пароль (ещё раз)',
       type: 'password',
-      inputName: 'password_confirmation',
+      inputName: 'passwordConfirmation',
       className: 'auth-form-field',
       ...validation.password,
     });
