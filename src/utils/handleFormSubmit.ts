@@ -9,7 +9,9 @@ const handleFormSubmit = (e: Event): void => {
   const nonEmptyFields: Record<string, FormDataEntryValue> = {};
 
   Array.from(formData.entries()).forEach(([fieldName, fieldValue]) => {
-    if (fieldValue) {
+    const isEmpty = fieldValue instanceof File ? !fieldValue.size : !fieldValue;
+
+    if (!isEmpty) {
       nonEmptyFields[fieldName] = fieldValue;
     }
   });
