@@ -1,12 +1,14 @@
 ## middle.messenger.praktikum.yandex
 
-Проектная работа первого спринта в рамках курса [Мидл фронтенд-разработчик](https://praktikum.yandex.ru/middle-frontend/) на платформе [Яндекс.Практикум](https://praktikum.yandex.ru/).
-Смысл работы — реализовать на практике предварительные этапы разработки веб-приложения:
-- разработка прототипов экранов приложения
-- создание и оформление репозитория с кодом
-- выбор и подключение шаблонизатора и препроцессора
-- настройка сборки проекта
-- настройка автодеплоя
+Проектная работа второго спринта в рамках курса [Мидл фронтенд-разработчик](https://praktikum.yandex.ru/middle-frontend/) на платформе [Яндекс.Практикум](https://praktikum.yandex.ru/).
+Внедренные доработки:
+- TypeScript
+- Кастомный класс Component
+- EventBus
+- Класс HTTP для работы с запросами
+- ESLint, stylelint, editorconfig
+- Взамен статического приложения реализовано SPA
+- Валидация форм
 
 ## Команды для работы с проектом
 
@@ -34,6 +36,7 @@
 - [Parcel](https://parceljs.org/)
 - [Pug](https://pugjs.org/)
 - [Sass](https://sass-lang.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Pull request второго спринта
 [Ссылка](https://github.com/ndronov/middle.messenger.praktikum.yandex/pull/3)
