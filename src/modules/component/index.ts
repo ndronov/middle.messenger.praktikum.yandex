@@ -115,9 +115,9 @@ abstract class Component {
     this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
   }
 
-  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
-  componentDidMount(_oldProps?: ComponentProps): void {
-    // TODO реализовать или удалить
+  // eslint-disable-next-line class-methods-use-this
+  componentDidMount(): void {
+    // каждый компонент может реализовать свой метод componentDidMount
   }
 
   private flowComponentDidUpdate(oldProps: ComponentProps, newProps: ComponentProps): void {
