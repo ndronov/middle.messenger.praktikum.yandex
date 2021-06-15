@@ -36,6 +36,7 @@ class ActiveChat extends Component {
     const messageSendingForm = new MessageSendingForm({
       validation,
       onSubmit: handleFormSubmit,
+      validateOnSubmit: true,
     });
 
     super('div', {

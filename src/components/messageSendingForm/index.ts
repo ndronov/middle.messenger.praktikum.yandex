@@ -6,12 +6,14 @@ import Input from '../input';
 import './index.scss';
 
 const template = `
-form.message-sending-form#message-sending-form
+form.message-sending-form#message-sending-form(novalidate="")
   message-input(data-component-id=messageInput.id)
   button.message-sending-button(type="submit") &#8594;
 `;
 
 class MessageSendingForm extends Component {
+  protected readonly props: FormProps;
+
   constructor(props: FormProps) {
     const { validation } = props;
     const messageInput = new Input({
@@ -19,7 +21,7 @@ class MessageSendingForm extends Component {
       type: 'text',
       inputName: 'message',
       placeholder: 'Сообщение',
-      ...validation.message,
+      ...validation?.message,
     });
 
     super(

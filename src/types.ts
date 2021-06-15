@@ -7,7 +7,23 @@ export interface Validation {
 
 export type ValidationMap = Record<string, Validation>;
 
+export interface ValidationOptions {
+  triggerOnEmpty?: boolean;
+}
+
 export interface FormProps<V = unknown> extends ComponentProps {
   values?: V;
   validation?: ValidationMap;
+}
+
+export interface InputProps extends ComponentProps {
+  type: string;
+  label?: string;
+  inputName: string;
+  placeholder?: string;
+  accept?: string;
+  value?: string;
+  className?: string;
+  pattern?: RegExp;
+  error?: string;
 }

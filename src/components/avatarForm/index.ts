@@ -8,7 +8,7 @@ import '../../styles/settings.scss';
 
 const template = `
 div.modal-backdrop
-  form.avatar-form
+  form.avatar-form(novalidate="")
     h3.title Загрузите файл
 
     avatar-input(data-component-id=avatarInput.id)
@@ -16,14 +16,8 @@ div.modal-backdrop
     submit-button(data-component-id=submitButton.id)
 `;
 
-interface AvatarFormValues {
-  avatar?: unknown;
-}
-
 class AvatarForm extends Component {
-  constructor(props: FormProps<AvatarFormValues>) {
-    const { values } = props;
-
+  constructor(props: FormProps) {
     const submitButton = new SubmitButton({
       label: 'Поменять',
     });
@@ -33,7 +27,6 @@ class AvatarForm extends Component {
       accept: 'image/*',
       label: 'Выбрать файл на компьютере',
       inputName: 'avatar',
-      value: values?.avatar,
       className: 'label',
     });
 

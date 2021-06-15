@@ -3,7 +3,7 @@ import EventBus from './eventBus';
 import htmlToDOM from '../utils/htmlToDOM';
 import renderElement from '../utils/renderElement';
 import getEventNameByHandlerPropName from '../utils/getEventNameByHandlerPropName';
-import { ComponentProps } from '../types';
+import { ComponentProps, ValidationOptions } from '../types';
 
 const eventHandlerPropNames = ['onSubmit'];
 
@@ -42,10 +42,14 @@ abstract class Component {
 
   private readonly innerHandlers: InnerHandlers = {};
 
-  protected constructor(tagName = 'div', initialProps?: ComponentProps) {
+  protected constructor(tagName = 'div', initialProps: ComponentProps = {}) {
     const {
-      root, template, eventTargetSelector, ...props
-    } = initialProps || {};
+      root,
+      template,
+      eventTargetSelector,
+      validateOnSubmit,
+      ...props
+    } = initialProps;
 
     this.meta = {
       tagName,
@@ -60,6 +64,10 @@ abstract class Component {
 
     this.registerEvents();
     this.registerChildComponents();
+
+    if (validateOnSubmit) {
+      this.setInnerHandler('submit', this.validateChildComponents.bind(this));
+    }
 
     if (root) {
       this.eventBus.emit(Component.EVENTS.INIT);
@@ -287,6 +295,24 @@ abstract class Component {
 
   hide(): void {
     this.content.style.display = 'none';
+  }
+
+  get hasValidation(): boolean {
+    return !!this.props.pattern && !!this.props.error;
+  }
+
+  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
+  validate(_options?: ValidationOptions): void {
+    // каждый компонент может реализовать свой метод валидации
+  }
+
+  validateChildComponents(): void {
+    Object.keys(this.children)
+      .map((id) => this.children[id])
+      .filter((component) => component.hasValidation)
+      .forEach((component) => {
+        component.validate({ triggerOnEmpty: true });
+      });
   }
 
   registerChildComponents(): void {

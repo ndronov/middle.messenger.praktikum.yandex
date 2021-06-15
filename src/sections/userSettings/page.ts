@@ -21,6 +21,7 @@ class UserSettings extends Component {
       values: mockUserSettings,
       validation: userSettingsValidationMap,
       onSubmit: handleFormSubmit,
+      validateOnSubmit: true,
     });
 
     super('div', {

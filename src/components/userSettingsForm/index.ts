@@ -7,7 +7,7 @@ import SubmitButton from '../submitButton';
 import '../../styles/settings.scss';
 
 const template = `
-form.settings-form#user-settings
+form.settings-form#user-settings(novalidate="")
   div.avatar
 
   email-input(data-component-id=emailInput.id)

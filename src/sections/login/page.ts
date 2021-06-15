@@ -46,6 +46,7 @@ class LoginPage extends Component {
       passwordInput,
       submitButton,
       onSubmit: handleFormSubmit,
+      validateOnSubmit: true,
     });
   }
 

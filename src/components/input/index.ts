@@ -1,7 +1,7 @@
 // @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
-import { ComponentProps } from '../../types';
+import { InputProps, ValidationOptions } from '../../types';
 import './index.scss';
 
 const template = `
@@ -11,7 +11,9 @@ label(class=className)= label
 `;
 
 class Input extends Component {
-  constructor(props: ComponentProps) {
+  protected readonly props: InputProps;
+
+  constructor(props: InputProps) {
     super(
       'label',
       {
@@ -49,14 +51,38 @@ class Input extends Component {
   }
 
   handleBlur(): void {
-    const { value } = this.eventTarget as HTMLInputElement;
-    const pattern = this.props.pattern as RegExp;
+    this.validate();
+  }
 
-    if (pattern.test(value) || !value) {
+  validate(options: ValidationOptions = {}): void {
+    const { pattern } = this.props;
+
+    if (!pattern) {
+      return;
+    }
+
+    const { triggerOnEmpty } = options;
+    const isValid = pattern.test(this.value);
+    const isEmpty = !this.value;
+
+    if (isEmpty && triggerOnEmpty) {
+      this.showError();
+      return;
+    }
+
+    if (isEmpty && !triggerOnEmpty) {
       this.hideError();
-    } else {
+      return;
+    }
+
+    if (!isValid) {
       this.showError();
     }
+  }
+
+  get value(): string {
+    const { value } = this.eventTarget as HTMLInputElement;
+    return value;
   }
 
   render(): string {

@@ -96,6 +96,7 @@ class SignupPage extends Component {
       passwordConfirmationInput,
       submitButton,
       onSubmit: handleFormSubmit,
+      validateOnSubmit: true,
     });
   }
 
