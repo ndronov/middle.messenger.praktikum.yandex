@@ -1,7 +1,7 @@
 const chatValidationMap = {
   message: {
     pattern: /^(?!.*angular).*$/i,
-    error: 'angular - запрещённое слово',
+    error: 'Введите сообщение ("angular" - запрещённое слово)',
   },
 };
 
