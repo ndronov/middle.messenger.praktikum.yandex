@@ -6,7 +6,8 @@
     "prebuild": "rimraf build/*",
     "build": "parcel build ./src/index.html --no-scope-hoist --dist-dir build",
     "dev": "parcel serve ./src/index.html --open --dist-dir .parcel-serve",
-    "start": "npm run build && node server",
+    "prestart": "rimraf build/*",
+    "start": "parcel build ./src/index.html --no-scope-hoist --dist-dir build && node server",
     "server": "node server",
     "lint": "eslint --ext .ts src",
     "stylelint": "stylelint src/**/*.scss"
