@@ -8,7 +8,7 @@ const template = `
 div.error-page
   span.code= meta.code
   span.label= meta.label
-  a.link(href="/sections/chatList/index.html") Назад к чатам
+  a.link(href="/pages/chatList/index.html") Назад к чатам
 `;
 
 interface ErrorMeta extends ComponentProps {
