@@ -34,3 +34,6 @@
 - [Parcel](https://parceljs.org/)
 - [Pug](https://pugjs.org/)
 - [Sass](https://sass-lang.com/)
+
+## Pull request второго спринта
+[Ссылка](https://github.com/ndronov/middle.messenger.praktikum.yandex/pull/3)
