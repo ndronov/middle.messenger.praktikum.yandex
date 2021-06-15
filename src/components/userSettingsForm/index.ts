@@ -4,7 +4,7 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import '../../styles/settings.scss';
+import './index.scss';
 
 const template = `
 form.settings-form#user-settings(novalidate="")

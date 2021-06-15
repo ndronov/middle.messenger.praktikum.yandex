@@ -4,7 +4,7 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import '../../styles/settings.scss';
+import './index.scss';
 
 const template = `
 div.modal-backdrop
@@ -29,7 +29,7 @@ class AvatarForm extends Component {
       accept: 'image/*',
       label: 'Выбрать файл на компьютере',
       inputName: 'avatar',
-      className: 'label',
+      className: 'avatar-field',
     });
 
     super(
