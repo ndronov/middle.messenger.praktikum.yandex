@@ -4,7 +4,7 @@
   "description": "Messenger application",
   "scripts": {
     "prebuild": "rimraf build/*",
-    "build": "parcel build ./src/index.html --dist-dir build",
+    "build": "parcel build ./src/index.html --no-scope-hoist --dist-dir build",
     "dev": "parcel serve ./src/index.html --open --dist-dir .parcel-serve",
     "start": "npm run build && node server",
     "server": "node server",
