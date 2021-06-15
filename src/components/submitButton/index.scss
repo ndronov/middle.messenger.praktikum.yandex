@@ -1,11 +1,12 @@
 @import '../../styles/colors';
+@import '../../styles/font';
 
 .submit-button {
   min-width: 280px;
   min-height: 37px;
   color: $color_white;
   font-size: 13px;
-  font-family: 'Inter', sans-serif;
+  font-family: $font;
   line-height: 13px;
   background-color: $color_blue;
   border-radius: 8px;
