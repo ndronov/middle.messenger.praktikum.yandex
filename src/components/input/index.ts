@@ -7,7 +7,7 @@ import './index.scss';
 const template = `
 label(class=className)= label
   input.input(type=type, name=inputName, placeholder=placeholder, value=value, accept=accept)
-  span.error= error
+  span(class = "error error_hidden")= error
 `;
 
 class Input extends Component {
@@ -39,11 +39,11 @@ class Input extends Component {
   }
 
   showError(): void {
-    this.errorElement.style.display = 'block';
+    this.errorElement.classList.remove('error_hidden');
   }
 
   hideError(): void {
-    this.errorElement.style.display = 'none';
+    this.errorElement.classList.add('error_hidden');
   }
 
   handleFocus(): void {
@@ -62,7 +62,6 @@ class Input extends Component {
     }
 
     const { triggerOnEmpty } = options;
-    const isValid = pattern.test(this.value);
     const isEmpty = !this.value;
 
     if (isEmpty && triggerOnEmpty) {
@@ -74,6 +73,8 @@ class Input extends Component {
       this.hideError();
       return;
     }
+
+    const isValid = pattern.test(this.value);
 
     if (!isValid) {
       this.showError();

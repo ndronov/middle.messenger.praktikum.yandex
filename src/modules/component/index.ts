@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
+import { ComponentProps, ValidationOptions } from '../../types';
 import EventBus from '../eventBus';
 import htmlToDOM from './htmlToDOM';
 import renderElement from './renderElement';
 import equal from './equal';
 import getEventNameByHandlerPropName from './getEventNameByHandlerPropName';
-import { ComponentProps, ValidationOptions } from '../../types';
 
 const eventHandlerPropNames = ['onSubmit'];
 

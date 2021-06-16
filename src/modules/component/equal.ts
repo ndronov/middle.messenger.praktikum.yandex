@@ -11,15 +11,14 @@ const equal = (a: unknown, b: unknown): boolean => {
     return a === b;
   }
 
-  // @ts-ignore
-  if (a.prototype !== b.prototype) {
-    return false;
+  if (typeof a === 'function' && typeof b === 'function') {
+    if (a.prototype !== b.prototype) {
+      return false;
+    }
   }
 
-  // @ts-ignore
-  const keysA = Object.keys(a);
-  // @ts-ignore
-  const keysB = Object.keys(b);
+  const keysA = Object.keys(a as Record<string, unknown>); // using Record instead object
+  const keysB = Object.keys(a as Record<string, unknown>); // see https://github.com/microsoft/TypeScript/issues/21732
 
   if (keysA.length !== keysB.length) {
     return false;

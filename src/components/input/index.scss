@@ -1,9 +1,12 @@
 @import '../../styles/colors';
 
 .error {
-  display: none;
   margin-top: 8px;
   color: $color_red;
   font-size: 8px;
   line-height: 8px;
+}
+
+.error_hidden {
+  display: none;
 }
