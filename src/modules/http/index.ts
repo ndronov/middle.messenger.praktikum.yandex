@@ -62,7 +62,11 @@ class HTTP {
       });
 
       xhr.onload = () => {
-        resolve(xhr);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr.response);
+        } else {
+          reject(new Error(`${xhr.status}: ${xhr.statusText}`));
+        }
       };
 
       xhr.timeout = timeout;
