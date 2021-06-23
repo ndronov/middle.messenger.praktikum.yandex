@@ -1,0 +1,22 @@
+@import '../../styles/colors';
+@import '../../styles/settings';
+
+.links {
+  display: flex;
+  flex-flow: column;
+  width: 510px;
+  margin-top: 60px;
+}
+
+.link {
+  color: $color_blue;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 32px;
+  border-bottom: 1px solid $color_grey4;
+}
+
+.exit-link {
+  color: $color_red;
+  border-bottom: none;
+}

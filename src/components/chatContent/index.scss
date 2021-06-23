@@ -1,0 +1,64 @@
+@import '../../styles/colors';
+
+.chat-content {
+  display: flex;
+  flex: 1;
+  flex-flow: column;
+  align-items: flex-start;
+
+  .date {
+    align-self: center;
+    margin: 48px 0 30px 0;
+  }
+
+  .message {
+    margin-bottom: 10px;
+  }
+
+  .text-message {
+    max-width: 402px;
+    padding: 11px;
+    color: $color_black;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    background-color: $color_grey2;
+    border-radius: 5px;
+  }
+
+  .text-message_own {
+    align-self: flex-end;
+    background-color: $color_light_blue;
+  }
+
+  .image-message {
+    position: relative;
+  }
+
+  .image-message_own {
+    align-self: flex-end;
+  }
+
+  .image-message-time {
+    position: absolute;
+    right: 11px;
+    bottom: 11px;
+    padding: 2px 7px;
+    color: $color_white;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 9px;
+    background: $color_grey5;
+    border-radius: 30px;
+  }
+
+  .text-message-time {
+    float: right;
+    margin-top: 10px;
+    margin-left: 10px;
+    color: $color_grey5;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 9px;
+  }
+}

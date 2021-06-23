@@ -1,0 +1,36 @@
+@import '../../styles/colors';
+
+.message-sending-form {
+  display: flex;
+  height: 70px;
+  padding: 11px 0;
+  border-top: 1px solid $color_grey4;
+
+  .message-input {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+
+    &::placeholder {
+      color: $color_grey5;
+    }
+
+    .input {
+      flex-shrink: 0;
+      height: 32px;
+      padding: 0 20px;
+      background-color: $color_grey3;
+      border-radius: 16px;
+    }
+  }
+
+  .message-sending-button {
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+    margin-left: 10px;
+    color: $color_white;
+    background-color: $color_blue;
+    border-radius: 50%;
+  }
+}

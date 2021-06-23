@@ -1,0 +1,70 @@
+@import '../../styles/colors';
+
+.chats {
+  overflow: scroll;
+
+  .chat {
+    display: flex;
+    align-items: stretch;
+    height: 70px;
+    padding: 12px 0;
+    border-top: 1px solid $color_grey4;
+
+    .content {
+      display: flex;
+      flex: 1;
+      flex-flow: column;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+    }
+
+    .name {
+      margin-bottom: 4px;
+      color: $color_black;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 13px;
+    }
+
+    .message {
+      color: $color_grey5;
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .additional-content {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+    }
+
+    .time {
+      align-self: flex-end;
+      color: $color_grey5;
+      font-size: 9px;
+      line-height: 13px;
+    }
+
+    .notifications-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      color: $color_white;
+      font-size: 11px;
+      line-height: 12px;
+      background: $color_blue;
+      border-radius: 50%;
+    }
+  }
+}
+
+.avatar {
+  align-self: stretch;
+  margin-right: 10px;
+  background: $color_grey3;
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
