@@ -38,5 +38,5 @@
 - [Sass](https://sass-lang.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 
-## Pull request второго спринта
-[Ссылка](https://github.com/ndronov/middle.messenger.praktikum.yandex/pull/3)
+## Pull request третьего спринта
+[Ссылка](https://github.com/ndronov/middle.messenger.praktikum.yandex/pull/4)
