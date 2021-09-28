@@ -19,6 +19,10 @@ interface Meta {
 type ChildrenType = Record<string, Component>;
 type InnerHandlers = Record<string, EventListener>;
 
+export interface ComponentConstructor {
+  new (): Component;
+}
+
 abstract class Component {
   static EVENTS = {
     INIT: 'init',

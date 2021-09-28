@@ -1,10 +1,5 @@
-import Component from '../component';
+import Component, { ComponentConstructor } from '../component';
 
-interface ComponentConstructor {
-  new (): Component;
-}
-
-// @ts-ignore
 class Route {
   private pathname: string;
 
@@ -18,24 +13,24 @@ class Route {
     this.block = null;
   }
 
-  navigate(pathname: string) {
+  navigate(pathname: string): void {
     if (this.match(pathname)) {
       this.pathname = pathname;
       this.render();
     }
   }
 
-  leave() {
+  leave(): void {
     if (this.block) {
       this.block.hide();
     }
   }
 
-  match(pathname: string) {
+  match(pathname: string): boolean {
     return pathname === this.pathname;
   }
 
-  render() {
+  render(): void {
     if (!this.block) {
       const Block = this.blockClass;
       this.block = new Block();
@@ -46,3 +41,5 @@ class Route {
     this.block.show();
   }
 }
+
+export default Route;
