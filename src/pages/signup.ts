@@ -1,10 +1,10 @@
 // @ts-ignore
 import pug from 'pug';
-import Component from '../../modules/component';
-import SubmitButton from '../../components/submitButton';
-import Input from '../../components/input';
-import validation from '../../validation/userSettingsValidationMap';
-import handleFormSubmit from '../../utils/handleFormSubmit';
+import Component from '../modules/component';
+import SubmitButton from '../components/submitButton';
+import Input from '../components/input';
+import validation from '../validation/userSettingsValidationMap';
+import handleFormSubmit from '../utils/handleFormSubmit';
 
 const template = `
 form.auth-form(novalidate="")
@@ -20,11 +20,11 @@ form.auth-form(novalidate="")
   div.gap
 
   submit-button(data-component-id=submitButton.id)
-  a.auth-mode-switch-link(href="../login/index.html") Войти
+  a.auth-mode-switch-link(href="/") Войти
 `;
 
 class SignupPage extends Component {
-  constructor(root: string) {
+  constructor() {
     const emailInput = new Input({
       label: 'Почта',
       type: 'text',
@@ -86,7 +86,7 @@ class SignupPage extends Component {
     });
 
     super('form', {
-      root,
+      hasFlow: true,
       emailInput,
       loginInput,
       firstNameInput,

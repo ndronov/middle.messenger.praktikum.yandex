@@ -1,4 +1,6 @@
 import { ComponentConstructor } from '../component';
+import { ComponentProps } from '../../types';
+
 import Route from './route';
 
 class Router {
@@ -10,7 +12,11 @@ class Router {
 
   private currentRoute: Route | null;
 
-  constructor() {
+  private readonly rootQuery: string;
+
+  private readonly rootPath: string = '/';
+
+  constructor(rootQuery: string) {
     if (Router.instance) {
       return Router.instance;
     }
@@ -18,12 +24,13 @@ class Router {
     this.routes = [];
     this.history = window.history;
     this.currentRoute = null;
+    this.rootQuery = rootQuery;
 
     Router.instance = this;
   }
 
-  use(pathname: string, block: ComponentConstructor): Router {
-    const route = new Route(pathname, block);
+  use(pathname: string, block: ComponentConstructor, props?: ComponentProps): Router {
+    const route = new Route(pathname, block, { rootQuery: this.rootQuery, ...props });
 
     this.routes.push(route);
 
@@ -41,7 +48,9 @@ class Router {
 
   private onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
+
     if (!route) {
+      this.go(this.rootPath);
       return;
     }
 
@@ -66,14 +75,8 @@ class Router {
     this.history.forward();
   }
 
-  getRoute(pathname: string): Route {
-    const routeByPathname = this.routes.find((route) => route.match(pathname));
-
-    if (!routeByPathname) {
-      throw new Error(`Не найден маршрут для "${pathname}"`);
-    }
-
-    return routeByPathname;
+  getRoute(pathname: string): Route | null {
+    return this.routes.find((route) => route.match(pathname)) ?? null;
   }
 }
 

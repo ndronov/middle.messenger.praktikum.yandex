@@ -4,11 +4,10 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import './index.scss';
 
 const template = `
 form.settings-form#user-settings(novalidate="")
-  div.avatar
+  div.settings-form-avatar
 
   email-input(data-component-id=emailInput.id)
   login-input(data-component-id=loginInput.id)

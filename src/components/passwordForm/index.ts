@@ -4,11 +4,10 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import '../../styles/settings.scss';
 
 const template = `
 form.settings-form#user-settings(novalidate="")
-  div.avatar
+  div.settings-form-avatar
 
   old-password-input(data-component-id=oldPasswordInput.id)
   new-password-input(data-component-id=newPasswordInput.id)

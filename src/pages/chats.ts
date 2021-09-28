@@ -1,26 +1,26 @@
 // @ts-ignore
 import pug from 'pug';
-import Component from '../../modules/component';
-import Chats from '../../components/chats';
-import mockChats from '../../mockData/mockChats';
+import Component from '../modules/component';
+import Chats from '../components/chats';
+import mockChats from '../mockData/mockChats';
 
 const template = `
 div.container
   nav.navigation
-    a(href="../userSettings/index.html").profile-link Профиль &rang;
+    a(href="/settings").profile-link Профиль &rang;
     button.search-button &#128269; Поиск
     chats(data-component-id=chats.id)
   div.active-chat-placeholder Выберите чат, чтобы отправить сообщение
 `;
 
 class ChatList extends Component {
-  constructor(root: string) {
+  constructor() {
     const chats = new Chats({
       chats: mockChats,
     });
 
     super('div', {
-      root,
+      hasFlow: true,
       chats,
     });
   }

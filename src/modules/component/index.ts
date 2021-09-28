@@ -13,6 +13,7 @@ interface Meta {
   props: ComponentProps;
   componentId: string;
   root?: string;
+  hasFlow: boolean;
   eventTargetSelector?: string;
 }
 
@@ -20,7 +21,7 @@ type ChildrenType = Record<string, Component>;
 type InnerHandlers = Record<string, EventListener>;
 
 export interface ComponentConstructor {
-  new (): Component;
+  new (props?: ComponentProps): Component;
 }
 
 abstract class Component {
@@ -50,6 +51,7 @@ abstract class Component {
   protected constructor(tagName = 'div', initialProps: ComponentProps = {}) {
     const {
       root,
+      hasFlow,
       template,
       eventTargetSelector,
       validateOnSubmit,
@@ -60,6 +62,7 @@ abstract class Component {
       tagName,
       props,
       root: root as string,
+      hasFlow: Boolean(hasFlow),
       eventTargetSelector: eventTargetSelector as string,
       componentId: uuidv4(),
     };
@@ -74,7 +77,7 @@ abstract class Component {
       this.setInnerHandler('submit', this.validateChildComponents.bind(this));
     }
 
-    if (root) {
+    if (root || hasFlow) {
       this.eventBus.emit(Component.EVENTS.INIT);
     }
   }
@@ -148,12 +151,14 @@ abstract class Component {
     Object.assign(this.props, nextProps);
   };
 
-  renderToRoot(): void {
-    if (!this.meta.root) {
+  renderToRoot(selector?: string): void {
+    const rootSelector = selector || this.meta.root;
+
+    if (!rootSelector) {
       throw new Error('Для компонента не указан корневой элемент');
     }
 
-    const rootElement = document.querySelector(this.meta.root);
+    const rootElement = document.querySelector(rootSelector);
 
     if (!rootElement) {
       throw new Error('Для компонента не найден корневой элемент');
@@ -294,7 +299,7 @@ abstract class Component {
   }
 
   show(): void {
-    this.content.style.display = 'block';
+    this.content.style.removeProperty('display');
   }
 
   hide(): void {

@@ -1,4 +1,9 @@
 import Component, { ComponentConstructor } from '../component';
+import { ComponentProps } from '../../types';
+
+interface RouteProps extends ComponentProps {
+  rootQuery: string;
+}
 
 class Route {
   private pathname: string;
@@ -7,10 +12,13 @@ class Route {
 
   private block: Component | null;
 
-  constructor(pathname: string, view: ComponentConstructor) {
+  private readonly props: RouteProps;
+
+  constructor(pathname: string, view: ComponentConstructor, props: RouteProps) {
     this.pathname = pathname;
     this.blockClass = view;
     this.block = null;
+    this.props = props;
   }
 
   navigate(pathname: string): void {
@@ -33,9 +41,10 @@ class Route {
   render(): void {
     if (!this.block) {
       const Block = this.blockClass;
-      this.block = new Block();
+      const { rootQuery, ...restProps } = this.props;
+      this.block = new Block(restProps);
 
-      this.block.renderToRoot();
+      this.block.renderToRoot(rootQuery);
     }
 
     this.block.show();

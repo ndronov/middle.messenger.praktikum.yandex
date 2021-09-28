@@ -1,18 +1,18 @@
 // @ts-ignore
 import pug from 'pug';
-import Component from '../../modules/component';
-import Chats from '../../components/chats';
-import ChatContent from '../../components/chatContent';
-import MessageSendingForm from '../../components/messageSendingForm';
-import mockChats from '../../mockData/mockChats';
-import mockActiveChat from '../../mockData/mockActiveChat';
-import handleFormSubmit from '../../utils/handleFormSubmit';
-import validation from '../../validation/chatValidationMap';
+import Component from '../modules/component';
+import Chats from '../components/chats';
+import ChatContent from '../components/chatContent';
+import MessageSendingForm from '../components/messageSendingForm';
+import mockChats from '../mockData/mockChats';
+import mockActiveChat from '../mockData/mockActiveChat';
+import handleFormSubmit from '../utils/handleFormSubmit';
+import validation from '../validation/chatValidationMap';
 
 const template = `
 div.container
   nav.navigation
-    a(href="../userSettings/index.html").profile-link Профиль &rang;
+    a(href="/settings").profile-link Профиль &rang;
     button.search-button &#128269; Поиск
     chats(data-component-id=chats.id)
   div.active-chat
@@ -24,7 +24,7 @@ div.container
 `;
 
 class ActiveChat extends Component {
-  constructor(root: string) {
+  constructor() {
     const chats = new Chats({
       chats: mockChats,
     });
@@ -40,7 +40,7 @@ class ActiveChat extends Component {
     });
 
     super('div', {
-      root,
+      hasFlow: true,
       chats,
       chatContent,
       messageSendingForm,

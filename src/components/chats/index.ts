@@ -2,7 +2,6 @@
 import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
-import './index.scss';
 
 const template = `
 div.chats

@@ -1,21 +1,21 @@
 // @ts-ignore
 import pug from 'pug';
-import Component from '../../modules/component';
-import PasswordForm from '../../components/passwordForm';
-import handleFormSubmit from '../../utils/handleFormSubmit';
-import userSettingsValidationMap from '../../validation/userSettingsValidationMap';
-import mockPassword from '../../mockData/mockPassword';
+import Component from '../modules/component';
+import PasswordForm from '../components/passwordForm';
+import handleFormSubmit from '../utils/handleFormSubmit';
+import userSettingsValidationMap from '../validation/userSettingsValidationMap';
+import mockPassword from '../mockData/mockPassword';
 
 const template = `
 div.container
   aside.aside-panel
-    button.back-button(type="button") &#8592;
+    a.back-button(href="/") &#8592;
 
   user-settings-form(data-component-id=passwordForm.id)
 `;
 
 class PasswordChange extends Component {
-  constructor(root: string) {
+  constructor() {
     const passwordForm = new PasswordForm({
       editMode: true,
       values: mockPassword,
@@ -25,7 +25,7 @@ class PasswordChange extends Component {
     });
 
     super('div', {
-      root,
+      hasFlow: true,
       passwordForm,
     });
   }

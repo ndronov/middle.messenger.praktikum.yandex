@@ -1,21 +1,21 @@
 // @ts-ignore
 import pug from 'pug';
-import Component from '../../modules/component';
-import UserSettingsForm from '../../components/userSettingsForm';
-import handleFormSubmit from '../../utils/handleFormSubmit';
-import userSettingsValidationMap from '../../validation/userSettingsValidationMap';
-import mockUserSettings from '../../mockData/mockUserSettings';
+import Component from '../modules/component';
+import UserSettingsForm from '../components/userSettingsForm';
+import handleFormSubmit from '../utils/handleFormSubmit';
+import userSettingsValidationMap from '../validation/userSettingsValidationMap';
+import mockUserSettings from '../mockData/mockUserSettings';
 
 const template = `
 div.container
   aside.aside-panel
-    button.back-button(type="button") &#8592;
+    a.back-button(href="/") &#8592;
 
   user-settings-form(data-component-id=userSettingsForm.id)
 `;
 
 class UserSettings extends Component {
-  constructor(root: string) {
+  constructor() {
     const userSettingsForm = new UserSettingsForm({
       editMode: true,
       values: mockUserSettings,
@@ -25,7 +25,7 @@ class UserSettings extends Component {
     });
 
     super('div', {
-      root,
+      hasFlow: true,
       userSettingsForm,
     });
   }
