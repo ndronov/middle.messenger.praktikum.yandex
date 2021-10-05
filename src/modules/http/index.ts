@@ -7,9 +7,11 @@ enum Method {
   DELETE = 'DELETE',
 }
 
+export type HTTPRequestBody = Record<string, unknown>;
+
 interface Options {
   method?: Method
-  data?: Record<string, unknown>,
+  data?: HTTPRequestBody | unknown,
   headers?: Record<string, string>,
   timeout?: number,
 }
@@ -65,7 +67,7 @@ export default class HTTP {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const isGet = method === Method.GET;
-      const requestUrl = isGet ? url + queryStringify(data) : url;
+      const requestUrl = isGet ? url + queryStringify(data as HTTPRequestBody) : url;
 
       xhr.open(method, requestUrl);
 
