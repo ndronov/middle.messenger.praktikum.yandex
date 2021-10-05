@@ -18,31 +18,43 @@ const defaultMethod = Method.GET;
 const defaultTimeout = 5000;
 
 class HTTP {
-  get = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+  static BASE_URL = 'https://ya-praktikum.tech/api/v2';
+
+  protected endpoint: string;
+
+  constructor(endpoint: string) {
+    this.endpoint = `${HTTP.BASE_URL}${endpoint}`;
+  }
+
+  public get<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.GET },
-    ));
+    );
+  }
 
-  post = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+  public post<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.POST },
-    ));
+    );
+  }
 
-  put = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+  public put<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.PUT },
-    ));
+    );
+  }
 
-  delete = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+  public delete<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.DELETE },
-    ));
+    );
+  }
 
-  request = (url: string, options: Options): Promise<XMLHttpRequest> => {
+  private static request<Response>(url: string, options: Options): Promise<Response> {
     const {
       method = defaultMethod,
       data,
@@ -80,7 +92,7 @@ class HTTP {
 
       xhr.send(body);
     });
-  };
+  }
 }
 
 export default HTTP;
