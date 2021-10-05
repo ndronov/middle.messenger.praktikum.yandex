@@ -17,7 +17,7 @@ interface Options {
 const defaultMethod = Method.GET;
 const defaultTimeout = 5000;
 
-class HTTP {
+export default class HTTP {
   static BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
   protected endpoint: string;
@@ -94,5 +94,3 @@ class HTTP {
     });
   }
 }
-
-export default HTTP;
