@@ -4,7 +4,7 @@ import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
 import validation from '../validation/userSettingsValidationMap';
-import handleFormSubmit from '../utils/handleFormSubmit';
+import getSubmittedFormData from '../utils/getSubmittedFormData';
 
 const template = `
 form.auth-form(novalidate="")
@@ -45,9 +45,21 @@ class LoginPage extends Component {
       loginInput,
       passwordInput,
       submitButton,
-      onSubmit: handleFormSubmit,
       validateOnSubmit: true,
     });
+  }
+
+  componentDidMount() {
+    this.addEventListener('submit', this.handleSubmit.bind(this));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  handleSubmit(e: Event) {
+    e.preventDefault();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // @ts-ignore
+    const data = getSubmittedFormData(e);
+    // TODO handle submit
   }
 
   render(): string {

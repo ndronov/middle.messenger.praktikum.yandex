@@ -212,6 +212,10 @@ abstract class Component {
     });
   }
 
+  protected addEventListener(eventName: string, listener: EventListener): void {
+    this.eventTarget.addEventListener(eventName, listener);
+  }
+
   private flowUnregisterHandlers() {
     this.eventHandlersProps.forEach((handlerPropName) => {
       const eventName = getEventNameByHandlerPropName(handlerPropName);
