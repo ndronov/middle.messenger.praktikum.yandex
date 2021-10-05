@@ -4,7 +4,7 @@ import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
 import validation from '../validation/userSettingsValidationMap';
-import getSubmittedFormData from '../utils/getSubmittedFormData';
+import loginController from '../controllers/loginController';
 
 const template = `
 form.auth-form(novalidate="")
@@ -54,12 +54,10 @@ class LoginPage extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  handleSubmit(e: Event) {
+  async handleSubmit(e: Event): Promise<void> {
     e.preventDefault();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // @ts-ignore
-    const data = getSubmittedFormData(e);
-    // TODO handle submit
+
+    await loginController.login(e);
   }
 
   render(): string {

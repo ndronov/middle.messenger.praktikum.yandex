@@ -3,7 +3,8 @@ interface FormDataType {
 }
 
 const getSubmittedFormData = (e: Event): Record<string, FormDataEntryValue> => {
-  const formData = new FormData(e.target as HTMLFormElement) as FormDataType;
+  const form = e.target as HTMLFormElement;
+  const formData = new FormData(form) as FormDataType;
   const nonEmptyFields: Record<string, FormDataEntryValue> = {};
 
   Array.from(formData.entries()).forEach(([fieldName, fieldValue]) => {
