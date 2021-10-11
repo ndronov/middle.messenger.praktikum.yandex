@@ -1,29 +1,20 @@
-import AuthAPI, { SignInRequest } from '../../api/AuthAPI';
+import authAPI, { SignInRequest } from '../../api/AuthAPI';
 import getSubmittedFormData from '../../utils/getSubmittedFormData';
-import Router from '../../modules/router';
-
-// TODO rework router
-const router = new Router('.app');
-const authAPI = new AuthAPI();
+import handleError from '../../utils/handleError';
+import router from '../../modules/router';
 
 class LoginController {
-  // eslint-disable-next-line class-methods-use-this
-  public async login(e: Event) {
+  public static async login(e: Event): Promise<void> {
     try {
-      const credentials = getSubmittedFormData(e) as unknown as SignInRequest;
-      // TODO надо делать валидацию формы ?
-      // TODO add preloader ?
+      const credentials = getSubmittedFormData<SignInRequest>(e);
 
       await authAPI.signIn(credentials);
 
       router.go('/chats');
-
-      // TODO stop preloader ?
     } catch (error) {
-      // TODO handle error
-      console.log(error);
+      handleError(error);
     }
   }
 }
 
-export default new LoginController();
+export default LoginController;

@@ -3,6 +3,7 @@ import pug from 'pug';
 import Component from '../modules/component';
 import Chats from '../components/chats';
 import mockChats from '../mockData/mockChats';
+import AuthController from '../controllers/authController';
 
 const template = `
 div.container
@@ -23,6 +24,11 @@ class ChatList extends Component {
       hasFlow: true,
       chats,
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async componentDidMount() {
+    await AuthController.checkAuthorization();
   }
 
   render(): string {

@@ -29,7 +29,7 @@ export interface GetUserInfoResponse {
   avatar: string;
 }
 
-export default class AuthAPI extends BaseAPI {
+class AuthAPI extends BaseAPI {
   constructor() {
     super('/auth');
   }
@@ -56,3 +56,5 @@ export default class AuthAPI extends BaseAPI {
 
   delete: undefined;
 }
+
+export default new AuthAPI();

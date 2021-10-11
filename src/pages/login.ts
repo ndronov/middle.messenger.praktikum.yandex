@@ -4,7 +4,7 @@ import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
 import validation from '../validation/userSettingsValidationMap';
-import loginController from '../controllers/loginController';
+import AuthController from '../controllers/AuthController';
 
 const template = `
 form.auth-form(novalidate="")
@@ -49,15 +49,17 @@ class LoginPage extends Component {
     });
   }
 
-  componentDidMount() {
+  async componentDidMount(): Promise<void> {
     this.addEventListener('submit', this.handleSubmit.bind(this));
+
+    await AuthController.checkAuthorization();
   }
 
   // eslint-disable-next-line class-methods-use-this
   async handleSubmit(e: Event): Promise<void> {
     e.preventDefault();
 
-    await loginController.login(e);
+    await AuthController.login(e);
   }
 
   render(): string {

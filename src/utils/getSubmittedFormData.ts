@@ -2,10 +2,12 @@ interface FormDataType {
   entries: () => IterableIterator<[string, FormDataEntryValue]>;
 }
 
-const getSubmittedFormData = (e: Event): Record<string, FormDataEntryValue> => {
+type DefaultFormDataType = Record<string, FormDataEntryValue>;
+
+const getSubmittedFormData = <T = DefaultFormDataType>(e: Event): T => {
   const form = e.target as HTMLFormElement;
   const formData = new FormData(form) as FormDataType;
-  const nonEmptyFields: Record<string, FormDataEntryValue> = {};
+  const nonEmptyFields: DefaultFormDataType = {};
 
   Array.from(formData.entries()).forEach(([fieldName, fieldValue]) => {
     const isEmpty = fieldValue instanceof File ? !fieldValue.size : !fieldValue;
@@ -15,7 +17,7 @@ const getSubmittedFormData = (e: Event): Record<string, FormDataEntryValue> => {
     }
   });
 
-  return nonEmptyFields;
+  return nonEmptyFields as unknown as T;
 };
 
 export default getSubmittedFormData;

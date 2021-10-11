@@ -60,7 +60,9 @@ export default class HTTP {
     const {
       method = defaultMethod,
       data,
-      headers = {},
+      headers = {
+        'content-type': 'application/json; charset=utf-8',
+      },
       timeout = defaultTimeout,
     } = options;
 
@@ -77,7 +79,12 @@ export default class HTTP {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.response);
+          try {
+            const parsedResponse = JSON.parse(xhr.response);
+            resolve(parsedResponse);
+          } catch {
+            resolve(xhr.response);
+          }
         } else {
           reject(new Error(`${xhr.status}: ${xhr.statusText}`));
         }
@@ -87,6 +94,7 @@ export default class HTTP {
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
+      xhr.withCredentials = true;
 
       const body = isGet || !data
         ? null

@@ -4,7 +4,7 @@ import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
 import validation from '../validation/userSettingsValidationMap';
-import handleFormSubmit from '../utils/handleFormSubmit';
+import AuthController from '../controllers/authController';
 
 const template = `
 form.auth-form(novalidate="")
@@ -15,7 +15,6 @@ form.auth-form(novalidate="")
   secondName-input(data-component-id=secondNameInput.id)
   phone-input(data-component-id=phoneInput.id)
   password-input(data-component-id=passwordInput.id)
-  passwordConfirmation-input(data-component-id=passwordConfirmationInput.id)
 
   div.gap
 
@@ -44,7 +43,7 @@ class SignupPage extends Component {
     const firstNameInput = new Input({
       label: 'Имя',
       type: 'text',
-      inputName: 'firstName',
+      inputName: 'first_name',
       className: 'auth-form-field',
       ...validation.name,
     });
@@ -52,7 +51,7 @@ class SignupPage extends Component {
     const secondNameInput = new Input({
       label: 'Фамилия',
       type: 'text',
-      inputName: 'secondName',
+      inputName: 'second_name',
       className: 'auth-form-field',
       ...validation.name,
     });
@@ -73,14 +72,6 @@ class SignupPage extends Component {
       ...validation.password,
     });
 
-    const passwordConfirmationInput = new Input({
-      label: 'Пароль (ещё раз)',
-      type: 'password',
-      inputName: 'passwordConfirmation',
-      className: 'auth-form-field',
-      ...validation.password,
-    });
-
     const submitButton = new SubmitButton({
       label: 'Зарегистрироваться',
     });
@@ -93,11 +84,21 @@ class SignupPage extends Component {
       secondNameInput,
       phoneInput,
       passwordInput,
-      passwordConfirmationInput,
       submitButton,
-      onSubmit: handleFormSubmit,
       validateOnSubmit: true,
     });
+  }
+
+  async componentDidMount(): Promise<void> {
+    this.addEventListener('submit', SignupPage.handleSubmit);
+
+    await AuthController.checkAuthorization();
+  }
+
+  static async handleSubmit(e: Event): Promise<void> {
+    e.preventDefault();
+
+    await AuthController.signUp(e);
   }
 
   render(): string {
