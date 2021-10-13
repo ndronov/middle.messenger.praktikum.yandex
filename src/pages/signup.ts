@@ -92,7 +92,7 @@ class SignupPage extends Component {
   async componentDidMount(): Promise<void> {
     this.addEventListener('submit', SignupPage.handleSubmit);
 
-    await AuthController.checkAuthorization();
+    await AuthController.checkAuthorization({ goAuthRoute: false });
   }
 
   static async handleSubmit(e: Event): Promise<void> {

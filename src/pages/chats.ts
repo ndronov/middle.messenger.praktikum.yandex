@@ -29,8 +29,8 @@ class ChatList extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async componentDidMount() {
-    await AuthController.checkAuthorization();
+  async componentDidMount(): Promise<void> {
+    await AuthController.checkAuthorization({ goDefaultContentRoute: false });
   }
 
   render(): string {

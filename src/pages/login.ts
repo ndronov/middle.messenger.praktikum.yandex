@@ -50,13 +50,12 @@ class LoginPage extends Component {
   }
 
   async componentDidMount(): Promise<void> {
-    this.addEventListener('submit', this.handleSubmit.bind(this));
+    this.addEventListener('submit', LoginPage.handleSubmit);
 
-    await AuthController.checkAuthorization();
+    await AuthController.checkAuthorization({ goAuthRoute: false });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  async handleSubmit(e: Event): Promise<void> {
+  static async handleSubmit(e: Event): Promise<void> {
     e.preventDefault();
 
     await AuthController.login(e);

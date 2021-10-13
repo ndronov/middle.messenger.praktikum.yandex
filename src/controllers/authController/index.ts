@@ -3,14 +3,28 @@ import getSubmittedFormData from '../../utils/getSubmittedFormData';
 import handleError from '../../utils/handleError';
 import router from '../../modules/router';
 
+interface AuthParams {
+  goDefaultContentRoute?: boolean;
+  goAuthRoute?: boolean;
+}
+
+const defaultAuthParams = {
+  goDefaultContentRoute: true,
+  goAuthRoute: true,
+};
+
 class AuthController {
+  static defaultContentRoute = '/chats';
+
+  static authRoute = '/';
+
   public static async login(e: Event): Promise<void> {
     try {
       const credentials = getSubmittedFormData<SignInRequest>(e);
 
       await authAPI.signIn(credentials);
 
-      router.go('/chats');
+      router.go(AuthController.defaultContentRoute);
     } catch (error) {
       handleError(error);
     }
@@ -22,7 +36,7 @@ class AuthController {
 
       await authAPI.signUp(newUserData);
 
-      router.go('/chats');
+      router.go(AuthController.defaultContentRoute);
     } catch (error) {
       handleError(error);
     }
@@ -32,18 +46,25 @@ class AuthController {
     try {
       await authAPI.logout();
 
-      router.go('/');
+      router.go(AuthController.authRoute);
     } catch (error) {
       handleError(error);
     }
   }
 
-  public static async checkAuthorization(): Promise<void> {
+  public static async checkAuthorization(params?: AuthParams): Promise<void> {
+    const { goDefaultContentRoute, goAuthRoute } = { ...defaultAuthParams, ...params };
+
     try {
       await authAPI.read();
-      router.go('/chats');
+
+      if (goDefaultContentRoute) {
+        router.go(AuthController.defaultContentRoute);
+      }
     } catch {
-      router.go('/');
+      if (goAuthRoute) {
+        router.go(AuthController.authRoute);
+      }
     }
   }
 }

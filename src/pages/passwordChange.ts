@@ -5,6 +5,7 @@ import PasswordForm from '../components/passwordForm';
 import handleFormSubmit from '../utils/handleFormSubmit';
 import userSettingsValidationMap from '../validation/userSettingsValidationMap';
 import mockPassword from '../mockData/mockPassword';
+import AuthController from '../controllers/authController';
 
 const template = `
 div.container
@@ -28,6 +29,11 @@ class PasswordChange extends Component {
       hasFlow: true,
       passwordForm,
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async componentDidMount(): Promise<void> {
+    await AuthController.checkAuthorization();
   }
 
   render(): string {

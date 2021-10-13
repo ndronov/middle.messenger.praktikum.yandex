@@ -5,6 +5,7 @@ import UserSettingsForm from '../components/userSettingsForm';
 import AvatarForm from '../components/avatarForm';
 import mockUserSettings from '../mockData/mockUserSettings';
 import handleFormSubmit from '../utils/handleFormSubmit';
+import AuthController from '../controllers/authController';
 
 const template = `
 div.container
@@ -30,6 +31,11 @@ class AvatarChange extends Component {
       userSettingsForm,
       avatarForm,
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async componentDidMount(): Promise<void> {
+    await AuthController.checkAuthorization();
   }
 
   render(): string {

@@ -8,6 +8,7 @@ import mockChats from '../mockData/mockChats';
 import mockActiveChat from '../mockData/mockActiveChat';
 import handleFormSubmit from '../utils/handleFormSubmit';
 import validation from '../validation/chatValidationMap';
+import AuthController from '../controllers/authController';
 
 const template = `
 div.container
@@ -47,6 +48,11 @@ class ActiveChat extends Component {
       chatContent,
       messageSendingForm,
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async componentDidMount(): Promise<void> {
+    await AuthController.checkAuthorization();
   }
 
   render(): string {
