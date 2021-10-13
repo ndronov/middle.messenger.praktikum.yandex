@@ -1,4 +1,5 @@
 import LoginPage from './pages/login';
+import LogoutPage from './pages/logout';
 import SignupPage from './pages/signup';
 import UserSettings from './pages/userSettings';
 import ChatList from './pages/chats';
@@ -10,6 +11,7 @@ import router from './modules/router';
 
 router
   .use('/', LoginPage)
+  .use('/sign-out', LogoutPage)
   .use('/sign-up', SignupPage)
   .use('/chats', ChatList)
   .use('/active-chat', ActiveChat)

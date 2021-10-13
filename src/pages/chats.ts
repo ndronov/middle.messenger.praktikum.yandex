@@ -8,7 +8,9 @@ import AuthController from '../controllers/authController';
 const template = `
 div.container
   nav.navigation
-    a(href="/settings").profile-link Профиль &rang;
+    div.links
+      a(href="/sign-out").link &#128682; Выход
+      a(href="/settings").link Профиль &rang;
     button.search-button &#128269; Поиск
     chats(data-component-id=chats.id)
   div.active-chat-placeholder Выберите чат, чтобы отправить сообщение
