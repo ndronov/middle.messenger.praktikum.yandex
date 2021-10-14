@@ -60,7 +60,7 @@ class LoginPage extends Component {
   async componentDidMount(): Promise<void> {
     this.addEventListener('submit', LoginPage.handleSubmit);
 
-    await AuthController.checkAuthorization({ goAuthRoute: false });
+    await AuthController.checkAuthorization({ goDefaultContentRoute: true, goAuthRoute: false });
   }
 
   static async handleSubmit(e: Event): Promise<void> {

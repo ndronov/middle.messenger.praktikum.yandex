@@ -29,9 +29,7 @@ class Route {
   }
 
   leave(): void {
-    if (this.block) {
-      this.block.hide();
-    }
+    this.block?.clearRoot();
   }
 
   match(pathname: string): boolean {
@@ -39,15 +37,17 @@ class Route {
   }
 
   render(): void {
-    if (!this.block) {
-      const Block = this.blockClass;
-      const { rootQuery, ...restProps } = this.props;
-      this.block = new Block(restProps);
+    if (this.block) {
+      this.block.renderToRoot();
 
-      this.block.renderToRoot(rootQuery);
+      return;
     }
 
-    this.block.show();
+    const Block = this.blockClass;
+    const { rootQuery, ...restProps } = this.props;
+    this.block = new Block(restProps);
+
+    this.block.mountToRoot(rootQuery);
   }
 }
 

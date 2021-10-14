@@ -12,7 +12,7 @@ interface Meta {
   tagName: string;
   props: ComponentProps;
   componentId: string;
-  root?: string;
+  rootElement?: Element;
   hasFlow: boolean;
   eventTargetSelector?: string;
 }
@@ -29,11 +29,13 @@ abstract class Component {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
+    FLOW_CWU: 'flow:component-did-unmount',
     FLOW_RENDER: 'flow:render',
     FLOW_REGISTER_HANDLERS: 'flow:register-handlers',
     FLOW_UNREGISTER_HANDLERS: 'flow:unregister-handlers',
     FLOW_REGISTER_INNER_HANDLERS: 'flow:register-inner-handlers',
     FLOW_UNREGISTER_INNER_HANDLERS: 'flow:unregister-inner-handlers',
+    CLEAR: 'clear',
   };
 
   private element: HTMLElement;
@@ -44,13 +46,12 @@ abstract class Component {
 
   private readonly eventBus: EventBus;
 
-  private readonly children: ChildrenType = {};
+  private children: ChildrenType = {};
 
   private readonly innerHandlers: InnerHandlers = {};
 
   protected constructor(tagName = 'div', initialProps: ComponentProps = {}) {
     const {
-      root,
       hasFlow,
       template,
       eventTargetSelector,
@@ -61,7 +62,6 @@ abstract class Component {
     this.meta = {
       tagName,
       props,
-      root: root as string,
       hasFlow: Boolean(hasFlow),
       eventTargetSelector: eventTargetSelector as string,
       componentId: uuidv4(),
@@ -77,7 +77,7 @@ abstract class Component {
       this.setInnerHandler('submit', this.validateChildComponents.bind(this));
     }
 
-    if (root || hasFlow) {
+    if (hasFlow) {
       this.eventBus.emit(Component.EVENTS.INIT);
     }
   }
@@ -100,6 +100,8 @@ abstract class Component {
       Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS,
       this.flowUnregisterInnerHandlers.bind(this),
     );
+    this.eventBus.on(Component.EVENTS.FLOW_CWU, this.flowComponentWillUnmount.bind(this));
+    this.eventBus.on(Component.EVENTS.CLEAR, this.flowClearEventBus.bind(this));
   }
 
   private createResources(placeholderFromParent?: Element) {
@@ -118,8 +120,8 @@ abstract class Component {
     this.eventBus.emit(Component.EVENTS.FLOW_CDM);
   }
 
-  private flowComponentDidMount(): void {
-    this.componentDidMount();
+  private async flowComponentDidMount(): Promise<void> {
+    await this.componentDidMount();
     this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
   }
 
@@ -138,6 +140,34 @@ abstract class Component {
     }
   }
 
+  private flowComponentWillUnmount(): void {
+    this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_HANDLERS);
+    this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS);
+    this.eventBus.emit(Component.EVENTS.CLEAR);
+  }
+
+  private flowClearEventBus(): void {
+    this.eventBus.clear();
+  }
+
+  protected removeFromParent(): void {
+    this.removeChildComponents();
+
+    this.eventBus.emit(Component.EVENTS.FLOW_CWU);
+  }
+
+  clearRoot(): void {
+    if (!this.meta.rootElement) {
+      throw new Error('Для компонента не найден корневой элемент');
+    }
+
+    this.meta.rootElement.innerHTML = '';
+  }
+
+  private createRootElement(selector: string): void {
+    this.meta.rootElement = document.querySelector(selector) ?? undefined;
+  }
+
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(oldProps: ComponentProps, newProps: ComponentProps): boolean {
     return !equal(oldProps, newProps);
@@ -151,21 +181,17 @@ abstract class Component {
     Object.assign(this.props, nextProps);
   };
 
-  renderToRoot(selector?: string): void {
-    const rootSelector = selector || this.meta.root;
+  mountToRoot(selector: string): void {
+    this.createRootElement(selector);
+    this.renderToRoot();
+  }
 
-    if (!rootSelector) {
-      throw new Error('Для компонента не указан корневой элемент');
-    }
-
-    const rootElement = document.querySelector(rootSelector);
-
-    if (!rootElement) {
+  renderToRoot(): void {
+    if (!this.meta.rootElement) {
       throw new Error('Для компонента не найден корневой элемент');
     }
 
-    rootElement.innerHTML = '';
-    rootElement.appendChild(this.content);
+    this.meta.rootElement.appendChild(this.content);
   }
 
   private flowRender(): void {
@@ -225,7 +251,7 @@ abstract class Component {
     });
   }
 
-  setInnerHandler(event: string, handler: EventListener): void {
+  protected setInnerHandler(event: string, handler: EventListener): void {
     this.innerHandlers[event] = handler;
   }
 
@@ -302,14 +328,6 @@ abstract class Component {
     return document.createElement(tagName);
   }
 
-  show(): void {
-    this.content.style.removeProperty('display');
-  }
-
-  hide(): void {
-    this.content.style.display = 'none';
-  }
-
   get hasValidation(): boolean {
     return !!this.props.pattern && !!this.props.error;
   }
@@ -336,6 +354,15 @@ abstract class Component {
         this.children[prop.id] = prop;
       }
     });
+  }
+
+  removeChildComponents(): void {
+    Object.keys(this.children)
+      .forEach((id) => {
+        this.children[id].removeFromParent();
+        this.children[id].element.remove();
+        delete this.children[id];
+      });
   }
 }
 

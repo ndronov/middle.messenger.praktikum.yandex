@@ -30,13 +30,13 @@ div.container
 class ActiveChat extends Component {
   constructor() {
     const logoutLink = new Link({
-      label: '< Выход!',
+      label: '< Выход',
       href: '/sign-out',
       className: 'link',
     });
 
     const profileLink = new Link({
-      label: '!Профиль >',
+      label: 'Профиль >',
       href: '/settings',
       className: 'link',
     });

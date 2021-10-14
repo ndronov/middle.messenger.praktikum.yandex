@@ -32,6 +32,10 @@ class EventBus {
       listener(...args);
     });
   }
+
+  clear(): void {
+    this.listeners = {};
+  }
 }
 
 export default EventBus;
