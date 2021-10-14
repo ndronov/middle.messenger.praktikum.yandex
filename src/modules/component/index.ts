@@ -173,12 +173,14 @@ abstract class Component {
     return !equal(oldProps, newProps);
   }
 
-  setProps = (nextProps: ComponentProps): void => {
+  setProps = (nextProps: ComponentProps): Component => {
     if (!nextProps) {
-      return;
+      return this;
     }
 
-    Object.assign(this.props, nextProps);
+    // TODO make setProps queue RAF ?
+    setTimeout(() => Object.assign(this.props, nextProps), 200);
+    return this;
   };
 
   mountToRoot(selector: string): void {

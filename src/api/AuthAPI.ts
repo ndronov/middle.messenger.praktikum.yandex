@@ -1,4 +1,5 @@
 import BaseAPI from './BaseAPI';
+import { UserProfile } from '../models';
 
 export interface SignUpRequest {
   first_name: string;
@@ -18,17 +19,6 @@ export interface SignInRequest {
   password: string;
 }
 
-export interface GetUserInfoResponse {
-  id: string;
-  first_name: string;
-  second_name: string;
-  display_name: string;
-  login: string;
-  email: string;
-  phone: string;
-  avatar: string;
-}
-
 class AuthAPI extends BaseAPI {
   constructor() {
     super('/auth');
@@ -46,7 +36,7 @@ class AuthAPI extends BaseAPI {
     return this.http.post<void>('/logout');
   }
 
-  read<T = GetUserInfoResponse>(): Promise<T> {
+  read<T = UserProfile>(): Promise<T> {
     return this.http.get<T>('/user');
   }
 

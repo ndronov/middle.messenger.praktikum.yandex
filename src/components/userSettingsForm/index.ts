@@ -4,6 +4,7 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
+import store from '../../store';
 
 const template = `
 form.settings-form#user-settings(novalidate="")
@@ -25,6 +26,7 @@ form.settings-form#user-settings(novalidate="")
       a.link.exit-link(href="#") Выйти
 `;
 
+// TODO remove ?
 interface UserSettingsFormValues {
   email?: string;
   login?: string;
@@ -34,17 +36,28 @@ interface UserSettingsFormValues {
   phone?: string;
 }
 
+interface UserSettingsFormProps extends FormProps<UserSettingsFormValues> {
+  editMode: boolean;
+  emailInput: Input;
+  loginInput: Input;
+  firstNameInput: Input;
+  secondNameInput: Input;
+  displayNameInput: Input;
+  phoneInput: Input;
+  submitButton: Input;
+}
+
 class UserSettingsForm extends Component {
-  protected readonly props: FormProps<UserSettingsFormValues>;
+  protected readonly props: UserSettingsFormProps;
 
   constructor(props: FormProps<UserSettingsFormValues>) {
-    const { validation, values } = props;
+    const { validation } = props;
 
     const emailInput = new Input({
       type: 'email',
       label: 'Почта',
       inputName: 'email',
-      value: values?.email,
+      value: '',
       className: 'settings-input-field',
       ...validation?.email,
     });
@@ -53,7 +66,7 @@ class UserSettingsForm extends Component {
       type: 'text',
       label: 'Логин',
       inputName: 'login',
-      value: values?.login,
+      value: '',
       className: 'settings-input-field',
       ...validation?.login,
     });
@@ -61,8 +74,8 @@ class UserSettingsForm extends Component {
     const firstNameInput = new Input({
       type: 'text',
       label: 'Имя',
-      inputName: 'firstName',
-      value: values?.firstName,
+      inputName: 'first_name',
+      value: '',
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -70,8 +83,8 @@ class UserSettingsForm extends Component {
     const secondNameInput = new Input({
       type: 'text',
       label: 'Фамилия',
-      inputName: 'secondName',
-      value: values?.secondName,
+      inputName: 'second_name',
+      value: '',
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -79,8 +92,8 @@ class UserSettingsForm extends Component {
     const displayNameInput = new Input({
       type: 'text',
       label: 'Имя в чате',
-      inputName: 'displayName',
-      value: values?.displayName,
+      inputName: 'display_name',
+      value: '',
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -89,7 +102,7 @@ class UserSettingsForm extends Component {
       type: 'tel',
       label: 'Телефон',
       inputName: 'phone',
-      value: values?.phone,
+      value: '',
       className: 'settings-input-field',
       ...validation?.phone,
     });
@@ -111,17 +124,21 @@ class UserSettingsForm extends Component {
         submitButton,
       },
     );
+
+    store.connect(this);
   }
 
   render(): string {
+    const { user } = store.data;
+
     return pug.render(template, {
       editMode: this.props.editMode,
-      emailInput: this.props.emailInput,
-      loginInput: this.props.loginInput,
-      firstNameInput: this.props.firstNameInput,
-      secondNameInput: this.props.secondNameInput,
-      displayNameInput: this.props.displayNameInput,
-      phoneInput: this.props.phoneInput,
+      emailInput: this.props.emailInput.setProps({ value: user.email }),
+      loginInput: this.props.loginInput.setProps({ value: user.login }),
+      firstNameInput: this.props.firstNameInput.setProps({ value: user.first_name }),
+      secondNameInput: this.props.secondNameInput.setProps({ value: user.second_name }),
+      displayNameInput: this.props.displayNameInput.setProps({ value: user.display_name }),
+      phoneInput: this.props.phoneInput.setProps({ value: user.phone }),
       submitButton: this.props.submitButton,
     });
   }

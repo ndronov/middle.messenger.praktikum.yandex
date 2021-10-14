@@ -17,15 +17,17 @@ const equal = (a: unknown, b: unknown): boolean => {
     }
   }
 
-  const keysA = Object.keys(a as Record<string, unknown>); // using Record instead object
-  const keysB = Object.keys(a as Record<string, unknown>); // see https://github.com/microsoft/TypeScript/issues/21732
+  const aObj = a as Record<string, unknown>; // using Record instead object
+  const bObj = b as Record<string, unknown>; // see https://github.com/microsoft/TypeScript/issues/21732
+
+  const keysA = Object.keys(aObj);
+  const keysB = Object.keys(bObj);
 
   if (keysA.length !== keysB.length) {
     return false;
   }
 
-  // @ts-ignore
-  return keysA.every((k: string) => equals(a[k], b[k]));
+  return keysA.every((k: string) => equal(aObj[k], bObj[k]));
 };
 
 export default equal;
