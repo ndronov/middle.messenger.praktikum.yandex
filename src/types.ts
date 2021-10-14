@@ -28,8 +28,14 @@ export interface InputProps extends ComponentProps {
   error?: string;
 }
 
+export enum RouterLink {
+  Back = 'Back',
+  Forward = 'Forward',
+}
+
 export interface LinkProps extends ComponentProps {
   label: string,
-  href: string,
+  href?: string,
+  go?: RouterLink;
   className?: string,
 }

@@ -2,10 +2,10 @@
 import pug from 'pug';
 import Component from '../../modules/component';
 import router from '../../modules/router';
-import { LinkProps } from '../../types';
+import { LinkProps, RouterLink } from '../../types';
 
 const template = `
-a(class=className, href=href)= label
+a(class=className, href=link)= label
 `;
 
 class Link extends Component {
@@ -17,6 +17,7 @@ class Link extends Component {
       {
         hasFlow: true,
         ...props,
+        link: props.href ?? '#',
       },
     );
   }
@@ -27,7 +28,25 @@ class Link extends Component {
 
   handleClick(e: Event): void {
     e.preventDefault();
-    router.go(this.props.href);
+
+    if (this.props.href) {
+      router.go(this.props.href);
+
+      return;
+    }
+
+    switch (this.props.go) {
+      case RouterLink.Back:
+        router.back();
+        break;
+
+      case RouterLink.Forward:
+        router.forward();
+        break;
+
+      default:
+        throw new Error('Ошибка перехода по ссылке');
+    }
   }
 
   render(): string {
