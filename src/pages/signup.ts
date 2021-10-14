@@ -3,6 +3,7 @@ import pug from 'pug';
 import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
+import Link from '../components/link';
 import validation from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/authController';
 
@@ -19,7 +20,7 @@ form.auth-form(novalidate="")
   div.gap
 
   submit-button(data-component-id=submitButton.id)
-  a.auth-mode-switch-link(href="/") Войти
+  link(data-component-id=loginLink.id)
 `;
 
 class SignupPage extends Component {
@@ -76,6 +77,12 @@ class SignupPage extends Component {
       label: 'Зарегистрироваться',
     });
 
+    const loginLink = new Link({
+      label: 'Войти',
+      href: '/',
+      className: 'auth-mode-switch-link',
+    });
+
     super('form', {
       hasFlow: true,
       emailInput,
@@ -85,6 +92,7 @@ class SignupPage extends Component {
       phoneInput,
       passwordInput,
       submitButton,
+      loginLink,
       validateOnSubmit: true,
     });
   }
@@ -92,7 +100,7 @@ class SignupPage extends Component {
   async componentDidMount(): Promise<void> {
     this.addEventListener('submit', SignupPage.handleSubmit);
 
-    await AuthController.checkAuthorization({ goAuthRoute: false });
+    await AuthController.checkAuthorization({ goDefaultContentRoute: true, goAuthRoute: false });
   }
 
   static async handleSubmit(e: Event): Promise<void> {
@@ -111,6 +119,7 @@ class SignupPage extends Component {
       passwordInput: this.props.passwordInput,
       passwordConfirmationInput: this.props.passwordConfirmationInput,
       submitButton: this.props.submitButton,
+      loginLink: this.props.loginLink,
     });
   }
 }

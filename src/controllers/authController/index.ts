@@ -9,7 +9,7 @@ interface AuthParams {
 }
 
 const defaultAuthParams = {
-  goDefaultContentRoute: true,
+  goDefaultContentRoute: false,
   goAuthRoute: true,
 };
 

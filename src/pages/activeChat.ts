@@ -2,6 +2,7 @@
 import pug from 'pug';
 import Component from '../modules/component';
 import Chats from '../components/chats';
+import Link from '../components/link';
 import ChatContent from '../components/chatContent';
 import MessageSendingForm from '../components/messageSendingForm';
 import mockChats from '../mockData/mockChats';
@@ -14,8 +15,8 @@ const template = `
 div.container
   nav.navigation
     div.links
-      a(href="/sign-out").link &#128682; Выход
-      a(href="/settings").link Профиль &rang;
+      link(data-component-id=logoutLink.id)
+      link(data-component-id=profileLink.id)
     button.search-button &#128269; Поиск
     chats(data-component-id=chats.id)
   div.active-chat
@@ -28,6 +29,18 @@ div.container
 
 class ActiveChat extends Component {
   constructor() {
+    const logoutLink = new Link({
+      label: '< Выход!',
+      href: '/sign-out',
+      className: 'link',
+    });
+
+    const profileLink = new Link({
+      label: '!Профиль >',
+      href: '/settings',
+      className: 'link',
+    });
+
     const chats = new Chats({
       chats: mockChats,
     });
@@ -44,6 +57,8 @@ class ActiveChat extends Component {
 
     super('div', {
       hasFlow: true,
+      logoutLink,
+      profileLink,
       chats,
       chatContent,
       messageSendingForm,
@@ -57,6 +72,8 @@ class ActiveChat extends Component {
 
   render(): string {
     return pug.render(template, {
+      logoutLink: this.props.logoutLink,
+      profileLink: this.props.profileLink,
       chats: this.props.chats,
       userName: mockActiveChat.userName,
       chatContent: this.props.chatContent,

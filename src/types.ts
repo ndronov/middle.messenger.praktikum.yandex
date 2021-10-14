@@ -27,3 +27,9 @@ export interface InputProps extends ComponentProps {
   pattern?: RegExp;
   error?: string;
 }
+
+export interface LinkProps extends ComponentProps {
+  label: string,
+  href: string,
+  className?: string,
+}

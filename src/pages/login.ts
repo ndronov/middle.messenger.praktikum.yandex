@@ -3,6 +3,7 @@ import pug from 'pug';
 import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
+import Link from '../components/link';
 import validation from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/AuthController';
 
@@ -15,7 +16,7 @@ form.auth-form(novalidate="")
   div.gap
 
   submit-button(data-component-id=submitButton.id)
-  a.auth-mode-switch-link(href="/sign-up") Нет аккаунта?
+  link(data-component-id=signupLink.id)
 `;
 
 class LoginPage extends Component {
@@ -40,11 +41,18 @@ class LoginPage extends Component {
       label: 'Авторизоваться',
     });
 
+    const signupLink = new Link({
+      label: 'Нет аккаунта?',
+      href: '/sign-up',
+      className: 'auth-mode-switch-link',
+    });
+
     super('form', {
       hasFlow: true,
       loginInput,
       passwordInput,
       submitButton,
+      signupLink,
       validateOnSubmit: true,
     });
   }
@@ -66,6 +74,7 @@ class LoginPage extends Component {
       loginInput: this.props.loginInput,
       passwordInput: this.props.passwordInput,
       submitButton: this.props.submitButton,
+      signupLink: this.props.signupLink,
     });
   }
 }
