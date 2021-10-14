@@ -7,6 +7,7 @@ import handleFormSubmit from '../utils/handleFormSubmit';
 import userSettingsValidationMap from '../validation/userSettingsValidationMap';
 import mockUserSettings from '../mockData/mockUserSettings';
 import AuthController from '../controllers/authController';
+import UsersController from '../controllers/usersController';
 import { RouterLink } from '../types';
 
 const template = `
@@ -42,7 +43,15 @@ class UserSettings extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
+    this.addEventListener('submit', UserSettings.handleSubmit);
+
     await AuthController.checkAuthorization();
+  }
+
+  static async handleSubmit(e: Event): Promise<void> {
+    e.preventDefault();
+
+    await UsersController.changeProfile(e);
   }
 
   render(): string {
