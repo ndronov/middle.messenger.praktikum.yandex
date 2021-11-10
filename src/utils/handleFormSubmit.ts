@@ -2,6 +2,8 @@ interface FormDataType {
   entries: () => IterableIterator<[string, FormDataEntryValue]>;
 }
 
+// TODO remove ?
+
 const handleFormSubmit = (e: Event): void => {
   e.preventDefault();
 

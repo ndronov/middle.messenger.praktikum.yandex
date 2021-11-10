@@ -36,7 +36,6 @@ interface UserSettingsFormValues {
 }
 
 interface UserSettingsFormProps extends FormProps<UserSettingsFormValues> {
-  editMode: boolean;
   emailInput: Input;
   loginInput: Input;
   firstNameInput: Input;
@@ -147,7 +146,6 @@ class UserSettingsForm extends Component {
     const { user } = store.data;
 
     return pug.render(template, {
-      editMode: this.props.editMode,
       emailInput: this.props.emailInput.setProps({ value: user.email }),
       loginInput: this.props.loginInput.setProps({ value: user.login }),
       firstNameInput: this.props.firstNameInput.setProps({ value: user.first_name }),

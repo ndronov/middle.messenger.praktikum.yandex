@@ -1,3 +1,5 @@
+// TODO remove ?
+
 const mockUserSettings = {
   email: 'pochta@yandex.ru',
   login: 'ivanivanov',

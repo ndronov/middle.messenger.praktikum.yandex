@@ -26,13 +26,13 @@ class PasswordForm extends Component {
   protected readonly props: FormProps<PasswordFormValues>;
 
   constructor(props: FormProps<PasswordFormValues>) {
-    const { validation, values } = props;
+    const { validation } = props;
 
     const oldPasswordInput = new Input({
       type: 'password',
       label: 'Старый пароль',
       inputName: 'oldPassword',
-      value: values?.oldPassword,
+      value: '',
       className: 'settings-input-field',
       ...validation?.password,
     });
@@ -41,7 +41,7 @@ class PasswordForm extends Component {
       type: 'password',
       label: 'Новый пароль',
       inputName: 'newPassword',
-      value: values?.newPassword,
+      value: '',
       className: 'settings-input-field',
       ...validation?.password,
     });
@@ -50,7 +50,7 @@ class PasswordForm extends Component {
       type: 'password',
       label: 'Повторите новый пароль',
       inputName: 'newPasswordConfirmation',
-      value: values?.newPasswordConfirmation,
+      value: '',
       className: 'settings-input-field',
       ...validation?.password,
     });
@@ -73,7 +73,6 @@ class PasswordForm extends Component {
 
   render(): string {
     return pug.render(template, {
-      editMode: this.props.editMode,
       oldPasswordInput: this.props.oldPasswordInput,
       newPasswordInput: this.props.newPasswordInput,
       newPasswordConfirmationInput: this.props.newPasswordConfirmationInput,

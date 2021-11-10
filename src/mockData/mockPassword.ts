@@ -1,3 +1,5 @@
+// TODO remove ?
+
 const mockPassword = {
   oldPassword: 'одночасье',
   newPassword: 'перспективы',

@@ -3,9 +3,7 @@ import pug from 'pug';
 import Component from '../modules/component';
 import Link from '../components/link';
 import UserSettingsForm from '../components/userSettingsForm';
-import handleFormSubmit from '../utils/handleFormSubmit';
 import userSettingsValidationMap from '../validation/userSettingsValidationMap';
-import mockUserSettings from '../mockData/mockUserSettings';
 import AuthController from '../controllers/authController';
 import UsersController from '../controllers/usersController';
 import { RouterLink } from '../types';
@@ -22,9 +20,7 @@ class UserSettings extends Component {
   constructor() {
     const userSettingsForm = new UserSettingsForm({
       editMode: true,
-      values: mockUserSettings,
       validation: userSettingsValidationMap,
-      onSubmit: handleFormSubmit,
       validateOnSubmit: true,
     });
 
