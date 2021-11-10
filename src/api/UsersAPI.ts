@@ -9,6 +9,11 @@ export interface ChangeProfileRequest {
   phone?: string;
 }
 
+export interface ChangePasswordRequest {
+  oldPassword: string;
+  newPassword: string;
+}
+
 class UsersAPI extends BaseAPI {
   constructor() {
     super('/user');
@@ -16,6 +21,10 @@ class UsersAPI extends BaseAPI {
 
   changeProfile(data: ChangeProfileRequest): Promise<void> {
     return this.http.put('/profile', { data });
+  }
+
+  changePassword(data: ChangePasswordRequest): Promise<void> {
+    return this.http.put('/password', { data });
   }
 
   read: undefined;
