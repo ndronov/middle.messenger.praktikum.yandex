@@ -1,7 +1,6 @@
 // @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
-import Link from '../link';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
@@ -18,11 +17,13 @@ form.settings-form#user-settings(novalidate="")
   display-name-input(data-component-id=displayNameInput.id)
   phone-input(data-component-id=phoneInput.id)
 
-  div.links
-    link(data-component-id=passwordLink.id)
-    link(data-component-id=logoutLink.id)
-
-  submit-button(data-component-id=submitButton.id)
+  if (editMode)
+    submit-button(data-component-id=submitButton.id)
+  else
+    div.links
+      a.link(href="#") Изменить данные
+      a.link(href="#") Изменить пароль
+      a.link.exit-link(href="#") Выйти
 `;
 
 // TODO remove ?
@@ -43,8 +44,6 @@ interface UserSettingsFormProps extends FormProps<UserSettingsFormValues> {
   secondNameInput: Input;
   displayNameInput: Input;
   phoneInput: Input;
-  logoutLink: Link;
-  passwordLink: Link;
   submitButton: Input;
 }
 
@@ -108,18 +107,6 @@ class UserSettingsForm extends Component {
       ...validation?.phone,
     });
 
-    const logoutLink = new Link({
-      label: 'Выйти из системы',
-      href: '/sign-out',
-      className: 'link exit-link',
-    });
-
-    const passwordLink = new Link({
-      label: 'Изменить пароль',
-      href: '/password',
-      className: 'link',
-    });
-
     const submitButton = new SubmitButton({
       label: 'Сохранить',
     });
@@ -134,8 +121,6 @@ class UserSettingsForm extends Component {
         secondNameInput,
         displayNameInput,
         phoneInput,
-        logoutLink,
-        passwordLink,
         submitButton,
       },
     );
@@ -154,8 +139,6 @@ class UserSettingsForm extends Component {
       secondNameInput: this.props.secondNameInput.setProps({ value: user.second_name }),
       displayNameInput: this.props.displayNameInput.setProps({ value: user.display_name }),
       phoneInput: this.props.phoneInput.setProps({ value: user.phone }),
-      logoutLink: this.props.logoutLink,
-      passwordLink: this.props.passwordLink,
       submitButton: this.props.submitButton,
     });
   }
