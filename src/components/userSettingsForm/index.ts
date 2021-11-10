@@ -1,15 +1,19 @@
 // @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
-import Link from '../link';
+import getAvatarURL from '../../utils/getAvatarURL';
 import { FormProps } from '../../types';
+import Link from '../link';
 import Input from '../input';
 import SubmitButton from '../submitButton';
 import store from '../../store';
 
 const template = `
 form.settings-form#user-settings(novalidate="")
-  div.settings-form-avatar
+  if (avatar)
+    img.settings-form-avatar(src=avatar, alt="Аватар")
+  else
+    div.settings-form-avatar
 
   email-input(data-component-id=emailInput.id)
   login-input(data-component-id=loginInput.id)
@@ -19,6 +23,7 @@ form.settings-form#user-settings(novalidate="")
   phone-input(data-component-id=phoneInput.id)
 
   div.links
+    link(data-component-id=avatarLink.id)
     link(data-component-id=passwordLink.id)
     link(data-component-id=logoutLink.id)
 
@@ -44,6 +49,7 @@ interface UserSettingsFormProps extends FormProps<UserSettingsFormValues> {
   phoneInput: Input;
   logoutLink: Link;
   passwordLink: Link;
+  avatarLink: Link;
   submitButton: Input;
 }
 
@@ -119,6 +125,12 @@ class UserSettingsForm extends Component {
       className: 'link',
     });
 
+    const avatarLink = new Link({
+      label: 'Изменить аватар',
+      href: '/avatar',
+      className: 'link',
+    });
+
     const submitButton = new SubmitButton({
       label: 'Сохранить',
     });
@@ -135,6 +147,7 @@ class UserSettingsForm extends Component {
         phoneInput,
         logoutLink,
         passwordLink,
+        avatarLink,
         submitButton,
       },
     );
@@ -146,6 +159,7 @@ class UserSettingsForm extends Component {
     const { user } = store.data;
 
     return pug.render(template, {
+      avatar: getAvatarURL(user.avatar),
       emailInput: this.props.emailInput.setProps({ value: user.email }),
       loginInput: this.props.loginInput.setProps({ value: user.login }),
       firstNameInput: this.props.firstNameInput.setProps({ value: user.first_name }),
@@ -154,6 +168,7 @@ class UserSettingsForm extends Component {
       phoneInput: this.props.phoneInput.setProps({ value: user.phone }),
       logoutLink: this.props.logoutLink,
       passwordLink: this.props.passwordLink,
+      avatarLink: this.props.avatarLink,
       submitButton: this.props.submitButton,
     });
   }

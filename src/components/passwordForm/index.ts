@@ -4,10 +4,15 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
+import store from '../../store';
+import getAvatarURL from '../../utils/getAvatarURL';
 
 const template = `
 form.settings-form#user-settings(novalidate="")
-  div.settings-form-avatar
+  if (avatar)
+    img.settings-form-avatar(src=avatar, alt="Аватар")
+  else
+    div.settings-form-avatar
 
   old-password-input(data-component-id=oldPasswordInput.id)
   new-password-input(data-component-id=newPasswordInput.id)
@@ -69,10 +74,15 @@ class PasswordForm extends Component {
         submitButton,
       },
     );
+
+    store.connect(this);
   }
 
   render(): string {
+    const { user } = store.data;
+
     return pug.render(template, {
+      avatar: getAvatarURL(user.avatar),
       oldPasswordInput: this.props.oldPasswordInput,
       newPasswordInput: this.props.newPasswordInput,
       newPasswordConfirmationInput: this.props.newPasswordConfirmationInput,

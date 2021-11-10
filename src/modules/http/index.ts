@@ -7,6 +7,7 @@ enum Method {
   DELETE = 'DELETE',
 }
 
+export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 export type HTTPRequestBody = Record<string, unknown>;
 
 interface Options {
@@ -14,18 +15,17 @@ interface Options {
   data?: HTTPRequestBody | unknown,
   headers?: Record<string, string>,
   timeout?: number,
+  raw?: boolean,
 }
 
 const defaultMethod = Method.GET;
 const defaultTimeout = 5000;
 
 export default class HTTP {
-  static BASE_URL = 'https://ya-praktikum.tech/api/v2';
-
   protected endpoint: string;
 
   constructor(endpoint: string) {
-    this.endpoint = `${HTTP.BASE_URL}${endpoint}`;
+    this.endpoint = `${BASE_URL}${endpoint}`;
   }
 
   public get<Response>(path = '/', options: Options = {}): Promise<Response> {
@@ -64,6 +64,7 @@ export default class HTTP {
         'content-type': 'application/json; charset=utf-8',
       },
       timeout = defaultTimeout,
+      raw = false,
     } = options;
 
     return new Promise((resolve, reject) => {
@@ -96,9 +97,12 @@ export default class HTTP {
       xhr.ontimeout = reject;
       xhr.withCredentials = true;
 
-      const body = isGet || !data
-        ? null
-        : JSON.stringify(data);
+      if (isGet || !data) {
+        xhr.send();
+        return;
+      }
+
+      const body = raw ? (data as FormData) : JSON.stringify(data);
 
       xhr.send(body);
     });

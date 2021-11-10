@@ -21,13 +21,13 @@ class AvatarForm extends Component {
 
   constructor(props: FormProps) {
     const submitButton = new SubmitButton({
-      label: 'Поменять',
+      label: 'Сохранить',
     });
 
     const avatarInput = new Input({
       type: 'file',
       accept: 'image/*',
-      label: 'Выбрать файл на компьютере',
+      label: 'Выбрать файл',
       inputName: 'avatar',
       className: 'avatar-field',
     });

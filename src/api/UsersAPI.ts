@@ -14,6 +14,8 @@ export interface ChangePasswordRequest {
   newPassword: string;
 }
 
+export type ChangeAvatarRequest = FormData;
+
 class UsersAPI extends BaseAPI {
   constructor() {
     super('/user');
@@ -25,6 +27,12 @@ class UsersAPI extends BaseAPI {
 
   changePassword(data: ChangePasswordRequest): Promise<void> {
     return this.http.put('/password', { data });
+  }
+
+  changeAvatar(data: ChangeAvatarRequest): Promise<void> {
+    const headers = {};
+
+    return this.http.put('/profile/avatar', { headers, raw: true, data });
   }
 
   read: undefined;
