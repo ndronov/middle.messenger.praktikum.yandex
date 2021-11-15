@@ -311,6 +311,8 @@ abstract class Component {
       set: (props: ComponentProps, propName: string, value: unknown) => {
         const oldProps = { ...props };
 
+        // TODO каждое поле вызывает свой цикл обновления
+
         Object.assign(props, { [propName]: value });
 
         this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, props);

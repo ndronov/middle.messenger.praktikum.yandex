@@ -6,7 +6,7 @@ import Input from '../input';
 import './index.scss';
 
 const template = `
-form.message-sending-form#message-sending-form(novalidate="")
+form.message-sending-form(novalidate="")
   message-input(data-component-id=messageInput.id)
   button.message-sending-button(type="submit") &#8594;
 `;

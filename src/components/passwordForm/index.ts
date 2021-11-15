@@ -8,7 +8,7 @@ import store from '../../store';
 import getAvatarURL from '../../utils/getAvatarURL';
 
 const template = `
-form.settings-form#user-settings(novalidate="")
+form.settings-form(novalidate="")
   if (avatar)
     img.settings-form-avatar(src=avatar, alt="Аватар")
   else
