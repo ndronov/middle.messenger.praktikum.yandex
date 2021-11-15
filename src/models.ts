@@ -1,4 +1,4 @@
-export interface UserProfile {
+export interface User {
   id: number;
   first_name: string;
   second_name: string;
@@ -16,7 +16,7 @@ export interface Chat {
   unread_count: number;
   login: string;
   last_message: {
-    user: UserProfile;
+    user: User;
     time: string;
     content: string;
   }
