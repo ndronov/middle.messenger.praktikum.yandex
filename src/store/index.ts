@@ -19,7 +19,10 @@ class Store {
 
   public setData(dataChange: Record<string, unknown>): void {
     this.state = { ...this.state, ...dataChange };
-    this.eventBus.emit('update');
+
+    if (this.connected) {
+      this.eventBus.emit('update');
+    }
   }
 
   public get data(): StoreData {
@@ -38,6 +41,10 @@ class Store {
     this.eventBus.off('update', this.updaters[component.id]);
 
     delete this.updaters[component.id];
+  }
+
+  private get connected() {
+    return Object.keys(this.updaters).length > 0;
   }
 }
 
