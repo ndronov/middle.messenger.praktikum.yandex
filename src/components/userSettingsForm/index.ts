@@ -151,8 +151,6 @@ class UserSettingsForm extends Component {
         submitButton,
       },
     );
-
-    store.connect(this);
   }
 
   render(): string {
