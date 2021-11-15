@@ -11,7 +11,7 @@ class ChatsController {
     try {
       const chats = await chatsAPI.getChats();
 
-      setTimeout(() => store.setData({ chats }), 0);
+      setTimeout(() => store.setKeyValue('chats', chats), 0);
     } catch (error) {
       handleError(error);
     }

@@ -15,9 +15,9 @@ router
   .use('/sign-up', SignupPage)
   .use('/chats', ChatList)
   .use('/active-chat', ActiveChat)
-  .use('/settings', UserSettings)
-  .use('/avatar', AvatarChange)
-  .use('/password', PasswordChange)
+  .use('/settings', UserSettings, {}, ['user'])
+  .use('/avatar', AvatarChange, {}, ['user'])
+  .use('/password', PasswordChange, {}, ['user'])
   .use('/404', ErrorPage, getErrorMeta(404))
   .use('/500', ErrorPage, getErrorMeta(500))
   .start();

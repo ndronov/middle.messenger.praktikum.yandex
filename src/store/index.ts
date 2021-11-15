@@ -1,14 +1,15 @@
 import { User, Chat } from '../models';
 import Component from '../modules/component';
 import EventBus, { Listener } from '../modules/eventBus';
-import { ComponentProps } from '../types';
+
+export type StoreKeys = string[];
 
 export interface StoreData {
   user: User;
   chats: Chat[];
 }
 
-type Updaters = Record<string, Listener>;
+type Updaters = Record<string, Record<string, Listener>>;
 
 class Store {
   private state: StoreData = { user: {} as User, chats: [] } as StoreData;
@@ -17,11 +18,12 @@ class Store {
 
   private updaters: Updaters = {};
 
-  public setData(dataChange: Record<string, unknown>): void {
-    this.state = { ...this.state, ...dataChange };
+  public setKeyValue(key: keyof StoreData, value: unknown): void {
+    // TODO rework with StoreData param type
+    this.state = { ...this.state, ...{ [key]: value } };
 
-    if (this.connected) {
-      this.eventBus.emit('update');
+    if (this.connected(key)) {
+      this.eventBus.emit(key);
     }
   }
 
@@ -29,22 +31,37 @@ class Store {
     return this.state;
   }
 
-  public connect(component: Component): void {
-    this.updaters[component.id] = () => {
-      setTimeout(() => component.setProps(this.state as unknown as ComponentProps), 0);
-    };
+  public connect(component: Component, storeKeys: StoreKeys): void {
+    storeKeys.forEach((key) => {
+      if (!this.updaters[key]) {
+        this.updaters[key] = {};
+      }
 
-    this.eventBus.on('update', this.updaters[component.id]);
+      this.updaters[key][component.id] = () => {
+        setTimeout(() => {
+          const value = this.state[key as keyof StoreData];
+          component.setProps({ [key]: value });
+        }, 0);
+      };
+
+      this.eventBus.on(key, this.updaters[key][component.id]);
+    });
   }
 
-  public disconnect(component: Component): void {
-    this.eventBus.off('update', this.updaters[component.id]);
+  public disconnect(component: Component, storeKeys: StoreKeys): void {
+    storeKeys.forEach((key) => {
+      this.eventBus.off(key, this.updaters[key][component.id]);
 
-    delete this.updaters[component.id];
+      delete this.updaters[key][component.id];
+
+      if (Object.keys(this.updaters[key]).length === 0) {
+        delete this.updaters[key];
+      }
+    });
   }
 
-  private get connected() {
-    return Object.keys(this.updaters).length > 0;
+  private connected(eventKey: string) {
+    return this.updaters[eventKey] && Object.keys(this.updaters[eventKey]).length > 0;
   }
 }
 

@@ -1,6 +1,6 @@
 import Component, { ComponentConstructor } from '../component';
 import { ComponentProps } from '../../types';
-import store from '../../store';
+import store, { StoreKeys } from '../../store';
 
 interface RouteProps extends ComponentProps {
   rootQuery: string;
@@ -15,11 +15,19 @@ class Route {
 
   private readonly props: RouteProps;
 
-  constructor(pathname: string, view: ComponentConstructor, props: RouteProps) {
+  private readonly storeKeys?: StoreKeys;
+
+  constructor(
+    pathname: string,
+    view: ComponentConstructor,
+    props: RouteProps,
+    storeKeys?: StoreKeys,
+  ) {
     this.pathname = pathname;
     this.blockClass = view;
     this.block = null;
     this.props = props;
+    this.storeKeys = storeKeys;
   }
 
   navigate(pathname: string): void {
@@ -32,17 +40,28 @@ class Route {
   leave(): void {
     this.block?.clearRoot();
 
-    if (this.block) {
-      store.disconnect(this.block);
-    }
+    this.disconnectFromStore();
   }
 
   match(pathname: string): boolean {
     return pathname === this.pathname;
   }
 
+  connectToStore(): void {
+    if (this.block && this.storeKeys) {
+      store.connect(this.block, this.storeKeys);
+    }
+  }
+
+  disconnectFromStore(): void {
+    if (this.block && this.storeKeys) {
+      store.disconnect(this.block, this.storeKeys);
+    }
+  }
+
   render(): void {
     if (this.block) {
+      this.connectToStore();
       this.block.renderToRoot();
 
       return;
@@ -52,8 +71,7 @@ class Route {
     const { rootQuery, ...restProps } = this.props;
     this.block = new Block(restProps);
 
-    store.connect(this.block);
-
+    this.connectToStore();
     this.block.mountToRoot(rootQuery);
   }
 }

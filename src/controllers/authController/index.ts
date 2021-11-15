@@ -58,7 +58,7 @@ class AuthController {
 
     try {
       const user = await authAPI.read();
-      setTimeout(() => store.setData({ user }), 5000);
+      setTimeout(() => store.setKeyValue('user', user), 0);
 
       if (goDefaultContentRoute) {
         router.go(AuthController.defaultContentRoute);

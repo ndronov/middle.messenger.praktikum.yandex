@@ -1,5 +1,6 @@
 import { ComponentConstructor } from '../component';
 import { ComponentProps } from '../../types';
+import { StoreKeys } from '../../store';
 
 import Route from './route';
 
@@ -29,8 +30,13 @@ class Router {
     Router.instance = this;
   }
 
-  use(pathname: string, block: ComponentConstructor, props?: ComponentProps): Router {
-    const route = new Route(pathname, block, { rootQuery: this.rootQuery, ...props });
+  use(
+    pathname: string,
+    block: ComponentConstructor,
+    props?: ComponentProps,
+    storeKeys?: StoreKeys,
+  ): Router {
+    const route = new Route(pathname, block, { rootQuery: this.rootQuery, ...props }, storeKeys);
 
     this.routes.push(route);
 
