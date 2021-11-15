@@ -12,10 +12,10 @@ export interface User {
 export interface Chat {
   id: number;
   title: string;
-  avatar: string;
+  avatar?: string;
   unread_count: number;
   login: string;
-  last_message: {
+  last_message?: {
     user: User;
     time: string;
     content: string;

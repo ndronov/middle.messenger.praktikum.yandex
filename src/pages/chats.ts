@@ -5,6 +5,7 @@ import Chats from '../components/chats';
 import Link from '../components/link';
 import mockChats from '../mockData/mockChats';
 import AuthController from '../controllers/authController';
+import ChatsController from '../controllers/chatsController';
 
 const template = `
 div.container
@@ -46,6 +47,7 @@ class ChatList extends Component {
   // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
     await AuthController.checkAuthorization();
+    await ChatsController.getChats();
   }
 
   render(): string {
