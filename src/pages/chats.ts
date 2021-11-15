@@ -3,9 +3,10 @@ import pug from 'pug';
 import Component from '../modules/component';
 import Chats from '../components/chats';
 import Link from '../components/link';
-import mockChats from '../mockData/mockChats';
 import AuthController from '../controllers/authController';
 import ChatsController from '../controllers/chatsController';
+import store from '../store';
+import { ComponentProps } from '../types';
 
 const template = `
 div.container
@@ -14,11 +15,19 @@ div.container
       link(data-component-id=logoutLink.id)
       link(data-component-id=profileLink.id)
     button.search-button &#128269; Поиск
-    chats(data-component-id=chats.id)
+    chats(data-component-id=dialogs.id)
   div.active-chat-placeholder Выберите чат, чтобы отправить сообщение
 `;
 
+interface ChatListProps extends ComponentProps {
+  dialogs: Chats;
+  logoutLink: Link;
+  profileLink: Link;
+}
+
 class ChatList extends Component {
+  protected readonly props: ChatListProps;
+
   constructor() {
     const logoutLink = new Link({
       label: '< Выход',
@@ -32,15 +41,15 @@ class ChatList extends Component {
       className: 'link',
     });
 
-    const chats = new Chats({
-      chats: mockChats,
+    const dialogs = new Chats({
+      chats: [],
     });
 
     super('div', {
       hasFlow: true,
       logoutLink,
       profileLink,
-      chats,
+      dialogs,
     });
   }
 
@@ -51,10 +60,12 @@ class ChatList extends Component {
   }
 
   render(): string {
+    const { chats } = store.data;
+
     return pug.render(template, {
       logoutLink: this.props.logoutLink,
       profileLink: this.props.profileLink,
-      chats: this.props.chats,
+      dialogs: this.props.dialogs.setProps({ chats }),
     });
   }
 }

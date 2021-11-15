@@ -9,13 +9,15 @@ div.chats
     div.chat
       div.avatar
       div.content
-        span.name= chat.name
+        span.name= chat.title
         span.message= chat.message
       div.additional-content
         time.time= chat.time
-        if chat.notificationsNumber
-          span.notifications-number= chat.notificationsNumber
+        if chat.unread_count
+          span.notifications-number= chat.unread_count
 `;
+
+// TODO отобразить данные чатов
 
 class Chats extends Component {
   constructor(props: ComponentProps) {

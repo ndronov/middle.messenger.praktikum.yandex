@@ -5,7 +5,7 @@ import EventBus, { Listener } from '../modules/eventBus';
 export type StoreKeys = string[];
 
 export interface StoreData {
-  user: User;
+  user?: User;
   chats: Chat[];
 }
 

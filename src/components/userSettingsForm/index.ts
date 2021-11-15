@@ -157,13 +157,13 @@ class UserSettingsForm extends Component {
     const { user } = store.data;
 
     return pug.render(template, {
-      avatar: getAvatarURL(user.avatar),
-      emailInput: this.props.emailInput.setProps({ value: user.email }),
-      loginInput: this.props.loginInput.setProps({ value: user.login }),
-      firstNameInput: this.props.firstNameInput.setProps({ value: user.first_name }),
-      secondNameInput: this.props.secondNameInput.setProps({ value: user.second_name }),
-      displayNameInput: this.props.displayNameInput.setProps({ value: user.display_name }),
-      phoneInput: this.props.phoneInput.setProps({ value: user.phone }),
+      avatar: getAvatarURL(user?.avatar),
+      emailInput: this.props.emailInput.setProps({ value: user?.email }),
+      loginInput: this.props.loginInput.setProps({ value: user?.login }),
+      firstNameInput: this.props.firstNameInput.setProps({ value: user?.first_name }),
+      secondNameInput: this.props.secondNameInput.setProps({ value: user?.second_name }),
+      displayNameInput: this.props.displayNameInput.setProps({ value: user?.display_name }),
+      phoneInput: this.props.phoneInput.setProps({ value: user?.phone }),
       logoutLink: this.props.logoutLink,
       passwordLink: this.props.passwordLink,
       avatarLink: this.props.avatarLink,
