@@ -1,16 +1,17 @@
-import { UserProfile } from '../models';
+import { UserProfile, Chat } from '../models';
 import Component from '../modules/component';
 import EventBus, { Listener } from '../modules/eventBus';
 import { ComponentProps } from '../types';
 
 export interface StoreData {
   user: UserProfile;
+  chats: Chat[];
 }
 
 type Updaters = Record<string, Listener>;
 
 class Store {
-  private state: StoreData = { user: {} } as StoreData;
+  private state: StoreData = { user: {} as UserProfile, chats: [] } as StoreData;
 
   private eventBus = new EventBus();
 

@@ -1,5 +1,5 @@
 export interface UserProfile {
-  id: string;
+  id: number;
   first_name: string;
   second_name: string;
   display_name: string;
@@ -7,4 +7,17 @@ export interface UserProfile {
   email: string;
   phone: string;
   avatar: string;
+}
+
+export interface Chat {
+  id: number;
+  title: string;
+  avatar: string;
+  unread_count: number;
+  login: string;
+  last_message: {
+    user: UserProfile;
+    time: string;
+    content: string;
+  }
 }
