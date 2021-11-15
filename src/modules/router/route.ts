@@ -1,5 +1,6 @@
 import Component, { ComponentConstructor } from '../component';
 import { ComponentProps } from '../../types';
+import store from '../../store';
 
 interface RouteProps extends ComponentProps {
   rootQuery: string;
@@ -30,6 +31,10 @@ class Route {
 
   leave(): void {
     this.block?.clearRoot();
+
+    if (this.block) {
+      store.disconnect(this.block);
+    }
   }
 
   match(pathname: string): boolean {
@@ -46,6 +51,8 @@ class Route {
     const Block = this.blockClass;
     const { rootQuery, ...restProps } = this.props;
     this.block = new Block(restProps);
+
+    store.connect(this.block);
 
     this.block.mountToRoot(rootQuery);
   }
