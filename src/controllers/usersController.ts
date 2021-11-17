@@ -1,9 +1,9 @@
-import usersAPI, { ChangeProfileRequest, ChangePasswordRequest } from '../../api/UsersAPI';
-import getSubmittedFormData from '../../utils/getSubmittedFormData';
-import getRawFormData from '../../utils/getRawFormData';
-import handleError from '../../utils/handleError';
-import router from '../../modules/router';
-import store from '../../store';
+import usersAPI, { ChangeProfileRequest, ChangePasswordRequest } from '../api/UsersAPI';
+import getSubmittedFormData from '../utils/getSubmittedFormData';
+import getRawFormData from '../utils/getRawFormData';
+import handleError from '../utils/handleError';
+import router from '../modules/router';
+import store from '../store';
 
 class UsersController {
   public static async changeProfile(e: Event): Promise<void> {

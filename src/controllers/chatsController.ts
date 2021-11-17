@@ -1,10 +1,10 @@
 import chatsAPI, {
   CreateChatRequest,
   AddUserToChatRequest,
-} from '../../api/ChatsAPI';
-import handleError from '../../utils/handleError';
-import store from '../../store';
-import getSubmittedFormData from '../../utils/getSubmittedFormData';
+} from '../api/ChatsAPI';
+import handleError from '../utils/handleError';
+import store from '../store';
+import getSubmittedFormData from '../utils/getSubmittedFormData';
 
 class ChatsController {
   public static async getChats(): Promise<void> {
@@ -32,6 +32,16 @@ class ChatsController {
       const data = getSubmittedFormData<AddUserToChatRequest>(e);
 
       await chatsAPI.addUsersToChat(data);
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  public static async getChatUsers(chatId: number): Promise<void> {
+    try {
+      const users = await chatsAPI.getChatUsers({ chatId });
+
+      console.log(`chat ${chatId} users:`, users);
     } catch (error) {
       handleError(error);
     }

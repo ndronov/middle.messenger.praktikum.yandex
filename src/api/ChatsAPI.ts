@@ -15,6 +15,13 @@ export interface AddUserToChatRequest {
   userId: number;
 }
 
+export interface GetChatUsersRequest {
+  chatId: number;
+  offset?: number;
+  name?: string;
+  email?: string;
+}
+
 class ChatsAPI extends BaseAPI {
   constructor() {
     super('/chats');
@@ -40,6 +47,12 @@ class ChatsAPI extends BaseAPI {
     const data = { chatId, users: [userId] };
 
     return this.http.delete('/users', { data });
+  }
+
+  getChatUsers(params: GetChatUsersRequest): Promise<void> {
+    const { chatId, ...data } = params;
+
+    return this.http.get(`/${chatId}/users`, { data });
   }
 
   read: undefined;

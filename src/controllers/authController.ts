@@ -1,8 +1,8 @@
-import authAPI, { SignInRequest, SignUpRequest } from '../../api/AuthAPI';
-import getSubmittedFormData from '../../utils/getSubmittedFormData';
-import handleError from '../../utils/handleError';
-import router from '../../modules/router';
-import store from '../../store';
+import authAPI, { SignInRequest, SignUpRequest } from '../api/AuthAPI';
+import getSubmittedFormData from '../utils/getSubmittedFormData';
+import handleError from '../utils/handleError';
+import router from '../modules/router';
+import store from '../store';
 
 interface AuthParams {
   goDefaultContentRoute?: boolean;

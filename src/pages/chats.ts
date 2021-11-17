@@ -74,6 +74,9 @@ class ChatList extends Component {
 
     await AuthController.checkAuthorization();
     await ChatsController.getChats();
+
+    // TODO it's debug
+    await ChatsController.getChatUsers(559);
   }
 
   async handleSubmit(e: Event): Promise<void> {
