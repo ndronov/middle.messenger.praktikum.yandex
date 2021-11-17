@@ -4,6 +4,7 @@ import Component from '../modules/component';
 import Chats from '../components/chats';
 import Link from '../components/link';
 import NewChatForm from '../components/newChatForm';
+import AddUserToChatForm from '../components/addUserToChatForm';
 import AuthController from '../controllers/authController';
 import ChatsController from '../controllers/chatsController';
 import store from '../store';
@@ -19,6 +20,7 @@ div.container
     chats(data-component-id=dialogs.id)
   div.chats-additional-forms.active-chat
     new-chat-form(data-component-id=newChatForm.id)
+    add-user-to-chat-form(data-component-id=addUserToChatForm.id)
 `;
 
 interface ChatListProps extends ComponentProps {
@@ -26,6 +28,7 @@ interface ChatListProps extends ComponentProps {
   logoutLink: Link;
   profileLink: Link;
   newChatForm: NewChatForm;
+  addUserToChatForm: AddUserToChatForm;
 }
 
 class ChatList extends Component {
@@ -52,27 +55,44 @@ class ChatList extends Component {
       validateOnSubmit: true,
     });
 
+    const addUserToChatForm = new AddUserToChatForm({
+      validateOnSubmit: true,
+    });
+
     super('div', {
       hasFlow: true,
       logoutLink,
       profileLink,
       dialogs,
       newChatForm,
+      addUserToChatForm,
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
-    this.addEventListener('submit', ChatList.handleSubmit);
+    this.addEventListener('submit', this.handleSubmit.bind(this));
 
     await AuthController.checkAuthorization();
     await ChatsController.getChats();
   }
 
-  static async handleSubmit(e: Event): Promise<void> {
+  async handleSubmit(e: Event): Promise<void> {
     e.preventDefault();
 
-    await ChatsController.createChat(e);
+    const form = e.target as HTMLFormElement;
+
+    switch (form.id) {
+      case this.props.newChatForm.id:
+        await ChatsController.createChat(e);
+        break;
+
+      case this.props.addUserToChatForm.id:
+        await ChatsController.addUserToChat(e);
+        break;
+
+      default:
+        throw new Error(`Обработчик для формы ${form.id} не найден`);
+    }
   }
 
   render(): string {
@@ -83,6 +103,7 @@ class ChatList extends Component {
       profileLink: this.props.profileLink,
       dialogs: this.props.dialogs.setProps({ chats }),
       newChatForm: this.props.newChatForm,
+      addUserToChatForm: this.props.addUserToChatForm,
     });
   }
 }

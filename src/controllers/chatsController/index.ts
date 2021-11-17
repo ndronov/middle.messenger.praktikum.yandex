@@ -1,7 +1,6 @@
 import chatsAPI, {
-// GetChatRequest,
   CreateChatRequest,
-// AddUsersToChatRequest
+  AddUserToChatRequest,
 } from '../../api/ChatsAPI';
 import handleError from '../../utils/handleError';
 import store from '../../store';
@@ -23,7 +22,16 @@ class ChatsController {
       const newChatData = getSubmittedFormData<CreateChatRequest>(e);
 
       await chatsAPI.createChat(newChatData);
-      // TODO clear form after cerate ?
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  public static async addUserToChat(e: Event): Promise<void> {
+    try {
+      const data = getSubmittedFormData<AddUserToChatRequest>(e);
+
+      await chatsAPI.addUsersToChat(data);
     } catch (error) {
       handleError(error);
     }

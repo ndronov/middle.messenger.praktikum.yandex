@@ -86,8 +86,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 20px;
+        min-width: 20px;
         height: 20px;
+        padding: 0 4px;
         color: $color_white;
         font-size: 11px;
         line-height: 12px;
@@ -146,5 +147,8 @@
 }
 
 .chats-additional-forms {
+  flex-flow: row;
+  gap: 20px;
+  align-items: flex-start;
   padding: 20px;
 }

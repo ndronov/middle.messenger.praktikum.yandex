@@ -4,10 +4,9 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import './index.scss';
 
 const template = `
-form.new-chat-form.chats-additional-form(novalidate="")
+form.chats-additional-form(novalidate="")
   h1.title Создайте новый чат
 
   chat-title-input(data-component-id=chatTitleInput.id)

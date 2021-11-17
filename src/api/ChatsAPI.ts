@@ -10,9 +10,9 @@ export interface CreateChatRequest {
   title: string;
 }
 
-export interface AddUsersToChatRequest {
+export interface AddUserToChatRequest {
   chatId: number;
-  users: number[];
+  userId: number;
 }
 
 class ChatsAPI extends BaseAPI {
@@ -28,11 +28,17 @@ class ChatsAPI extends BaseAPI {
     return this.http.post('', { data });
   }
 
-  addUsersToChat(data: AddUsersToChatRequest): Promise<void> {
+  addUsersToChat(rawData: AddUserToChatRequest): Promise<void> {
+    const { userId, chatId } = rawData;
+    const data = { chatId, users: [userId] };
+
     return this.http.put('/users', { data });
   }
 
-  deleteUsersFromChat(data: AddUsersToChatRequest): Promise<void> {
+  deleteUsersFromChat(rawData: AddUserToChatRequest): Promise<void> {
+    const { userId, chatId } = rawData;
+    const data = { chatId, users: [userId] };
+
     return this.http.delete('/users', { data });
   }
 

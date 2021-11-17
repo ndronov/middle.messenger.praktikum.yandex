@@ -3,6 +3,8 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
 
+// TODO replace unread_count by id
+
 const template = `
 div.chats
   each chat in chats
@@ -13,11 +15,9 @@ div.chats
         span.message= chat.message
       div.additional-content
         time.time= chat.time
-        if chat.unread_count
-          span.notifications-number= chat.unread_count
+        if chat.id
+          span.notifications-number= chat.id
 `;
-
-// TODO отобразить данные чатов
 
 class Chats extends Component {
   constructor(props: ComponentProps) {
