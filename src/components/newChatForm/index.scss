@@ -1,0 +1,49 @@
+@import '../../styles/colors';
+@import '../../styles/font';
+
+.chats-additional-form {
+  display: flex;
+  flex-flow: column;
+  width: 340px;
+  min-height: 150px;
+  padding: 20px;
+  background: $color_white;
+  border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+
+  .title {
+    align-self: flex-start;
+    margin: 0;
+    color: $color_black;
+    font-size: 13px;
+    line-height: 13px;
+  }
+
+  .chats-additional-form-field {
+    display: flex;
+    flex-flow: column;
+    margin-top: 16px;
+    color: $color-grey5;
+    font-size: 9px;
+    line-height: 9px;
+
+    .input {
+      margin-top: 8px;
+      color: $color_black;
+      font-weight: 500;
+      font-size: 13px;
+      font-family: $font;
+      line-height: 13px;
+      border-bottom: 1px solid $color_blue;
+
+      &:focus {
+        border-bottom-style: dashed;
+      }
+    }
+  }
+
+  .gap {
+    flex: 1;
+    min-height: 20px;
+  }
+}

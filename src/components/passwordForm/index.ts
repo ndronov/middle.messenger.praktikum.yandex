@@ -78,7 +78,7 @@ class PasswordForm extends Component {
 
   render(): string {
     return pug.render(template, {
-      avatar: getAvatarURL(store.data.user.avatar),
+      avatar: getAvatarURL(store.data.user?.avatar),
       oldPasswordInput: this.props.oldPasswordInput,
       newPasswordInput: this.props.newPasswordInput,
       newPasswordConfirmationInput: this.props.newPasswordConfirmationInput,

@@ -3,6 +3,7 @@ import pug from 'pug';
 import Component from '../modules/component';
 import Chats from '../components/chats';
 import Link from '../components/link';
+import NewChatForm from '../components/newChatForm';
 import AuthController from '../controllers/authController';
 import ChatsController from '../controllers/chatsController';
 import store from '../store';
@@ -16,13 +17,15 @@ div.container
       link(data-component-id=profileLink.id)
     button.search-button &#128269; Поиск
     chats(data-component-id=dialogs.id)
-  div.active-chat-placeholder Выберите чат, чтобы отправить сообщение
+  div.chats-additional-forms.active-chat
+    new-chat-form(data-component-id=newChatForm.id)
 `;
 
 interface ChatListProps extends ComponentProps {
   dialogs: Chats;
   logoutLink: Link;
   profileLink: Link;
+  newChatForm: NewChatForm;
 }
 
 class ChatList extends Component {
@@ -45,18 +48,31 @@ class ChatList extends Component {
       chats: [],
     });
 
+    const newChatForm = new NewChatForm({
+      validateOnSubmit: true,
+    });
+
     super('div', {
       hasFlow: true,
       logoutLink,
       profileLink,
       dialogs,
+      newChatForm,
     });
   }
 
   // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
+    this.addEventListener('submit', ChatList.handleSubmit);
+
     await AuthController.checkAuthorization();
     await ChatsController.getChats();
+  }
+
+  static async handleSubmit(e: Event): Promise<void> {
+    e.preventDefault();
+
+    await ChatsController.createChat(e);
   }
 
   render(): string {
@@ -66,6 +82,7 @@ class ChatList extends Component {
       logoutLink: this.props.logoutLink,
       profileLink: this.props.profileLink,
       dialogs: this.props.dialogs.setProps({ chats }),
+      newChatForm: this.props.newChatForm,
     });
   }
 }
