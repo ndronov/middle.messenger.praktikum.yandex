@@ -42,7 +42,7 @@ class ChatsAPI extends BaseAPI {
     return this.http.put('/users', { data });
   }
 
-  deleteUsersFromChat(rawData: AddUserToChatRequest): Promise<void> {
+  deleteUserFromChat(rawData: AddUserToChatRequest): Promise<void> {
     const { userId, chatId } = rawData;
     const data = { chatId, users: [userId] };
 

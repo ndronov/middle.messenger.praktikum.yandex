@@ -37,6 +37,16 @@ class ChatsController {
     }
   }
 
+  public static async deleteUserFromChat(e: Event): Promise<void> {
+    try {
+      const data = getSubmittedFormData<AddUserToChatRequest>(e);
+
+      await chatsAPI.deleteUserFromChat(data);
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
   public static async getChatUsers(chatId: number): Promise<void> {
     try {
       const users = await chatsAPI.getChatUsers({ chatId });

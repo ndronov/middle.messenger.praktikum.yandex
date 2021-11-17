@@ -5,6 +5,7 @@ import Chats from '../components/chats';
 import Link from '../components/link';
 import NewChatForm from '../components/newChatForm';
 import AddUserToChatForm from '../components/addUserToChatForm';
+import DeleteUserFromChatForm from '../components/deleteUserFromChatForm';
 import AuthController from '../controllers/authController';
 import ChatsController from '../controllers/chatsController';
 import store from '../store';
@@ -21,6 +22,7 @@ div.container
   div.chats-additional-forms.active-chat
     new-chat-form(data-component-id=newChatForm.id)
     add-user-to-chat-form(data-component-id=addUserToChatForm.id)
+    delete-user-from-chat-form(data-component-id=deleteUserFromChatForm.id)
 `;
 
 interface ChatListProps extends ComponentProps {
@@ -29,6 +31,7 @@ interface ChatListProps extends ComponentProps {
   profileLink: Link;
   newChatForm: NewChatForm;
   addUserToChatForm: AddUserToChatForm;
+  deleteUserFromChatForm: DeleteUserFromChatForm;
 }
 
 class ChatList extends Component {
@@ -51,13 +54,11 @@ class ChatList extends Component {
       chats: [],
     });
 
-    const newChatForm = new NewChatForm({
-      validateOnSubmit: true,
-    });
+    const newChatForm = new NewChatForm({});
 
-    const addUserToChatForm = new AddUserToChatForm({
-      validateOnSubmit: true,
-    });
+    const addUserToChatForm = new AddUserToChatForm({});
+
+    const deleteUserFromChatForm = new DeleteUserFromChatForm({});
 
     super('div', {
       hasFlow: true,
@@ -66,6 +67,7 @@ class ChatList extends Component {
       dialogs,
       newChatForm,
       addUserToChatForm,
+      deleteUserFromChatForm,
     });
   }
 
@@ -93,6 +95,10 @@ class ChatList extends Component {
         await ChatsController.addUserToChat(e);
         break;
 
+      case this.props.deleteUserFromChatForm.id:
+        await ChatsController.deleteUserFromChat(e);
+        break;
+
       default:
         throw new Error(`Обработчик для формы ${form.id} не найден`);
     }
@@ -107,6 +113,7 @@ class ChatList extends Component {
       dialogs: this.props.dialogs.setProps({ chats }),
       newChatForm: this.props.newChatForm,
       addUserToChatForm: this.props.addUserToChatForm,
+      deleteUserFromChatForm: this.props.deleteUserFromChatForm,
     });
   }
 }

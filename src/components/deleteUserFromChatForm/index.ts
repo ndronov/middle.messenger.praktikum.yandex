@@ -7,7 +7,7 @@ import SubmitButton from '../submitButton';
 
 const template = `
 form.chats-additional-form(novalidate="")
-  h1.title Добавьте пользователя в чат
+  h1.title Удалите пользователя из чата
 
   chat-id-input(data-component-id=chatIdInput.id)
   user-id-input(data-component-id=userIdInput.id)
@@ -17,15 +17,15 @@ form.chats-additional-form(novalidate="")
   submit-button(data-component-id=submitButton.id)
 `;
 
-interface AddUserToChatFormValues {
+interface DeleteUserFromChatFormValues {
   chatId?: number;
   userId?: number;
 }
 
-class AddUserToChatForm extends Component {
-  protected readonly props: FormProps<AddUserToChatFormValues>;
+class DeleteUserFromChatForm extends Component {
+  protected readonly props: FormProps<DeleteUserFromChatFormValues>;
 
-  constructor(props: FormProps<AddUserToChatFormValues>) {
+  constructor(props: FormProps<DeleteUserFromChatFormValues>) {
     const chatIdInput = new Input({
       className: 'chats-additional-form-field',
       type: 'number',
@@ -41,7 +41,7 @@ class AddUserToChatForm extends Component {
     });
 
     const submitButton = new SubmitButton({
-      label: 'Добавить',
+      label: 'Удалить',
     });
 
     super(
@@ -64,4 +64,4 @@ class AddUserToChatForm extends Component {
   }
 }
 
-export default AddUserToChatForm;
+export default DeleteUserFromChatForm;
