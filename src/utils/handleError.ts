@@ -1,6 +1,7 @@
-const handleError = (e: Error, message = 'произошла ошибка'): void => {
+const handleError = (e: Error | string, message = 'произошла ошибка'): void => {
+  const error = typeof e === 'string' ? new Error(e) : e;
   // eslint-disable-next-line no-console
-  console.log(message, e);
+  console.log(message, error);
 };
 
 export default handleError;

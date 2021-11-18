@@ -2,9 +2,11 @@ import chatsAPI, {
   CreateChatRequest,
   AddUserToChatRequest,
 } from '../api/ChatsAPI';
+import ChatWS from '../api/ChatsWS';
+
 import handleError from '../utils/handleError';
-import store from '../store';
 import getSubmittedFormData from '../utils/getSubmittedFormData';
+import store from '../store';
 
 class ChatsController {
   public static async getChats(): Promise<void> {
@@ -47,37 +49,20 @@ class ChatsController {
     }
   }
 
+  // TODO удалить?
   public static async getChatUsers(chatId: number): Promise<void> {
     try {
       const users = await chatsAPI.getChatUsers({ chatId });
-
-      // TODO it's debug
       console.log(`chat ${chatId} users:`, users);
     } catch (error) {
       handleError(error);
     }
   }
 
-  public static async getChatToken(chatId: number): Promise<void> {
+  public static async openWS(chatId: number): Promise<void> {
     try {
-      const response = await chatsAPI.getChatToken(chatId);
-
-      // TODO it's debug
-      console.log(`token for ${chatId}:`, response.token);
-
-      // const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${113440}/${chatId}/${response.token}`);
-      // /ws/chats/<USER_ID>/<CHAT_ID>/<TOKEN_VALUE>
-
-      // const socket = null;
-
-      // socket?.addEventListener('open', () => {
-      //   console.log('Соединение установлено!');
-
-      // socket.send(JSON.stringify({
-      //   content: 'Моё первое сообщение миру!',
-      //   type: 'message',
-      // }));
-      // });
+      const chatWS = new ChatWS(chatId);
+      await chatWS.init();
     } catch (error) {
       handleError(error);
     }

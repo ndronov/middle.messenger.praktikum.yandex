@@ -14,7 +14,7 @@ router
   .use('/sign-out', LogoutPage)
   .use('/sign-up', SignupPage)
   .use('/chats', ChatList, {}, ['chats'])
-  .use('/chat', ActiveChat)
+  .use('/chat', ActiveChat, {}, ['user'])
   .use('/settings', UserSettings, {}, ['user'])
   .use('/avatar', AvatarChange, {}, ['user'])
   .use('/password', PasswordChange, {}, ['user'])

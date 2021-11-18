@@ -5,7 +5,7 @@ import EventBus, { Listener } from '../modules/eventBus';
 export type StoreKeys = string[];
 
 export interface StoreData {
-  user?: User;
+  user: User;
   chats: Chat[];
 }
 
@@ -20,7 +20,7 @@ class Store {
 
   public setKeyValue(key: keyof StoreData, value: unknown): void {
     // TODO rework with StoreData param type
-    this.state = { ...this.state, ...{ [key]: value } };
+    Object.assign(this.state, { [key]: value });
 
     if (this.connected(key)) {
       this.eventBus.emit(key);

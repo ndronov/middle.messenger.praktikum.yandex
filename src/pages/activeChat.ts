@@ -11,6 +11,7 @@ import handleFormSubmit from '../utils/handleFormSubmit';
 import validation from '../validation/chatValidationMap';
 import AuthController from '../controllers/authController';
 import { ComponentProps } from '../types';
+import ChatsController from '../controllers/chatsController';
 
 const template = `
 div.container
@@ -38,7 +39,7 @@ interface ActiveChatProps extends ComponentProps {
 }
 
 interface ActiveChatParams extends ComponentProps {
-  queryId?: number;
+  queryId: string;
 }
 
 class ActiveChat extends Component {
@@ -82,14 +83,13 @@ class ActiveChat extends Component {
       messageSendingForm,
     });
 
-    this.chatId = params.queryId ?? 0;
+    this.chatId = Number(params.queryId);
   }
 
   // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
     await AuthController.checkAuthorization();
-
-    console.log('загружаем чат:', this.chatId);
+    await ChatsController.openWS(this.chatId);
   }
 
   render(): string {
