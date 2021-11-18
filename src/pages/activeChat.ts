@@ -10,6 +10,7 @@ import mockActiveChat from '../mockData/mockActiveChat';
 import handleFormSubmit from '../utils/handleFormSubmit';
 import validation from '../validation/chatValidationMap';
 import AuthController from '../controllers/authController';
+import { ComponentProps } from '../types';
 
 const template = `
 div.container
@@ -27,8 +28,25 @@ div.container
     message-sending-form(data-component-id=messageSendingForm.id)
 `;
 
+interface ActiveChatProps extends ComponentProps {
+  logoutLink: Link;
+  profileLink: Link;
+  chats: Chats;
+  userName: string;
+  chatContent: ChatContent;
+  messageSendingForm: MessageSendingForm;
+}
+
+interface ActiveChatParams extends ComponentProps {
+  queryId?: number;
+}
+
 class ActiveChat extends Component {
-  constructor() {
+  protected readonly props: ActiveChatProps;
+
+  protected readonly chatId: number;
+
+  constructor(params: ActiveChatParams) {
     const logoutLink = new Link({
       label: '< Выход',
       href: '/sign-out',
@@ -63,11 +81,15 @@ class ActiveChat extends Component {
       chatContent,
       messageSendingForm,
     });
+
+    this.chatId = params.queryId ?? 0;
   }
 
   // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
     await AuthController.checkAuthorization();
+
+    console.log('загружаем чат:', this.chatId);
   }
 
   render(): string {

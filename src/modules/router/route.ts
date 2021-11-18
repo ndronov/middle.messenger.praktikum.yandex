@@ -44,7 +44,10 @@ class Route {
   }
 
   match(pathname: string): boolean {
-    return pathname === this.pathname;
+    const isRootMatch = pathname === this.pathname && this.pathname === '/';
+    const isNoRootMatch = pathname.startsWith(this.pathname) && this.pathname !== '/';
+
+    return isRootMatch || isNoRootMatch;
   }
 
   connectToStore(): void {
@@ -59,17 +62,29 @@ class Route {
     }
   }
 
-  render(): void {
+  render(params?: ComponentProps): void {
+    const yes = this.pathname === '/chat';
+
     if (this.block) {
+      if (yes) {
+        console.log('блок уже есть, надо обновить пропсы и перерендерить');
+      }
+
       this.connectToStore();
-      this.block.renderToRoot();
+
+      this.block.renderToRoot(params);
 
       return;
     }
 
     const Block = this.blockClass;
     const { rootQuery, ...restProps } = this.props;
-    this.block = new Block(restProps);
+
+    if (yes) {
+      console.log('блока нет, создаем новый с пропсами', params);
+    }
+
+    this.block = new Block({ ...restProps, ...params });
 
     this.connectToStore();
     this.block.mountToRoot(rootQuery);

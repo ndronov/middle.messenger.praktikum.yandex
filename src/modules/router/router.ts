@@ -65,7 +65,8 @@ class Router {
     }
 
     this.currentRoute = route;
-    route.render();
+    const params = Router.getRouteParams(pathname);
+    route.render(params);
   }
 
   go(pathname: string): void {
@@ -79,6 +80,16 @@ class Router {
 
   forward(): void {
     this.history.forward();
+  }
+
+  static getRouteParams(pathname: string): ComponentProps | undefined {
+    const [,, queryId] = pathname.split('/');
+
+    if (!queryId) {
+      return undefined;
+    }
+
+    return { queryId };
   }
 
   getRoute(pathname: string): Route | null {

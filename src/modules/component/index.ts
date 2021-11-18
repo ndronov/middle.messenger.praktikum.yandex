@@ -188,9 +188,13 @@ abstract class Component {
     this.renderToRoot();
   }
 
-  renderToRoot(): void {
+  renderToRoot(params?: ComponentProps): void {
     if (!this.meta.rootElement) {
       throw new Error('Для компонента не найден корневой элемент');
+    }
+
+    if (params) {
+      console.log('пришли новые пропсы, надо перерендерить');
     }
 
     this.meta.rootElement.appendChild(this.content);

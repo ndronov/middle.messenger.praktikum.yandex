@@ -3,14 +3,14 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
 import formatTime from '../../utils/formatTime';
+import router from '../../modules/router';
 
-// TODO создать механизм перехода на страницу чата
 // TODO remove id from chat title
 
 const template = `
 div.chats
   each chat in chats
-    div.chat
+    a.chat(href='chat/' + chat.id)
       div.avatar(title=chat.title)
       div.content
         if chat.last_message
@@ -31,8 +31,30 @@ class Chats extends Component {
     super('div', props);
   }
 
+  componentDidMount(): void {
+    this.addEventListener('click', Chats.handleClick);
+  }
+
+  static handleClick(e: Event): void {
+    e.preventDefault();
+
+    const target = e.target as HTMLElement;
+    const chatAnchor = target.closest('a');
+
+    if (!chatAnchor) {
+      throw new Error('Ошибка открытия чата');
+    }
+
+    const { pathname } = new URL(chatAnchor.href);
+    router.go(pathname);
+  }
+
   render(): string {
-    return pug.render(template, { ...this.props, formatTime });
+    return pug.render(template, {
+      ...this.props,
+      eventTarget: 'a',
+      formatTime,
+    });
   }
 }
 
