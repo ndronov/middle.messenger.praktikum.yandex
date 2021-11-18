@@ -5,25 +5,20 @@ import { ComponentProps } from '../../types';
 import formatTime from '../../utils/formatTime';
 import router from '../../modules/router';
 
-// TODO remove id from chat title
-
 const template = `
 div.chats
   each chat in chats
-    a.chat(href='chat/' + chat.id)
+    a.chat(href='/chat/' + chat.id)
       div.avatar(title=chat.title)
       div.content
-        if chat.last_message
-          span.name= chat.last_message.user.display_name
-        else
-          span.name= chat.title + ' ('+ chat.id + ')'
+        span.name= chat.title
         if chat.last_message
           span.message= chat.last_message.content
       div.additional-content
         if chat.last_message
           time.time= formatTime(chat.last_message.time)
-        if unread_count
-          span.notifications-number= unread_count
+        if chat.unread_count
+          span.notifications-number= chat.unread_count
 `;
 
 class Chats extends Component {
