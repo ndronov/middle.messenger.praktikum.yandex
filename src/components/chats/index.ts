@@ -2,21 +2,28 @@
 import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
+import formatTime from '../../utils/formatTime';
 
-// TODO replace unread_count by id
+// TODO создать механизм перехода на страницу чата
+// TODO remove id from chat title
 
 const template = `
 div.chats
   each chat in chats
     div.chat
-      div.avatar
+      div.avatar(title=chat.title)
       div.content
-        span.name= chat.title
-        span.message= chat.message
+        if chat.last_message
+          span.name= chat.last_message.user.display_name
+        else
+          span.name= chat.title + ' ('+ chat.id + ')'
+        if chat.last_message
+          span.message= chat.last_message.content
       div.additional-content
-        time.time= chat.time
-        if chat.id
-          span.notifications-number= chat.id
+        if chat.last_message
+          time.time= formatTime(chat.last_message.time)
+        if unread_count
+          span.notifications-number= unread_count
 `;
 
 class Chats extends Component {
@@ -25,7 +32,7 @@ class Chats extends Component {
   }
 
   render(): string {
-    return pug.render(template, this.props);
+    return pug.render(template, { ...this.props, formatTime });
   }
 }
 

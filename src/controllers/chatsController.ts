@@ -51,7 +51,33 @@ class ChatsController {
     try {
       const users = await chatsAPI.getChatUsers({ chatId });
 
+      // TODO it's debug
       console.log(`chat ${chatId} users:`, users);
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  public static async getChatToken(chatId: number): Promise<void> {
+    try {
+      const response = await chatsAPI.getChatToken(chatId);
+
+      // TODO it's debug
+      console.log(`token for ${chatId}:`, response.token);
+
+      // const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${113440}/${chatId}/${response.token}`);
+      // /ws/chats/<USER_ID>/<CHAT_ID>/<TOKEN_VALUE>
+
+      // const socket = null;
+
+      // socket?.addEventListener('open', () => {
+      //   console.log('Соединение установлено!');
+
+      // socket.send(JSON.stringify({
+      //   content: 'Моё первое сообщение миру!',
+      //   type: 'message',
+      // }));
+      // });
     } catch (error) {
       handleError(error);
     }

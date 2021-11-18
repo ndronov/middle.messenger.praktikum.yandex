@@ -22,6 +22,10 @@ export interface GetChatUsersRequest {
   email?: string;
 }
 
+export interface GetChatTokenResponse {
+  token: string;
+}
+
 class ChatsAPI extends BaseAPI {
   constructor() {
     super('/chats');
@@ -53,6 +57,10 @@ class ChatsAPI extends BaseAPI {
     const { chatId, ...data } = params;
 
     return this.http.get(`/${chatId}/users`, { data });
+  }
+
+  getChatToken(chatId: number): Promise<GetChatTokenResponse> {
+    return this.http.post(`/token/${chatId}`);
   }
 
   read: undefined;
