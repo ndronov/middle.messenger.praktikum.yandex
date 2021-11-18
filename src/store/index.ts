@@ -1,4 +1,4 @@
-import { User, Chat } from '../models';
+import { User, Chat, Message } from '../models';
 import Component from '../modules/component';
 import EventBus, { Listener } from '../modules/eventBus';
 
@@ -7,12 +7,17 @@ export type StoreKeys = string[];
 export interface StoreData {
   user: User;
   chats: Chat[];
+  messages: Message[];
 }
 
 type Updaters = Record<string, Record<string, Listener>>;
 
 class Store {
-  private state: StoreData = { user: {} as User, chats: [] } as StoreData;
+  private state: StoreData = {
+    user: {} as User,
+    chats: [],
+    messages: [],
+  } as StoreData;
 
   private eventBus = new EventBus();
 

@@ -2,19 +2,21 @@
 import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
+import formatTime from '../../utils/formatTime';
 import './index.scss';
+
+// TODO own - как проверить автора ?
 
 const template = `
 div.chat-content
-    div.date= content.date
     each message in content.messages
-        if message.text
+        if message.type == 'message'
             if message.own
-                span.message.text-message.text-message_own= message.text
-                    time.text-message-time= message.time
+                span.message.text-message.text-message_own= message.content
+                    time.text-message-time= formatTime(message.time)
             else
-                span.message.text-message= message.text
-                    time.text-message-time= message.time
+                span.message.text-message= message.content
+                    time.text-message-time= formatTime(message.time)
         else if message.image
             if message.own
                 div.message.image-message.image-message_own
@@ -32,7 +34,7 @@ class ChatContent extends Component {
   }
 
   render(): string {
-    return pug.render(template, this.props);
+    return pug.render(template, { ...this.props, formatTime });
   }
 }
 

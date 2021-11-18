@@ -12,6 +12,7 @@ import validation from '../validation/chatValidationMap';
 import AuthController from '../controllers/authController';
 import { ComponentProps } from '../types';
 import ChatsController from '../controllers/chatsController';
+import store from '../store';
 
 const template = `
 div.container
@@ -65,7 +66,7 @@ class ActiveChat extends Component {
     });
 
     const chatContent = new ChatContent({
-      content: mockActiveChat.content,
+      content: { messages: [] },
     });
 
     const messageSendingForm = new MessageSendingForm({
@@ -93,12 +94,15 @@ class ActiveChat extends Component {
   }
 
   render(): string {
+    const { messages } = store.data;
+    const content = { messages };
+
     return pug.render(template, {
       logoutLink: this.props.logoutLink,
       profileLink: this.props.profileLink,
       chats: this.props.chats,
       userName: mockActiveChat.userName,
-      chatContent: this.props.chatContent,
+      chatContent: this.props.chatContent.setProps({ content }),
       messageSendingForm: this.props.messageSendingForm,
     });
   }

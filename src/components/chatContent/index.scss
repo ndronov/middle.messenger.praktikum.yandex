@@ -6,9 +6,8 @@
   flex-flow: column;
   align-items: flex-start;
 
-  .date {
-    align-self: center;
-    margin: 48px 0 30px 0;
+  .message:first-child {
+    margin-top: 10px;
   }
 
   .message {

@@ -1,22 +1,26 @@
 import chatsAPI from './ChatsAPI';
 import store from '../store';
 import handleError from '../utils/handleError';
+import { Message } from '../models';
 
 export const BASE_WS_URL = 'wss://ya-praktikum.tech/ws/chats';
 const PING_PONG_INTERVAL = 15 * 1000;
 
-enum MessageType {
+enum WSMessageType {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   Message = 'message',
   Ping = 'ping',
   Pong = 'pong',
   Error = 'error',
-  UserConnected = 'user connected',
   GetOld = 'get old',
 }
-interface Message {
-  type: MessageType;
+
+interface WSMetaMessage {
+  type: WSMessageType;
   content?: string;
 }
+
+type WSMessage = WSMetaMessage | Message[];
 
 class ChatWS {
   private ws: WebSocket;
@@ -40,9 +44,8 @@ class ChatWS {
     return new Promise((success, fail) => {
       this.ws.addEventListener('open', () => {
         console.log(`Подключение к веб-сокету для чата ${this.chatId} установлено`);
-        this.handlePongMessage();
 
-        this.ws.addEventListener('message', this.handleMessage.bind(this));
+        this.ws.addEventListener('message', this.handleWSMessage.bind(this));
 
         this.ws.addEventListener('close', (event) => {
           if (event.wasClean) {
@@ -51,7 +54,11 @@ class ChatWS {
             console.log(`[close] Соединение прервано, код=${event.code} причина=${event.reason}`, event);
           }
         });
+
         success();
+
+        this.handlePong();
+        this.getMessages();
       });
 
       this.ws.addEventListener('error', () => {
@@ -61,16 +68,32 @@ class ChatWS {
     });
   }
 
-  handleMessage(event: MessageEvent) {
-    const message = JSON.parse(event.data) as Message;
+  handleWSMessage(event: MessageEvent): void {
+    const wsMessage = JSON.parse(event.data) as WSMessage;
+    const isContent = Array.isArray(wsMessage);
 
-    switch (message.type) {
-      case MessageType.Pong:
-        this.handlePongMessage();
+    console.log('wsMessage', wsMessage);
+
+    if (isContent) {
+      ChatWS.handleContentMessage(wsMessage as Message[]);
+      return;
+    }
+
+    this.handleMetaMessage(wsMessage as WSMetaMessage);
+  }
+
+  static handleContentMessage(messages: Message[]): void {
+    store.setKeyValue('messages', messages);
+  }
+
+  handleMetaMessage(meta: WSMetaMessage): void {
+    switch (meta.type) {
+      case WSMessageType.Pong:
+        this.handlePong();
         break;
 
-      case MessageType.Error:
-        handleError(message.content ?? 'Ошибка веб-сокета');
+      case WSMessageType.Error:
+        handleError(meta.content ?? 'Ошибка веб-сокета');
         break;
 
       default:
@@ -78,22 +101,29 @@ class ChatWS {
     }
   }
 
-  handlePongMessage() {
+  handlePong(): void {
     setTimeout(() => {
-      this.sendMessage({ type: MessageType.Ping });
+      this.sendWSMessage({ type: WSMessageType.Ping });
     }, PING_PONG_INTERVAL);
   }
 
-  sendMessage(message: Message) {
+  sendWSMessage(message: WSMessage):void {
     this.ws.send(JSON.stringify(message));
   }
 
-  // sendMessage(content: string) {
-  //   this.ws.send(JSON.stringify({
-  //     content,
-  //     type: 'message',
-  //   }));
-  // }
+  getMessages(offset = 0): void {
+    this.sendWSMessage({
+      type: WSMessageType.GetOld,
+      content: offset.toString(),
+    });
+  }
+
+  sendMessage(content: string): void {
+    this.sendWSMessage({
+      type: WSMessageType.Message,
+      content,
+    });
+  }
 }
 
 export default ChatWS;
