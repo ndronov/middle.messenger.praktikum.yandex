@@ -26,6 +26,10 @@ export interface GetChatTokenResponse {
   token: string;
 }
 
+export interface SendMessageRequest {
+  message: string;
+}
+
 class ChatsAPI extends BaseAPI {
   constructor() {
     super('/chats');

@@ -26,9 +26,9 @@ div.container
 `;
 
 interface ChatListProps extends ComponentProps {
-  dialogs: Chats;
   logoutLink: Link;
   profileLink: Link;
+  dialogs: Chats;
   newChatForm: NewChatForm;
   addUserToChatForm: AddUserToChatForm;
   deleteUserFromChatForm: DeleteUserFromChatForm;
@@ -76,10 +76,6 @@ class ChatList extends Component {
 
     await AuthController.checkAuthorization();
     await ChatsController.getChats();
-
-    // TODO it's debug
-    // await ChatsController.getChatUsers(518);
-    // await ChatsController.getChatToken(559);
   }
 
   async handleSubmit(e: Event): Promise<void> {

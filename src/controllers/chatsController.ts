@@ -1,6 +1,7 @@
 import chatsAPI, {
   CreateChatRequest,
   AddUserToChatRequest,
+  SendMessageRequest,
 } from '../api/ChatsAPI';
 import ChatWS from '../api/ChatsWS';
 
@@ -9,6 +10,8 @@ import getSubmittedFormData from '../utils/getSubmittedFormData';
 import store from '../store';
 
 class ChatsController {
+  private static chatWS: ChatWS;
+
   public static async getChats(): Promise<void> {
     try {
       const chats = await chatsAPI.getChats({ limit: 40 });
@@ -61,8 +64,17 @@ class ChatsController {
 
   public static async openWS(chatId: number): Promise<void> {
     try {
-      const chatWS = new ChatWS(chatId);
-      await chatWS.init();
+      ChatsController.chatWS = new ChatWS(chatId);
+      await ChatsController.chatWS.init();
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  public static async sendMessage(e: Event): Promise<void> {
+    try {
+      const { message } = getSubmittedFormData<SendMessageRequest>(e);
+      ChatsController.chatWS.sendMessage(message);
     } catch (error) {
       handleError(error);
     }

@@ -125,6 +125,9 @@
   line-height: 12px;
   background: $color_white;
 
+  // TODO remove user-panel and user-name class
+
+  .chat-header,
   .user-panel {
     display: flex;
     align-items: center;
@@ -136,7 +139,7 @@
       width: 34px;
     }
 
-    .user-name {
+    .chat-title {
       flex: 1;
       color: $color_black;
       font-weight: 600;

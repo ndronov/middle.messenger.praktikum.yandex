@@ -5,14 +5,14 @@ import Chats from '../components/chats';
 import Link from '../components/link';
 import ChatContent from '../components/chatContent';
 import MessageSendingForm from '../components/messageSendingForm';
-import mockChats from '../mockData/mockChats';
-import mockActiveChat from '../mockData/mockActiveChat';
 import handleFormSubmit from '../utils/handleFormSubmit';
 import validation from '../validation/chatValidationMap';
 import AuthController from '../controllers/authController';
 import { ComponentProps } from '../types';
 import ChatsController from '../controllers/chatsController';
 import store from '../store';
+
+// TODO remove user-panel and user-name class
 
 const template = `
 div.container
@@ -21,11 +21,11 @@ div.container
       link(data-component-id=logoutLink.id)
       link(data-component-id=profileLink.id)
     button.search-button &#128269; Поиск
-    chats(data-component-id=chats.id)
+    chats(data-component-id=dialogs.id)
   div.active-chat
-    div.user-panel
+    div.user-panel.chat-header
       div.avatar
-      div.user-name= userName
+      div.user-name.chat-title= chatTitle
     chat-content(data-component-id=chatContent.id)
     message-sending-form(data-component-id=messageSendingForm.id)
 `;
@@ -33,7 +33,7 @@ div.container
 interface ActiveChatProps extends ComponentProps {
   logoutLink: Link;
   profileLink: Link;
-  chats: Chats;
+  dialogs: Chats;
   userName: string;
   chatContent: ChatContent;
   messageSendingForm: MessageSendingForm;
@@ -61,13 +61,11 @@ class ActiveChat extends Component {
       className: 'link',
     });
 
-    const chats = new Chats({
-      chats: mockChats,
+    const dialogs = new Chats({
+      chats: [],
     });
 
-    const chatContent = new ChatContent({
-      content: { messages: [] },
-    });
+    const chatContent = new ChatContent({ messages: [] });
 
     const messageSendingForm = new MessageSendingForm({
       validation,
@@ -79,7 +77,7 @@ class ActiveChat extends Component {
       hasFlow: true,
       logoutLink,
       profileLink,
-      chats,
+      dialogs,
       chatContent,
       messageSendingForm,
     });
@@ -89,20 +87,32 @@ class ActiveChat extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
+    this.addEventListener('submit', ActiveChat.handleSubmit);
+
     await AuthController.checkAuthorization();
+    await ChatsController.getChats();
     await ChatsController.openWS(this.chatId);
   }
 
+  static async handleSubmit(e: Event): Promise<void> {
+    e.preventDefault();
+
+    await ChatsController.sendMessage(e);
+  }
+
+  get chatTitle(): string {
+    return store.data.chats.find((chat) => chat.id === this.chatId)?.title ?? '';
+  }
+
   render(): string {
-    const { messages } = store.data;
-    const content = { messages };
+    const { chats, messages } = store.data;
 
     return pug.render(template, {
       logoutLink: this.props.logoutLink,
       profileLink: this.props.profileLink,
-      chats: this.props.chats,
-      userName: mockActiveChat.userName,
-      chatContent: this.props.chatContent.setProps({ content }),
+      dialogs: this.props.dialogs.setProps({ chats }),
+      chatTitle: this.chatTitle,
+      chatContent: this.props.chatContent.setProps({ messages }),
       messageSendingForm: this.props.messageSendingForm,
     });
   }

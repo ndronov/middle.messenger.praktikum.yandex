@@ -9,7 +9,7 @@ import './index.scss';
 
 const template = `
 div.chat-content
-    each message in content.messages
+    each message in messages
         if message.type == 'message'
             if message.own
                 span.message.text-message.text-message_own= message.content

@@ -19,13 +19,11 @@ class MessageSendingForm extends Component {
   protected readonly props: FormProps<MessageSendingFormValues>;
 
   constructor(props: FormProps<MessageSendingFormValues>) {
-    const { validation } = props;
     const messageInput = new Input({
       className: 'message-input',
       type: 'text',
       inputName: 'message',
       placeholder: 'Сообщение',
-      ...validation?.message,
     });
 
     super(
