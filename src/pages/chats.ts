@@ -8,8 +8,8 @@ import AddUserToChatForm from '../components/addUserToChatForm';
 import DeleteUserFromChatForm from '../components/deleteUserFromChatForm';
 import AuthController from '../controllers/authController';
 import ChatsController from '../controllers/chatsController';
-import store from '../store';
 import { ComponentProps } from '../types';
+import { Chat } from '../models';
 
 const template = `
 div.container
@@ -29,6 +29,7 @@ interface ChatListProps extends ComponentProps {
   logoutLink: Link;
   profileLink: Link;
   dialogs: Chats;
+  chats?: Chat[];
   newChatForm: NewChatForm;
   addUserToChatForm: AddUserToChatForm;
   deleteUserFromChatForm: DeleteUserFromChatForm;
@@ -103,7 +104,11 @@ class ChatList extends Component {
   }
 
   render(): string {
-    const { chats } = store.data;
+    const { chats } = this.props;
+
+    if (!chats) {
+      return '';
+    }
 
     return pug.render(template, {
       logoutLink: this.props.logoutLink,

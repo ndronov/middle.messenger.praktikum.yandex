@@ -1,5 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ComponentProps, ValidationOptions } from '../../types';
+import {
+  ComponentProps,
+  ValidationOptions,
+  ComponentUpdateOptions,
+  ComponentUpdateData,
+  ComponentUpdateType,
+} from '../../types';
 import EventBus from '../eventBus';
 import htmlToDOM from './htmlToDOM';
 import renderElement from './renderElement';
@@ -184,13 +190,18 @@ abstract class Component {
     return !equal(oldProps, newProps);
   }
 
-  setProps = (nextProps: ComponentProps): Component => {
-    if (!nextProps) {
+  setProps = (keyValueObj: ComponentProps, options: ComponentUpdateOptions = {}): Component => {
+    if (!keyValueObj) {
       return this;
     }
 
+    const [propUpdate] = Object.entries(keyValueObj);
+    const [propName, propValue] = propUpdate;
+
+    const componentUpdateData = { [ComponentUpdateType.Flow]: { propName, propValue, options } };
+
     // TODO make setProps queue RAF ?
-    setTimeout(() => Object.assign(this.props, nextProps), 200);
+    setTimeout(() => Object.assign(this.props, componentUpdateData), 200);
     return this;
   };
 
@@ -214,6 +225,11 @@ abstract class Component {
 
   private flowRender(): void {
     const componentTemplate = htmlToDOM(this.render());
+
+    if (!componentTemplate) {
+      return;
+    }
+
     renderElement(componentTemplate, this.element);
 
     this.renderChildComponents();
@@ -324,15 +340,25 @@ abstract class Component {
         return typeof value === 'function' ? value.bind(props) : value;
       },
 
-      set: (props: ComponentProps, propName: string, newValue: unknown) => {
-        const oldPropValue = { [propName]: props[propName] };
-        const newPropValue = { [propName]: newValue };
+      set: (
+        oldProps: ComponentProps,
+        componentUpdateType: ComponentUpdateType,
+        componentUpdateData: ComponentUpdateData,
+      ) => {
+        if (componentUpdateType !== ComponentUpdateType.Flow) {
+          return false;
+        }
 
-        // TODO каждое поле вызывает свой цикл обновления
+        const { options, propName, propValue } = componentUpdateData;
 
-        Object.assign(props, newPropValue);
+        const oldPropValue = { [propName]: oldProps[propName] };
+        const newPropValue = { [propName]: propValue };
 
-        this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldPropValue, newPropValue);
+        Object.assign(oldProps, newPropValue);
+
+        if (!options.silent) {
+          this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldPropValue, newPropValue);
+        }
 
         return true;
       },

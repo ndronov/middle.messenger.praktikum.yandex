@@ -8,9 +8,9 @@ import MessageSendingForm from '../components/messageSendingForm';
 import handleFormSubmit from '../utils/handleFormSubmit';
 import validation from '../validation/chatValidationMap';
 import AuthController from '../controllers/authController';
-import { ComponentProps } from '../types';
 import ChatsController from '../controllers/chatsController';
-import store from '../store';
+import { ComponentProps } from '../types';
+import { Chat, Message } from '../models';
 
 const template = `
 div.container
@@ -32,6 +32,8 @@ interface ActiveChatProps extends ComponentProps {
   logoutLink: Link;
   profileLink: Link;
   dialogs: Chats;
+  chats?: Chat[];
+  messages?: Message[];
   userName: string;
   chatContent: ChatContent;
   messageSendingForm: MessageSendingForm;
@@ -88,7 +90,7 @@ class ActiveChat extends Component {
     this.addEventListener('submit', ActiveChat.handleSubmit);
 
     await AuthController.checkAuthorization();
-    await ChatsController.getChats();
+    await ChatsController.getChats({ silent: true });
     await ChatsController.openWebSocket(this.chatId);
   }
 
@@ -109,11 +111,17 @@ class ActiveChat extends Component {
   }
 
   get chatTitle(): string {
-    return store.data.chats.find((chat) => chat.id === this.chatId)?.title ?? '';
+    const { chats } = this.props;
+
+    return chats?.find((chat) => chat.id === this.chatId)?.title ?? '';
   }
 
   render(): string {
-    const { chats, messages } = store.data;
+    const { messages, chats } = this.props;
+
+    if (!messages || !chats) {
+      return '';
+    }
 
     return pug.render(template, {
       logoutLink: this.props.logoutLink,

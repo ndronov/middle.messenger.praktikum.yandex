@@ -8,15 +8,15 @@ import ChatWS from '../api/ChatsWS';
 import handleError from '../utils/handleError';
 import getSubmittedFormData from '../utils/getSubmittedFormData';
 import store from '../store';
+import { ComponentUpdateOptions } from '../types';
 
 class ChatsController {
   private static chatWS: ChatWS;
 
-  public static async getChats(): Promise<void> {
+  public static async getChats(options: ComponentUpdateOptions = {}): Promise<void> {
     try {
       const chats = await chatsAPI.getChats({ limit: 40 });
-
-      store.setKeyValue('chats', chats);
+      store.setKeyValue('chats', chats, options);
     } catch (error) {
       handleError(error);
     }
@@ -25,7 +25,6 @@ class ChatsController {
   public static async createChat(e: Event): Promise<void> {
     try {
       const newChatData = getSubmittedFormData<CreateChatRequest>(e);
-
       await chatsAPI.createChat(newChatData);
     } catch (error) {
       handleError(error);
@@ -35,7 +34,6 @@ class ChatsController {
   public static async addUserToChat(e: Event): Promise<void> {
     try {
       const data = getSubmittedFormData<AddUserToChatRequest>(e);
-
       await chatsAPI.addUsersToChat(data);
     } catch (error) {
       handleError(error);
@@ -45,7 +43,6 @@ class ChatsController {
   public static async deleteUserFromChat(e: Event): Promise<void> {
     try {
       const data = getSubmittedFormData<AddUserToChatRequest>(e);
-
       await chatsAPI.deleteUserFromChat(data);
     } catch (error) {
       handleError(error);

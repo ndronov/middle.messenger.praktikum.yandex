@@ -1,5 +1,19 @@
 export type ComponentProps = Record<string, unknown>;
 
+export interface ComponentUpdateOptions {
+  silent?: boolean;
+}
+
+export enum ComponentUpdateType {
+  Flow = 'Flow',
+}
+
+export interface ComponentUpdateData {
+  options: ComponentUpdateOptions;
+  propName: string;
+  propValue: unknown;
+}
+
 export interface Validation {
   pattern: RegExp;
   error: string;
