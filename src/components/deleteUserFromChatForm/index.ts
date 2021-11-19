@@ -22,6 +22,8 @@ interface DeleteUserFromChatFormValues {
   userId?: number;
 }
 
+// TODO add types..
+
 class DeleteUserFromChatForm extends Component {
   protected readonly props: FormProps<DeleteUserFromChatFormValues>;
 

@@ -16,8 +16,13 @@ div.modal-backdrop
     submit-button(data-component-id=submitButton.id)
 `;
 
+interface AvatarFormProps extends FormProps {
+  avatarInput: Input;
+  submitButton: Input;
+}
+
 class AvatarForm extends Component {
-  protected readonly props: FormProps;
+  protected readonly props: AvatarFormProps;
 
   constructor(props: FormProps) {
     const submitButton = new SubmitButton({

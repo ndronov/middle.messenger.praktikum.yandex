@@ -22,8 +22,14 @@ interface AddUserToChatFormValues {
   userId?: number;
 }
 
+interface AddUserToChatFormProps extends FormProps<AddUserToChatFormValues> {
+  chatIdInput: Input;
+  userIdInput: Input;
+  submitButton: Input;
+}
+
 class AddUserToChatForm extends Component {
-  protected readonly props: FormProps<AddUserToChatFormValues>;
+  protected readonly props: AddUserToChatFormProps;
 
   constructor(props: FormProps<AddUserToChatFormValues>) {
     const chatIdInput = new Input({
