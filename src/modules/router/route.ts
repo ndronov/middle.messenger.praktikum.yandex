@@ -63,15 +63,8 @@ class Route {
   }
 
   render(params?: ComponentProps): void {
-    const yes = this.pathname === '/chat';
-
     if (this.block) {
-      if (yes) {
-        console.log('блок уже есть, надо обновить пропсы и перерендерить');
-      }
-
       this.connectToStore();
-
       this.block.renderToRoot(params);
 
       return;
@@ -79,10 +72,6 @@ class Route {
 
     const Block = this.blockClass;
     const { rootQuery, ...restProps } = this.props;
-
-    if (yes) {
-      console.log('блока нет, создаем новый с пропсами', params);
-    }
 
     this.block = new Block({ ...restProps, ...params });
 

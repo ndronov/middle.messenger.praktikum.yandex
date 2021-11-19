@@ -16,7 +16,7 @@ class ChatsController {
     try {
       const chats = await chatsAPI.getChats({ limit: 40 });
 
-      setTimeout(() => store.setKeyValue('chats', chats), 0);
+      store.setKeyValue('chats', chats);
     } catch (error) {
       handleError(error);
     }
@@ -62,7 +62,7 @@ class ChatsController {
     }
   }
 
-  public static async openWS(chatId: number): Promise<void> {
+  public static async openWebSocket(chatId: number): Promise<void> {
     try {
       ChatsController.chatWS = new ChatWS(chatId);
       await ChatsController.chatWS.init();

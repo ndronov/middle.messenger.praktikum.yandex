@@ -56,6 +56,7 @@ abstract class Component {
       template,
       eventTargetSelector,
       validateOnSubmit,
+      id,
       ...props
     } = initialProps;
 
@@ -64,7 +65,7 @@ abstract class Component {
       props,
       hasFlow: Boolean(hasFlow),
       eventTargetSelector: eventTargetSelector as string,
-      componentId: uuidv4(),
+      componentId: id as string ?? uuidv4(),
     };
 
     this.props = this.makePropsProxy(props);
@@ -126,18 +127,28 @@ abstract class Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     // каждый компонент может реализовать свой метод componentDidMount
   }
 
-  private flowComponentDidUpdate(oldProps: ComponentProps, newProps: ComponentProps): void {
+  private async flowComponentDidUpdate(
+    oldProps: ComponentProps,
+    newProps: ComponentProps,
+  ): Promise<void> {
     const shouldUpdate = this.shouldComponentUpdate(oldProps, newProps);
 
     if (shouldUpdate) {
+      await this.componentDidUpdate(newProps);
       this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_HANDLERS);
       this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS);
       this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
     }
+  }
+
+  // @ts-ignore
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
+  async componentDidUpdate(newProps: ComponentProps): Promise<void> {
+    // каждый компонент может реализовать свой метод componentDidUpdate
   }
 
   private flowComponentWillUnmount(): void {
@@ -194,7 +205,8 @@ abstract class Component {
     }
 
     if (params) {
-      console.log('пришли новые пропсы, надо перерендерить');
+      this.setProps(params);
+      return;
     }
 
     this.meta.rootElement.appendChild(this.content);
@@ -312,14 +324,15 @@ abstract class Component {
         return typeof value === 'function' ? value.bind(props) : value;
       },
 
-      set: (props: ComponentProps, propName: string, value: unknown) => {
-        const oldProps = { ...props };
+      set: (props: ComponentProps, propName: string, newValue: unknown) => {
+        const oldPropValue = { [propName]: props[propName] };
+        const newPropValue = { [propName]: newValue };
 
         // TODO каждое поле вызывает свой цикл обновления
 
-        Object.assign(props, { [propName]: value });
+        Object.assign(props, newPropValue);
 
-        this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, props);
+        this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldPropValue, newPropValue);
 
         return true;
       },

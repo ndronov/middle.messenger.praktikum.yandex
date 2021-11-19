@@ -12,8 +12,6 @@ import { ComponentProps } from '../types';
 import ChatsController from '../controllers/chatsController';
 import store from '../store';
 
-// TODO remove user-panel and user-name class
-
 const template = `
 div.container
   nav.navigation
@@ -23,9 +21,9 @@ div.container
     button.search-button &#128269; Поиск
     chats(data-component-id=dialogs.id)
   div.active-chat
-    div.user-panel.chat-header
+    div.chat-header
       div.avatar
-      div.user-name.chat-title= chatTitle
+      div.chat-title= chatTitle
     chat-content(data-component-id=chatContent.id)
     message-sending-form(data-component-id=messageSendingForm.id)
 `;
@@ -46,7 +44,7 @@ interface ActiveChatParams extends ComponentProps {
 class ActiveChat extends Component {
   protected readonly props: ActiveChatProps;
 
-  protected readonly chatId: number;
+  protected chatId: number;
 
   constructor(params: ActiveChatParams) {
     const logoutLink = new Link({
@@ -91,7 +89,17 @@ class ActiveChat extends Component {
 
     await AuthController.checkAuthorization();
     await ChatsController.getChats();
-    await ChatsController.openWS(this.chatId);
+    await ChatsController.openWebSocket(this.chatId);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async componentDidUpdate(newParams: ActiveChatParams): Promise<void> {
+    const newChatId = Number(newParams.queryId);
+
+    if (newChatId !== this.chatId && newChatId) {
+      this.chatId = newChatId;
+      await ChatsController.openWebSocket(this.chatId);
+    }
   }
 
   static async handleSubmit(e: Event): Promise<void> {

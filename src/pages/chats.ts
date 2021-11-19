@@ -86,6 +86,7 @@ class ChatList extends Component {
     switch (form.id) {
       case this.props.newChatForm.id:
         await ChatsController.createChat(e);
+        await ChatsController.getChats();
         break;
 
       case this.props.addUserToChatForm.id:
