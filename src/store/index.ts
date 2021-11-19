@@ -3,12 +3,12 @@ import Component from '../modules/component';
 import EventBus, { Listener } from '../modules/eventBus';
 import { ComponentUpdateOptions } from '../types';
 
-export type StoreKeys = string[];
+export type StoreKeys = (keyof StoreData)[];
 
 export interface StoreData {
   user: User;
-  chats: Chat[];
-  messages: Message[];
+  chats?: Chat[];
+  messages?: Message[];
 }
 
 type Updaters = Record<string, Record<string, Listener>>;
@@ -30,6 +30,16 @@ class Store {
     options: ComponentUpdateOptions = {},
   ): void {
     Object.assign(this.state, { [key]: value });
+
+    if (!this.connected(key)) {
+      return;
+    }
+
+    this.eventBus.emit(key, options);
+  }
+
+  public clearData(key: keyof StoreData, options: ComponentUpdateOptions = {}): void {
+    delete this.state[key];
 
     if (!this.connected(key)) {
       return;

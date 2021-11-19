@@ -6,12 +6,12 @@
   flex-flow: column;
   align-items: flex-start;
 
-  .message:first-child {
-    margin-top: 10px;
-  }
-
   .message {
     margin-bottom: 10px;
+  }
+
+  .message:first-child {
+    margin-top: 10px;
   }
 
   .text-message {
@@ -21,6 +21,7 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
+    word-break: break-all;
     background-color: $color_grey2;
     border-radius: 5px;
   }

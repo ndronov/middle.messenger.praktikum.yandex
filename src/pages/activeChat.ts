@@ -10,7 +10,7 @@ import validation from '../validation/chatValidationMap';
 import AuthController from '../controllers/authController';
 import ChatsController from '../controllers/chatsController';
 import { ComponentProps } from '../types';
-import { Chat, Message } from '../models';
+import { Chat, Message, User } from '../models';
 
 const template = `
 div.container
@@ -33,6 +33,7 @@ interface ActiveChatProps extends ComponentProps {
   profileLink: Link;
   dialogs: Chats;
   chats?: Chat[];
+  user: User;
   messages?: Message[];
   userName: string;
   chatContent: ChatContent;
@@ -65,7 +66,7 @@ class ActiveChat extends Component {
       chats: [],
     });
 
-    const chatContent = new ChatContent({ messages: [] });
+    const chatContent = new ChatContent({ messages: [], id: '1' });
 
     const messageSendingForm = new MessageSendingForm({
       validation,
@@ -117,9 +118,9 @@ class ActiveChat extends Component {
   }
 
   render(): string {
-    const { messages, chats } = this.props;
+    const { messages, chats, user } = this.props;
 
-    if (!messages || !chats) {
+    if (!messages || !chats || !user) {
       return '';
     }
 
@@ -128,7 +129,7 @@ class ActiveChat extends Component {
       profileLink: this.props.profileLink,
       dialogs: this.props.dialogs.setProps({ chats }),
       chatTitle: this.chatTitle,
-      chatContent: this.props.chatContent.setProps({ messages }),
+      chatContent: this.props.chatContent.setProps({ user, messages }),
       messageSendingForm: this.props.messageSendingForm,
     });
   }

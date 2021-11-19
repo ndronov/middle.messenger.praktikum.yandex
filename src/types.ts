@@ -10,8 +10,7 @@ export enum ComponentUpdateType {
 
 export interface ComponentUpdateData {
   options: ComponentUpdateOptions;
-  propName: string;
-  propValue: unknown;
+  values: ComponentProps;
 }
 
 export interface Validation {

@@ -44,18 +44,10 @@ class ChatWS {
       this.ws.addEventListener('open', () => {
         this.ws.addEventListener('message', this.handleWSMessage.bind(this));
 
-        this.ws.addEventListener('close', (event) => {
-          if (event.wasClean) {
-            console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`, event);
-          } else {
-            console.log(`[close] Соединение прервано, код=${event.code} причина=${event.reason}`, event);
-          }
-        });
-
-        success();
-
         this.handlePong();
         this.getMessages();
+
+        success();
       });
 
       this.ws.addEventListener('error', () => {
@@ -82,7 +74,7 @@ class ChatWS {
   }
 
   addChatMessage(message: Message): void {
-    const { messages } = store.data;
+    const { messages = [] } = store.data;
     const newMessage = { ...message, chat_id: this.chatId };
     const newMessages = [newMessage, ...messages];
 

@@ -26,7 +26,7 @@ class Chats extends Component {
     super('div', props);
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     this.addEventListener('click', Chats.handleClick);
   }
 

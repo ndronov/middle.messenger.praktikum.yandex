@@ -61,6 +61,7 @@ class ChatsController {
 
   public static async openWebSocket(chatId: number): Promise<void> {
     try {
+      store.clearData('messages', { silent: true });
       ChatsController.chatWS = new ChatWS(chatId);
       await ChatsController.chatWS.init();
     } catch (error) {

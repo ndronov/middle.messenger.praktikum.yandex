@@ -190,15 +190,12 @@ abstract class Component {
     return !equal(oldProps, newProps);
   }
 
-  setProps = (keyValueObj: ComponentProps, options: ComponentUpdateOptions = {}): Component => {
-    if (!keyValueObj) {
+  setProps = (values: ComponentProps, options: ComponentUpdateOptions = {}): Component => {
+    if (!values) {
       return this;
     }
 
-    const [propUpdate] = Object.entries(keyValueObj);
-    const [propName, propValue] = propUpdate;
-
-    const componentUpdateData = { [ComponentUpdateType.Flow]: { propName, propValue, options } };
+    const componentUpdateData = { [ComponentUpdateType.Flow]: { values, options } };
 
     // TODO make setProps queue RAF ?
     setTimeout(() => Object.assign(this.props, componentUpdateData), 200);
@@ -349,15 +346,20 @@ abstract class Component {
           return false;
         }
 
-        const { options, propName, propValue } = componentUpdateData;
+        const { options, values } = componentUpdateData;
 
-        const oldPropValue = { [propName]: oldProps[propName] };
-        const newPropValue = { [propName]: propValue };
+        const oldPropsValues = Object.entries(values)
+          .reduce((
+            result,
+            [propName],
+          ) => ({ ...result, [propName]: oldProps[propName] }), {});
 
-        Object.assign(oldProps, newPropValue);
+        Object.assign(oldProps, values);
+
+        this.id == '1' && console.log(values, 'silent', options.silent);
 
         if (!options.silent) {
-          this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldPropValue, newPropValue);
+          this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldPropsValues, values);
         }
 
         return true;
