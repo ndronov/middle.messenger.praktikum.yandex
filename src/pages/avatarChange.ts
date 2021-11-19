@@ -46,7 +46,6 @@ class AvatarChange extends Component {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
     this.addEventListener('submit', AvatarChange.handleSubmit);
 

@@ -19,7 +19,6 @@ interface Meta {
   props: ComponentProps;
   componentId: string;
   rootElement?: Element;
-  hasFlow: boolean;
   eventTargetSelector?: string;
 }
 
@@ -69,7 +68,6 @@ abstract class Component {
     this.meta = {
       tagName,
       props,
-      hasFlow: Boolean(hasFlow),
       eventTargetSelector: eventTargetSelector as string,
       componentId: id as string ?? uuidv4(),
     };

@@ -90,7 +90,7 @@ class ActiveChat extends Component {
   async componentDidMount(): Promise<void> {
     this.addEventListener('submit', ActiveChat.handleSubmit);
 
-    await AuthController.checkAuthorization();
+    await AuthController.checkAuthorization({ silent: true });
     await ChatsController.getChats({ silent: true });
     await ChatsController.openWebSocket(this.chatId);
   }

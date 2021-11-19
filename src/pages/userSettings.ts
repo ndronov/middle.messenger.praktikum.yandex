@@ -31,7 +31,6 @@ class UserSettings extends Component {
 
   constructor() {
     const userSettingsForm = new UserSettingsForm({
-      editMode: true,
       validation: userSettingsValidationMap,
       validateOnSubmit: true,
     });
@@ -49,7 +48,6 @@ class UserSettings extends Component {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
     this.addEventListener('submit', UserSettings.handleSubmit);
 

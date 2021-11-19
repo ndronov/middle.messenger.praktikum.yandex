@@ -7,6 +7,7 @@ import store from '../store';
 interface AuthParams {
   goDefaultContentRoute?: boolean;
   goAuthRoute?: boolean;
+  silent?: boolean
 }
 
 const defaultAuthParams = {
@@ -54,11 +55,11 @@ class AuthController {
   }
 
   public static async checkAuthorization(params?: AuthParams): Promise<void> {
-    const { goDefaultContentRoute, goAuthRoute } = { ...defaultAuthParams, ...params };
+    const { goDefaultContentRoute, goAuthRoute, silent } = { ...defaultAuthParams, ...params };
 
     try {
       const user = await authAPI.read();
-      store.setData('user', user);
+      store.setData('user', user, { silent });
 
       if (goDefaultContentRoute) {
         router.go(AuthController.defaultContentRoute);

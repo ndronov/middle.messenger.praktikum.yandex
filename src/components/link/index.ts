@@ -22,7 +22,7 @@ class Link extends Component {
     );
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     this.addEventListener('click', this.handleClick.bind(this));
   }
 
