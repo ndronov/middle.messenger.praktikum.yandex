@@ -78,7 +78,7 @@ class ChatWS {
   }
 
   static setChatMessages(messages: Message[]): void {
-    store.setKeyValue('messages', messages);
+    store.setData('messages', messages);
   }
 
   addChatMessage(message: Message): void {
@@ -86,7 +86,7 @@ class ChatWS {
     const newMessage = { ...message, chat_id: this.chatId };
     const newMessages = [newMessage, ...messages];
 
-    store.setKeyValue('messages', newMessages);
+    store.setData('messages', newMessages);
   }
 
   handleMetaMessage(meta: WSMetaMessage): void {

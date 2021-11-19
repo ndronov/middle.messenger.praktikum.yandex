@@ -24,7 +24,7 @@ class Store {
 
   private updaters: Updaters = {};
 
-  public setKeyValue(
+  public setData(
     key: keyof StoreData,
     value: unknown,
     options: ComponentUpdateOptions = {},

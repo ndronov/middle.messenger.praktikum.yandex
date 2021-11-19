@@ -16,7 +16,7 @@ class ChatsController {
   public static async getChats(options: ComponentUpdateOptions = {}): Promise<void> {
     try {
       const chats = await chatsAPI.getChats({ limit: 40 });
-      store.setKeyValue('chats', chats, options);
+      store.setData('chats', chats, options);
     } catch (error) {
       handleError(error);
     }

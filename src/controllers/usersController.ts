@@ -32,7 +32,7 @@ class UsersController {
 
       const user = await usersAPI.changeAvatar(newAvatarData);
 
-      setTimeout(() => store.setKeyValue('user', user), 0);
+      setTimeout(() => store.setData('user', user), 0);
 
       router.go('/settings');
     } catch (error) {
