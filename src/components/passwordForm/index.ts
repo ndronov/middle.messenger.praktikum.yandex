@@ -4,8 +4,8 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import store from '../../store';
 import getAvatarURL from '../../utils/getAvatarURL';
+import { User } from '../../models';
 
 const template = `
 form.settings-form(novalidate="")
@@ -27,8 +27,16 @@ interface PasswordFormValues {
   newPasswordConfirmation?: string;
 }
 
+interface PasswordFormProps extends FormProps<PasswordFormValues> {
+  user?: User;
+  oldPasswordInput: Input;
+  newPasswordInput: Input;
+  newPasswordConfirmationInput: Input;
+  submitButton: Input;
+}
+
 class PasswordForm extends Component {
-  protected readonly props: FormProps<PasswordFormValues>;
+  protected readonly props: PasswordFormProps;
 
   constructor(props: FormProps<PasswordFormValues>) {
     const { validation } = props;
@@ -77,8 +85,14 @@ class PasswordForm extends Component {
   }
 
   render(): string {
+    const { user } = this.props;
+
+    if (!user) {
+      return '';
+    }
+
     return pug.render(template, {
-      avatar: getAvatarURL(store.data.user?.avatar),
+      avatar: getAvatarURL(user.avatar),
       oldPasswordInput: this.props.oldPasswordInput,
       newPasswordInput: this.props.newPasswordInput,
       newPasswordConfirmationInput: this.props.newPasswordConfirmationInput,

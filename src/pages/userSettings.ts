@@ -6,7 +6,9 @@ import UserSettingsForm from '../components/userSettingsForm';
 import userSettingsValidationMap from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/authController';
 import UsersController from '../controllers/usersController';
-import { RouterLink } from '../types';
+import { ComponentProps, RouterLink } from '../types';
+import Chats from '../components/chats';
+import { Chat } from '../models';
 
 const template = `
 div.container
@@ -16,7 +18,17 @@ div.container
   user-settings-form(data-component-id=userSettingsForm.id)
 `;
 
+interface UserSettingsProps extends ComponentProps {
+  backLink: Link;
+  profileLink: Link;
+  dialogs: Chats;
+  chats?: Chat[];
+  userSettingsForm: UserSettingsForm;
+}
+
 class UserSettings extends Component {
+  protected readonly props: UserSettingsProps;
+
   constructor() {
     const userSettingsForm = new UserSettingsForm({
       editMode: true,
@@ -51,9 +63,15 @@ class UserSettings extends Component {
   }
 
   render(): string {
+    const { user } = this.props;
+
+    if (!user) {
+      return '';
+    }
+
     return pug.render(template, {
       backLink: this.props.backLink,
-      userSettingsForm: this.props.userSettingsForm,
+      userSettingsForm: this.props.userSettingsForm.setProps({ user }),
     });
   }
 }

@@ -6,7 +6,7 @@ import { FormProps } from '../../types';
 import Link from '../link';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import store from '../../store';
+import { User } from '../../models';
 
 const template = `
 form.settings-form(novalidate="")
@@ -41,6 +41,7 @@ interface UserSettingsFormValues {
 }
 
 interface UserSettingsFormProps extends FormProps<UserSettingsFormValues> {
+  user?: User;
   emailInput: Input;
   loginInput: Input;
   firstNameInput: Input;
@@ -154,16 +155,20 @@ class UserSettingsForm extends Component {
   }
 
   render(): string {
-    const { user } = store.data;
+    const { user } = this.props;
+
+    if (!user) {
+      return '';
+    }
 
     return pug.render(template, {
-      avatar: getAvatarURL(user?.avatar),
-      emailInput: this.props.emailInput.setProps({ value: user?.email }),
-      loginInput: this.props.loginInput.setProps({ value: user?.login }),
-      firstNameInput: this.props.firstNameInput.setProps({ value: user?.first_name }),
-      secondNameInput: this.props.secondNameInput.setProps({ value: user?.second_name }),
-      displayNameInput: this.props.displayNameInput.setProps({ value: user?.display_name }),
-      phoneInput: this.props.phoneInput.setProps({ value: user?.phone }),
+      avatar: getAvatarURL(user.avatar),
+      emailInput: this.props.emailInput.setProps({ value: user.email }),
+      loginInput: this.props.loginInput.setProps({ value: user.login }),
+      firstNameInput: this.props.firstNameInput.setProps({ value: user.first_name }),
+      secondNameInput: this.props.secondNameInput.setProps({ value: user.second_name }),
+      displayNameInput: this.props.displayNameInput.setProps({ value: user.display_name }),
+      phoneInput: this.props.phoneInput.setProps({ value: user.phone }),
       logoutLink: this.props.logoutLink,
       passwordLink: this.props.passwordLink,
       avatarLink: this.props.avatarLink,

@@ -6,7 +6,8 @@ import PasswordForm from '../components/passwordForm';
 import userSettingsValidationMap from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/authController';
 import UsersController from '../controllers/usersController';
-import { RouterLink } from '../types';
+import { ComponentProps, RouterLink } from '../types';
+import { User } from '../models';
 
 const template = `
 div.container
@@ -16,10 +17,16 @@ div.container
   password-form(data-component-id=passwordForm.id)
 `;
 
+interface PasswordChange extends ComponentProps {
+  user?: User;
+  passwordForm: PasswordForm;
+}
+
 class PasswordChange extends Component {
+  protected readonly props: PasswordChange;
+
   constructor() {
     const passwordForm = new PasswordForm({
-      editMode: true,
       validation: userSettingsValidationMap,
       validateOnSubmit: true,
     });
@@ -51,9 +58,15 @@ class PasswordChange extends Component {
   }
 
   render(): string {
+    const { user } = this.props;
+
+    if (!user) {
+      return '';
+    }
+
     return pug.render(template, {
       backLink: this.props.backLink,
-      passwordForm: this.props.passwordForm,
+      passwordForm: this.props.passwordForm.setProps({ user }),
     });
   }
 }

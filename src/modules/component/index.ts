@@ -356,8 +356,6 @@ abstract class Component {
 
         Object.assign(oldProps, values);
 
-        this.id == '1' && console.log(values, 'silent', options.silent);
-
         if (!options.silent) {
           this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldPropsValues, values);
         }

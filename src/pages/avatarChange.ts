@@ -6,7 +6,7 @@ import UserSettingsForm from '../components/userSettingsForm';
 import AvatarForm from '../components/avatarForm';
 import AuthController from '../controllers/authController';
 import UsersController from '../controllers/usersController';
-import { RouterLink } from '../types';
+import { ComponentProps, RouterLink } from '../types';
 
 const template = `
 div.container
@@ -17,7 +17,16 @@ div.container
   avatar-form(data-component-id=avatarForm.id)
 `;
 
+interface AvatarChangeProps extends ComponentProps {
+  backLink: Link;
+  profileLink: Link;
+  userSettingsForm: UserSettingsForm;
+  avatarForm: AvatarForm;
+}
+
 class AvatarChange extends Component {
+  protected readonly props: AvatarChangeProps;
+
   constructor() {
     const userSettingsForm = new UserSettingsForm({});
 
@@ -51,9 +60,15 @@ class AvatarChange extends Component {
   }
 
   render(): string {
+    const { user } = this.props;
+
+    if (!user) {
+      return '';
+    }
+
     return pug.render(template, {
       backLink: this.props.backLink,
-      userSettingsForm: this.props.userSettingsForm,
+      userSettingsForm: this.props.userSettingsForm.setProps({ user }),
       avatarForm: this.props.avatarForm,
     });
   }

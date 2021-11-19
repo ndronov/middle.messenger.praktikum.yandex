@@ -66,7 +66,7 @@ class ActiveChat extends Component {
       chats: [],
     });
 
-    const chatContent = new ChatContent({ messages: [], id: '1' });
+    const chatContent = new ChatContent({ messages: [] });
 
     const messageSendingForm = new MessageSendingForm({
       validation,
