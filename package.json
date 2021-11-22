@@ -10,7 +10,8 @@
     "start": "parcel build ./src/index.html --no-scope-hoist --dist-dir build && node server",
     "server": "node server",
     "lint": "eslint --ext .ts src",
-    "stylelint": "stylelint src/**/*.scss"
+    "stylelint": "stylelint src/**/*.scss",
+    "test": "mocha --require ts-node/register src/**/*.spec.ts"
   },
   "repository": {
     "type": "git",
