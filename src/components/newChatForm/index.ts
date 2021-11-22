@@ -20,8 +20,13 @@ interface NewChatFormValues {
   title?: string;
 }
 
+interface NewChatFormProps extends FormProps<NewChatFormValues> {
+  chatTitleInput: Input;
+  submitButton: SubmitButton;
+}
+
 class NewChatForm extends Component {
-  protected readonly props: FormProps<NewChatFormValues>;
+  protected readonly props: NewChatFormProps;
 
   constructor(props: FormProps<NewChatFormValues>) {
     const { validation } = props;

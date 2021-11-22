@@ -15,8 +15,12 @@ interface MessageSendingFormValues {
   message?: string;
 }
 
+interface MessageSendingFormProps extends FormProps<MessageSendingFormValues> {
+  messageInput: Input;
+}
+
 class MessageSendingForm extends Component {
-  protected readonly props: FormProps<MessageSendingFormValues>;
+  protected readonly props: MessageSendingFormProps;
 
   constructor(props: FormProps<MessageSendingFormValues>) {
     const messageInput = new Input({

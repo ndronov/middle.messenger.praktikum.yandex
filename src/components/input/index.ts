@@ -23,7 +23,7 @@ class Input extends Component {
     );
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     if (this.props.pattern) {
       this.setValidationFlow();
     }

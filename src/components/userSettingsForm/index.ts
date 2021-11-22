@@ -30,7 +30,6 @@ form.settings-form(novalidate="")
   submit-button(data-component-id=submitButton.id)
 `;
 
-// TODO remove ?
 interface UserSettingsFormValues {
   email?: string;
   login?: string;
