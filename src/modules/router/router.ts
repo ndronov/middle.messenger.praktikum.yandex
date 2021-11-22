@@ -82,7 +82,7 @@ class Router {
     this.history.forward();
   }
 
-  static getRouteParams(pathname: string): ComponentProps | undefined {
+  private static getRouteParams(pathname: string): ComponentProps | undefined {
     const [,, queryId] = pathname.split('/');
 
     if (!queryId) {
@@ -92,8 +92,13 @@ class Router {
     return { queryId };
   }
 
-  getRoute(pathname: string): Route | null {
+  private getRoute(pathname: string): Route | null {
     return this.routes.find((route) => route.match(pathname)) ?? null;
+  }
+
+  clear(): void {
+    this.routes = [];
+    this.currentRoute = null;
   }
 }
 
