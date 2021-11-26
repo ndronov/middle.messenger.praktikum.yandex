@@ -5,7 +5,7 @@ import { StoreKeys } from '../../store';
 import Route from './route';
 
 class Router {
-  static instance: Router;
+  static instance?: Router;
 
   private history: History;
 
@@ -13,12 +13,14 @@ class Router {
 
   private currentRoute: Route | null;
 
-  private readonly rootQuery: string;
+  private rootQuery = '';
 
   private readonly rootPath: string = '/';
 
   constructor(rootQuery: string) {
     if (Router.instance) {
+      Router.instance.setRootQuery(rootQuery);
+
       return Router.instance;
     }
 
@@ -28,6 +30,10 @@ class Router {
     this.rootQuery = rootQuery;
 
     Router.instance = this;
+  }
+
+  setRootQuery(rootQuery: string) {
+    this.rootQuery = rootQuery;
   }
 
   use(
@@ -96,9 +102,14 @@ class Router {
     return this.routes.find((route) => route.match(pathname)) ?? null;
   }
 
-  clear(): void {
-    this.routes = [];
-    this.currentRoute = null;
+  static clear(): void {
+    if (!this.instance) {
+      return;
+    }
+
+    this.instance.routes = [];
+    this.instance.currentRoute = null;
+    this.instance.rootQuery = '';
   }
 }
 
