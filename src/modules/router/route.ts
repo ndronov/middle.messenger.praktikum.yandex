@@ -7,9 +7,9 @@ interface RouteProps extends ComponentProps {
 }
 
 class Route {
-  private pathname: string;
+  pathname: string;
 
-  private readonly blockClass: ComponentConstructor;
+  readonly blockClass: ComponentConstructor;
 
   private block: Component | null;
 

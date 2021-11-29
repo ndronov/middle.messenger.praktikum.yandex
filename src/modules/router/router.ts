@@ -9,9 +9,9 @@ class Router {
 
   private history: History;
 
-  private routes: Route[];
+  routes: Route[];
 
-  private currentRoute: Route | null;
+  currentRoute: Route | null;
 
   private rootQuery = '';
 
@@ -98,7 +98,7 @@ class Router {
     return { queryId };
   }
 
-  private getRoute(pathname: string): Route | null {
+  getRoute(pathname: string): Route | null {
     return this.routes.find((route) => route.match(pathname)) ?? null;
   }
 

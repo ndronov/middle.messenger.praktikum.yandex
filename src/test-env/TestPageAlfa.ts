@@ -1,14 +1,13 @@
-// @ts-ignore
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../modules/component';
 import { ComponentProps } from '../types';
 
 const template = `
 div
-  span= text
+  span(id='text')= text
 `;
 
-class TestPage extends Component {
+class TestPageAlfa extends Component {
   constructor(params: ComponentProps) {
     super(
       'div',
@@ -23,10 +22,9 @@ class TestPage extends Component {
   async componentDidMount(): Promise<void> {
   }
 
-  // eslint-disable-next-line class-methods-use-this
   render(): string {
-    return pug.render(template, this.props);
+    return render(template, this.props);
   }
 }
 
-export default TestPage;
+export default TestPageAlfa;
