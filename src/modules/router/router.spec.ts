@@ -1,31 +1,11 @@
 import { expect } from 'chai';
-import { JSDOM, DOMWindow } from 'jsdom';
+import { JSDOM } from 'jsdom';
 
 import TestPageAlfa from '../../test-env/TestPageAlfa';
 import TestPageBeta from '../../test-env/TestPageBeta';
 import TestPageGamma from '../../test-env/TestPageGamma';
 
 import Router from './router';
-
-function firePopstateOnRoute(window: DOMWindow): void {
-  const { history } = window;
-  const originalBack = history.back;
-  const originalForwards = history.forward;
-
-  // eslint-disable-next-line no-proto
-  (history as unknown as { __proto__: History }).__proto__.back = function patchedBack(this: History, ...args: Parameters<History['back']>): void {
-    originalBack.apply(this, args);
-
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-
-  // eslint-disable-next-line no-proto
-  (history as unknown as { __proto__: History }).__proto__.forward = function patchedForward(this: History, ...args: Parameters<History['forward']>): void {
-    originalForwards.apply(this, args);
-
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-}
 
 const html = '<!DOCTYPE html><html><head></head><body><div class="root"></div></body></html>';
 
@@ -36,8 +16,6 @@ function mockBrowser(): void {
 
   const { window } = jsdom;
 
-  firePopstateOnRoute(window);
-
   Object.assign(global, {
     window,
     document: window.document,
@@ -47,10 +25,6 @@ function mockBrowser(): void {
 }
 
 describe('Router', () => {
-  before(() => {
-    // mockBrowser();
-  });
-
   beforeEach(() => {
     mockBrowser();
     Router.clear();
@@ -67,9 +41,9 @@ describe('Router', () => {
     const router = new Router('.root');
 
     router
-      .use('/alfa', TestPageAlfa, { text: 'alfa' })
-      .use('/beta', TestPageBeta, { text: 'beta' })
-      .use('/gamma', TestPageGamma, { text: 'gamma' });
+      .use('/alfa', TestPageAlfa)
+      .use('/beta', TestPageBeta)
+      .use('/gamma', TestPageGamma);
 
     expect(router.routes.length).to.eq(3);
     expect(router.getRoute('/alfa')?.blockClass).to.eq(TestPageAlfa);
@@ -89,19 +63,17 @@ describe('Router', () => {
     expect(router.currentRoute?.pathname).to.eq('/beta');
   });
 
-  // it('router starts successfully', () => {
-  //   const router = new Router('.root');
-  //
-  //   router
-  //     .use('/', TestPage, { text: 'text on root page' })
-  //     .use('/foo', TestPage, { text: 'foo' })
-  //     .use('/bar', TestPage, { text: 'bar' })
-  //     .start();
-  //
-  //   const testPageText = document.getElementById('text')?.textContent;
-  //   console.log('body:', document.body.innerHTML);
-  //   console.log('testPageText:', testPageText);
-  //
-  //   expect(testPageText).to.eq('text on root page');
-  // });
+  it('router.go() the method works correctly', () => {
+    const router = new Router('.root');
+
+    router
+      .use('/alfa', TestPageAlfa, { text: 'alfa' })
+      .use('/beta', TestPageBeta, { text: 'beta' })
+      .use('/gamma', TestPageGamma, { text: 'gamma' })
+      .start();
+
+    router.go('/alfa');
+
+    expect(router.currentRoute?.pathname).to.eq('/alfa');
+  });
 });
