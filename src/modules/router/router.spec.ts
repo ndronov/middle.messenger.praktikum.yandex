@@ -37,7 +37,7 @@ describe('Router', () => {
     expect(router1).to.eq(router2);
   });
 
-  it('router.use() the method works correctly', () => {
+  it('router.use() method works correctly', () => {
     const router = new Router('.root');
 
     router
@@ -51,7 +51,7 @@ describe('Router', () => {
     expect(router.getRoute('/gamma')?.blockClass).to.eq(TestPageGamma);
   });
 
-  it('router.start() the method works correctly', () => {
+  it('router.start() method works correctly', () => {
     const router = new Router('.root');
 
     router
@@ -63,13 +63,13 @@ describe('Router', () => {
     expect(router.currentRoute?.pathname).to.eq('/beta');
   });
 
-  it('router.go() the method works correctly', () => {
+  it('router.go() method works correctly', () => {
     const router = new Router('.root');
 
     router
-      .use('/alfa', TestPageAlfa, { text: 'alfa' })
-      .use('/beta', TestPageBeta, { text: 'beta' })
-      .use('/gamma', TestPageGamma, { text: 'gamma' })
+      .use('/alfa', TestPageAlfa)
+      .use('/beta', TestPageBeta)
+      .use('/gamma', TestPageGamma)
       .start();
 
     router.go('/alfa');
