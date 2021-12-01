@@ -29,7 +29,7 @@ interface AddUserToChatFormProps extends FormProps<AddUserToChatFormValues> {
 }
 
 class AddUserToChatForm extends Component {
-  protected readonly props: AddUserToChatFormProps;
+  readonly props: AddUserToChatFormProps;
 
   constructor(props: FormProps<AddUserToChatFormValues>) {
     const chatIdInput = new Input({

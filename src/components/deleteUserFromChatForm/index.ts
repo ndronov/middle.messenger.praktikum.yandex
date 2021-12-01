@@ -29,7 +29,7 @@ interface DeleteUserFromChatFormProps extends FormProps<DeleteUserFromChatFormVa
 }
 
 class DeleteUserFromChatForm extends Component {
-  protected readonly props: DeleteUserFromChatFormProps;
+  readonly props: DeleteUserFromChatFormProps;
 
   constructor(props: FormProps<DeleteUserFromChatFormValues>) {
     const chatIdInput = new Input({

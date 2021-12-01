@@ -22,7 +22,7 @@ interface AvatarFormProps extends FormProps {
 }
 
 class AvatarForm extends Component {
-  protected readonly props: AvatarFormProps;
+  readonly props: AvatarFormProps;
 
   constructor(props: FormProps) {
     const submitButton = new SubmitButton({

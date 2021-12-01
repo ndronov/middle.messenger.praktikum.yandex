@@ -36,7 +36,7 @@ interface PasswordFormProps extends FormProps<PasswordFormValues> {
 }
 
 class PasswordForm extends Component {
-  protected readonly props: PasswordFormProps;
+  readonly props: PasswordFormProps;
 
   constructor(props: FormProps<PasswordFormValues>) {
     const { validation } = props;

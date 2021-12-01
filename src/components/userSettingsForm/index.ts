@@ -54,7 +54,7 @@ interface UserSettingsFormProps extends FormProps<UserSettingsFormValues> {
 }
 
 class UserSettingsForm extends Component {
-  protected readonly props: UserSettingsFormProps;
+  readonly props: UserSettingsFormProps;
 
   constructor(props: FormProps<UserSettingsFormValues>) {
     const { validation } = props;

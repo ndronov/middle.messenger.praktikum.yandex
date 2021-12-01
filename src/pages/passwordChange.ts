@@ -23,7 +23,7 @@ interface PasswordChange extends ComponentProps {
 }
 
 class PasswordChange extends Component {
-  protected readonly props: PasswordChange;
+  readonly props: PasswordChange;
 
   constructor() {
     const passwordForm = new PasswordForm({

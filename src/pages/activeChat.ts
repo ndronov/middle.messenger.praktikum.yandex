@@ -45,7 +45,7 @@ interface ActiveChatParams extends ComponentProps {
 }
 
 class ActiveChat extends Component {
-  protected readonly props: ActiveChatProps;
+  readonly props: ActiveChatProps;
 
   protected chatId: number;
 

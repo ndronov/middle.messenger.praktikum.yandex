@@ -25,7 +25,7 @@ interface AvatarChangeProps extends ComponentProps {
 }
 
 class AvatarChange extends Component {
-  protected readonly props: AvatarChangeProps;
+  readonly props: AvatarChangeProps;
 
   constructor() {
     const userSettingsForm = new UserSettingsForm({});

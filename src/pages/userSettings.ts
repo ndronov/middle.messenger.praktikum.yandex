@@ -27,7 +27,7 @@ interface UserSettingsProps extends ComponentProps {
 }
 
 class UserSettings extends Component {
-  protected readonly props: UserSettingsProps;
+  readonly props: UserSettingsProps;
 
   constructor() {
     const userSettingsForm = new UserSettingsForm({

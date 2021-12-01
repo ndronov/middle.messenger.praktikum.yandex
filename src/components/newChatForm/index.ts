@@ -26,7 +26,7 @@ interface NewChatFormProps extends FormProps<NewChatFormValues> {
 }
 
 class NewChatForm extends Component {
-  protected readonly props: NewChatFormProps;
+  readonly props: NewChatFormProps;
 
   constructor(props: FormProps<NewChatFormValues>) {
     const { validation } = props;

@@ -36,7 +36,7 @@ interface ChatListProps extends ComponentProps {
 }
 
 class ChatList extends Component {
-  protected readonly props: ChatListProps;
+  readonly props: ChatListProps;
 
   constructor() {
     const logoutLink = new Link({

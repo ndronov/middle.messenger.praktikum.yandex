@@ -11,7 +11,7 @@ label(class=className)= label
 `;
 
 class Input extends Component {
-  protected readonly props: InputProps;
+  readonly props: InputProps;
 
   constructor(props: InputProps) {
     super(

@@ -9,7 +9,7 @@ a(class=className, href=link)= label
 `;
 
 class Link extends Component {
-  protected readonly props: LinkProps;
+  readonly props: LinkProps;
 
   constructor(props: LinkProps) {
     super(
