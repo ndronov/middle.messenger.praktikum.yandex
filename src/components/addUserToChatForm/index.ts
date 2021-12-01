@@ -1,4 +1,3 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';

@@ -1,4 +1,3 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../modules/component';
 import Chats from '../components/chats';
@@ -82,7 +81,6 @@ class ActiveChat extends Component {
     this.chatId = Number(params.queryId);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async componentDidMount(): Promise<void> {
     this.addEventListener('submit', ActiveChat.handleSubmit);
 
@@ -91,7 +89,6 @@ class ActiveChat extends Component {
     await ChatsController.openWebSocket(this.chatId);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async componentDidUpdate(newParams: ActiveChatParams): Promise<void> {
     const newChatId = Number(newParams.queryId);
 
