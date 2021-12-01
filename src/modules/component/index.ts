@@ -195,7 +195,6 @@ abstract class Component {
 
     const componentUpdateData = { [ComponentUpdateType.Flow]: { values, options } };
 
-    // TODO make setProps queue RAF ?
     setTimeout(() => Object.assign(this.props, componentUpdateData), 200);
     return this;
   };

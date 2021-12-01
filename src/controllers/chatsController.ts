@@ -49,16 +49,6 @@ class ChatsController {
     }
   }
 
-  // TODO удалить?
-  public static async getChatUsers(chatId: number): Promise<void> {
-    try {
-      const users = await chatsAPI.getChatUsers({ chatId });
-      console.log(`chat ${chatId} users:`, users);
-    } catch (error) {
-      handleError(error);
-    }
-  }
-
   public static async openWebSocket(chatId: number): Promise<void> {
     try {
       store.clearData('messages', { silent: true });
