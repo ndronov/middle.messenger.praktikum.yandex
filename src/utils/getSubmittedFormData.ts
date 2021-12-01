@@ -1,3 +1,5 @@
+import sanitizeUserInput from './sanitizeUserInput';
+
 interface FormDataType {
   entries: () => IterableIterator<[string, FormDataEntryValue]>;
 }
@@ -12,9 +14,13 @@ const getSubmittedFormData = <T = DefaultFormDataType>(e: Event): T => {
   Array.from(formData.entries()).forEach(([fieldName, fieldValue]) => {
     const isEmpty = fieldValue instanceof File ? !fieldValue.size : !fieldValue;
 
-    if (!isEmpty) {
-      nonEmptyFields[fieldName] = fieldValue;
+    if (isEmpty) {
+      return;
     }
+
+    nonEmptyFields[fieldName] = typeof fieldValue === 'string'
+      ? sanitizeUserInput(fieldValue)
+      : fieldValue;
   });
 
   return nonEmptyFields as unknown as T;
