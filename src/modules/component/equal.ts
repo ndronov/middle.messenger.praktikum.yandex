@@ -27,7 +27,7 @@ const equal = (a: unknown, b: unknown): boolean => {
     return false;
   }
 
-  return keysA.every((k: string) => equal(aObj[k], bObj[k]));
+  return !keysA.some((k: string) => !equal(aObj[k], bObj[k]));
 };
 
 export default equal;
