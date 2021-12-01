@@ -4,7 +4,6 @@ import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
 import Link from '../components/link';
-import validation from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/AuthController';
 
 const template = `
@@ -26,7 +25,6 @@ class LoginPage extends Component {
       type: 'text',
       inputName: 'login',
       className: 'auth-form-field',
-      ...validation.login,
     });
 
     const passwordInput = new Input({
@@ -34,7 +32,6 @@ class LoginPage extends Component {
       type: 'password',
       inputName: 'password',
       className: 'auth-form-field',
-      ...validation.password,
     });
 
     const submitButton = new SubmitButton({

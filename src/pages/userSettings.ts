@@ -3,7 +3,6 @@ import pug from 'pug';
 import Component from '../modules/component';
 import Link from '../components/link';
 import UserSettingsForm from '../components/userSettingsForm';
-import userSettingsValidationMap from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/authController';
 import UsersController from '../controllers/usersController';
 import { ComponentProps, RouterLink } from '../types';
@@ -31,7 +30,6 @@ class UserSettings extends Component {
 
   constructor() {
     const userSettingsForm = new UserSettingsForm({
-      validation: userSettingsValidationMap,
       validateOnSubmit: true,
     });
 

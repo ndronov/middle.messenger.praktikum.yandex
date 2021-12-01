@@ -3,7 +3,6 @@ import pug from 'pug';
 import Component from '../modules/component';
 import Link from '../components/link';
 import PasswordForm from '../components/passwordForm';
-import userSettingsValidationMap from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/authController';
 import UsersController from '../controllers/usersController';
 import { ComponentProps, RouterLink } from '../types';
@@ -27,7 +26,6 @@ class PasswordChange extends Component {
 
   constructor() {
     const passwordForm = new PasswordForm({
-      validation: userSettingsValidationMap,
       validateOnSubmit: true,
     });
 

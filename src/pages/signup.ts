@@ -4,7 +4,6 @@ import Component from '../modules/component';
 import SubmitButton from '../components/submitButton';
 import Input from '../components/input';
 import Link from '../components/link';
-import validation from '../validation/userSettingsValidationMap';
 import AuthController from '../controllers/authController';
 
 const template = `
@@ -30,7 +29,6 @@ class SignupPage extends Component {
       type: 'text',
       inputName: 'email',
       className: 'auth-form-field',
-      ...validation.email,
     });
 
     const loginInput = new Input({
@@ -38,7 +36,6 @@ class SignupPage extends Component {
       type: 'text',
       inputName: 'login',
       className: 'auth-form-field',
-      ...validation.login,
     });
 
     const firstNameInput = new Input({
@@ -46,7 +43,6 @@ class SignupPage extends Component {
       type: 'text',
       inputName: 'first_name',
       className: 'auth-form-field',
-      ...validation.name,
     });
 
     const secondNameInput = new Input({
@@ -54,7 +50,6 @@ class SignupPage extends Component {
       type: 'text',
       inputName: 'second_name',
       className: 'auth-form-field',
-      ...validation.name,
     });
 
     const phoneInput = new Input({
@@ -62,7 +57,6 @@ class SignupPage extends Component {
       type: 'tel',
       inputName: 'phone',
       className: 'auth-form-field',
-      ...validation.phone,
     });
 
     const passwordInput = new Input({
@@ -70,7 +64,6 @@ class SignupPage extends Component {
       type: 'password',
       inputName: 'password',
       className: 'auth-form-field',
-      ...validation.password,
     });
 
     const submitButton = new SubmitButton({
