@@ -7,7 +7,7 @@ import store from '../store';
 interface AuthParams {
   goDefaultContentRoute?: boolean;
   goAuthRoute?: boolean;
-  silent?: boolean
+  silent?: boolean;
 }
 
 const defaultAuthParams = {
