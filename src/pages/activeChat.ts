@@ -5,7 +5,6 @@ import Chats from '../components/chats';
 import Link from '../components/link';
 import ChatContent from '../components/chatContent';
 import MessageSendingForm from '../components/messageSendingForm';
-import handleFormSubmit from '../utils/handleFormSubmit';
 import validation from '../validation/chatValidationMap';
 import AuthController from '../controllers/authController';
 import ChatsController from '../controllers/chatsController';
@@ -70,7 +69,6 @@ class ActiveChat extends Component {
 
     const messageSendingForm = new MessageSendingForm({
       validation,
-      onSubmit: handleFormSubmit,
       validateOnSubmit: true,
     });
 
