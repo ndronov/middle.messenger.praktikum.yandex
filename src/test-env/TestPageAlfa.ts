@@ -9,11 +9,13 @@ div
 
 class TestPageAlfa extends Component {
   constructor(params: ComponentProps) {
+    const { tagName = 'div', ...restParams } = params;
+
     super(
-      'div',
+      tagName as string,
       {
         hasFlow: true,
-        text: params.text,
+        ...restParams,
       },
     );
   }

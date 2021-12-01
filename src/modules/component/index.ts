@@ -45,9 +45,9 @@ abstract class Component {
 
   private element: HTMLElement;
 
-  private readonly meta: Meta;
+  readonly meta: Meta;
 
-  protected readonly props: ComponentProps;
+  readonly props: ComponentProps;
 
   private readonly eventBus: EventBus;
 
