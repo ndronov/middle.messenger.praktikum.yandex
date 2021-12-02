@@ -39,5 +39,5 @@
 - [Mocha](https://mochajs.org/)
 - [Chai](https://www.chaijs.com/)
 
-## Pull request третьего спринта
-[Ссылка](https://github.com/ndronov/middle.messenger.praktikum.yandex/pull/4)
+## Pull request четвёртого спринта
+[Ссылка](https://github.com/ndronov/middle.messenger.praktikum.yandex/pull/5)
