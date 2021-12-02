@@ -8,3 +8,11 @@
 [build]
   command = "npm run build"
   publish = "build"
+
+[[redirects]]
+  from = "*"
+  to = "/"
+  status = 200
+  force = false
+  headers = {X-From = "Netlify"}
+ 
