@@ -1,14 +1,14 @@
 import pug from 'pug';
-import Component from '../modules/component';
-import Chats from '../components/chats';
-import Link from '../components/link';
-import NewChatForm from '../components/newChatForm';
-import AddUserToChatForm from '../components/addUserToChatForm';
-import DeleteUserFromChatForm from '../components/deleteUserFromChatForm';
-import AuthController from '../controllers/authController';
-import ChatsController from '../controllers/chatsController';
-import { ComponentProps } from '../types';
-import { Chat } from '../models';
+import Component from '../../modules/component';
+import Chats from '../../components/chats';
+import Link from '../../components/link';
+import NewChatForm from '../../components/newChatForm';
+import AddUserToChatForm from '../../components/addUserToChatForm';
+import DeleteUserFromChatForm from '../../components/deleteUserFromChatForm';
+import AuthController from '../../controllers/authController';
+import ChatsController from '../../controllers/chatsController';
+import { ComponentProps } from '../../types';
+import { Chat } from '../../models';
 
 const template = `
 div.container

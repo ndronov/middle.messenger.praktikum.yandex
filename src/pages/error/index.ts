@@ -1,7 +1,7 @@
 import pug from 'pug';
-import Component from '../modules/component';
-import { ComponentProps } from '../types';
-import '../styles/errorPages.scss';
+import Component from '../../modules/component';
+import { ComponentProps } from '../../types';
+import '../../styles/errorPages.scss';
 
 const metaData = [{
   code: 404,

@@ -1,11 +1,12 @@
 import pug from 'pug';
-import Component from '../modules/component';
-import Link from '../components/link';
-import UserSettingsForm from '../components/userSettingsForm';
-import AvatarForm from '../components/avatarForm';
-import AuthController from '../controllers/authController';
-import UsersController from '../controllers/usersController';
-import { ComponentProps, RouterLink } from '../types';
+import Component from '../../modules/component';
+import Link from '../../components/link';
+import UserSettingsForm from '../../components/userSettingsForm';
+import AuthController from '../../controllers/authController';
+import UsersController from '../../controllers/usersController';
+import { ComponentProps, RouterLink } from '../../types';
+import Chats from '../../components/chats';
+import { Chat } from '../../models';
 
 const template = `
 div.container
@@ -13,21 +14,23 @@ div.container
     link(data-component-id=backLink.id)
 
   user-settings-form(data-component-id=userSettingsForm.id)
-  avatar-form(data-component-id=avatarForm.id)
 `;
 
-interface AvatarChangeProps extends ComponentProps {
+interface UserSettingsProps extends ComponentProps {
   backLink: Link;
   profileLink: Link;
+  dialogs: Chats;
+  chats?: Chat[];
   userSettingsForm: UserSettingsForm;
-  avatarForm: AvatarForm;
 }
 
-class AvatarChange extends Component {
-  readonly props: AvatarChangeProps;
+class UserSettings extends Component {
+  readonly props: UserSettingsProps;
 
   constructor() {
-    const userSettingsForm = new UserSettingsForm({});
+    const userSettingsForm = new UserSettingsForm({
+      validateOnSubmit: true,
+    });
 
     const backLink = new Link({
       label: '<',
@@ -35,18 +38,15 @@ class AvatarChange extends Component {
       className: 'back-button',
     });
 
-    const avatarForm = new AvatarForm({});
-
     super('div', {
       hasFlow: true,
-      userSettingsForm,
-      avatarForm,
       backLink,
+      userSettingsForm,
     });
   }
 
   async componentDidMount(): Promise<void> {
-    this.addEventListener('submit', AvatarChange.handleSubmit);
+    this.addEventListener('submit', UserSettings.handleSubmit);
 
     await AuthController.checkAuthorization();
   }
@@ -54,7 +54,7 @@ class AvatarChange extends Component {
   static async handleSubmit(e: Event): Promise<void> {
     e.preventDefault();
 
-    await UsersController.changeAvatar(e);
+    await UsersController.changeProfile(e);
   }
 
   render(): string {
@@ -67,9 +67,8 @@ class AvatarChange extends Component {
     return pug.render(template, {
       backLink: this.props.backLink,
       userSettingsForm: this.props.userSettingsForm.setProps({ user }),
-      avatarForm: this.props.avatarForm,
     });
   }
 }
 
-export default AvatarChange;
+export default UserSettings;

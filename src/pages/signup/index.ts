@@ -1,9 +1,9 @@
 import pug from 'pug';
-import Component from '../modules/component';
-import SubmitButton from '../components/submitButton';
-import Input from '../components/input';
-import Link from '../components/link';
-import AuthController from '../controllers/authController';
+import Component from '../../modules/component';
+import SubmitButton from '../../components/submitButton';
+import Input from '../../components/input';
+import Link from '../../components/link';
+import AuthController from '../../controllers/authController';
 
 const template = `
 form.auth-form(novalidate="")

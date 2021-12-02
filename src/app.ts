@@ -5,7 +5,7 @@ import UserSettings from './pages/userSettings';
 import ChatList from './pages/chats';
 import ActiveChat from './pages/activeChat';
 import AvatarChange from './pages/avatarChange';
-import PasswordChange from './pages/passwordChange';
+import PasswordChange from './pages/passwordChange/passwordChange';
 import ErrorPage, { getErrorMeta } from './pages/error';
 import router from './modules/router';
 

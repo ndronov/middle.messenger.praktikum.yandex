@@ -1,11 +1,11 @@
 import pug from 'pug';
-import Component from '../modules/component';
-import Link from '../components/link';
-import PasswordForm from '../components/passwordForm';
-import AuthController from '../controllers/authController';
-import UsersController from '../controllers/usersController';
-import { ComponentProps, RouterLink } from '../types';
-import { User } from '../models';
+import Component from '../../modules/component';
+import Link from '../../components/link';
+import PasswordForm from '../../components/passwordForm';
+import AuthController from '../../controllers/authController';
+import UsersController from '../../controllers/usersController';
+import { ComponentProps, RouterLink } from '../../types';
+import { User } from '../../models';
 
 const template = `
 div.container

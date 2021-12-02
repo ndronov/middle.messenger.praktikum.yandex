@@ -1,6 +1,6 @@
 import pug from 'pug';
-import Component from '../modules/component';
-import AuthController from '../controllers/authController';
+import Component from '../../modules/component';
+import AuthController from '../../controllers/authController';
 
 const template = `
 div Выход из системы...
