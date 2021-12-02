@@ -2,10 +2,7 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import router from '../../modules/router';
 import { LinkProps, RouterLink } from '../../types';
-
-const template = `
-a(class=className, href=link)= label
-`;
+import template from './template';
 
 class Link extends Component {
   readonly props: LinkProps;

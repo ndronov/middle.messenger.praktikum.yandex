@@ -3,18 +3,7 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-
-const template = `
-form.chats-additional-form(novalidate="")
-  h1.title Добавьте пользователя в чат
-
-  chat-id-input(data-component-id=chatIdInput.id)
-  user-id-input(data-component-id=userIdInput.id)
-
-  div.gap
-
-  submit-button(data-component-id=submitButton.id)
-`;
+import template from './template';
 
 interface AddUserToChatFormValues {
   chatId?: number;

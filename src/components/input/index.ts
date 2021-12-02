@@ -1,13 +1,8 @@
 import pug from 'pug';
 import Component from '../../modules/component';
 import { InputProps, ValidationOptions } from '../../types';
+import template from './template';
 import './index.scss';
-
-const template = `
-label(class=className)= label
-  input.input(type=type, name=inputName, placeholder=placeholder, value=value, accept=accept)
-  span(class = "error error_hidden")= error
-`;
 
 class Input extends Component {
   readonly props: InputProps;

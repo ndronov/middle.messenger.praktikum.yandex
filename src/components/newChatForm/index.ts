@@ -3,17 +3,7 @@ import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-
-const template = `
-form.chats-additional-form(novalidate="")
-  h1.title Создайте новый чат
-
-  chat-title-input(data-component-id=chatTitleInput.id)
-
-  div.gap
-
-  submit-button(data-component-id=submitButton.id)
-`;
+import template from './template';
 
 interface NewChatFormValues {
   title?: string;

@@ -2,13 +2,8 @@ import pug from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
+import template from './template';
 import './index.scss';
-
-const template = `
-form.message-sending-form(novalidate="")
-  message-input(data-component-id=messageInput.id)
-  button.message-sending-button(type="submit") &#8594;
-`;
 
 interface MessageSendingFormValues {
   message?: string;
