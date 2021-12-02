@@ -1,17 +1,11 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
 import { InputProps, ValidationOptions } from '../../types';
+import template from './template';
 import './index.scss';
 
-const template = `
-label(class=className)= label
-  input.input(type=type, name=inputName, placeholder=placeholder, value=value, accept=accept)
-  span(class = "error error_hidden")= error
-`;
-
 class Input extends Component {
-  protected readonly props: InputProps;
+  readonly props: InputProps;
 
   constructor(props: InputProps) {
     super(
@@ -23,7 +17,7 @@ class Input extends Component {
     );
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     if (this.props.pattern) {
       this.setValidationFlow();
     }

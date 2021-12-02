@@ -1,5 +1,18 @@
 export type ComponentProps = Record<string, unknown>;
 
+export interface ComponentUpdateOptions {
+  silent?: boolean;
+}
+
+export enum ComponentUpdateType {
+  Flow = 'Flow',
+}
+
+export interface ComponentUpdateData {
+  options: ComponentUpdateOptions;
+  values: ComponentProps;
+}
+
 export interface Validation {
   pattern: RegExp;
   error: string;
@@ -26,4 +39,16 @@ export interface InputProps extends ComponentProps {
   className?: string;
   pattern?: RegExp;
   error?: string;
+}
+
+export enum RouterLink {
+  Back = 'Back',
+  Forward = 'Forward',
+}
+
+export interface LinkProps extends ComponentProps {
+  label: string,
+  href?: string,
+  go?: RouterLink;
+  className?: string,
 }

@@ -1,33 +1,28 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
+import template from './template';
 import './index.scss';
 
-const template = `
-div.modal-backdrop
-  form.avatar-form(novalidate="")
-    h3.title Загрузите файл
-
-    avatar-input(data-component-id=avatarInput.id)
-
-    submit-button(data-component-id=submitButton.id)
-`;
+interface AvatarFormProps extends FormProps {
+  avatarInput: Input;
+  submitButton: Input;
+}
 
 class AvatarForm extends Component {
-  protected readonly props: FormProps;
+  readonly props: AvatarFormProps;
 
   constructor(props: FormProps) {
     const submitButton = new SubmitButton({
-      label: 'Поменять',
+      label: 'Сохранить',
     });
 
     const avatarInput = new Input({
       type: 'file',
       accept: 'image/*',
-      label: 'Выбрать файл на компьютере',
+      label: 'Выбрать файл',
       inputName: 'avatar',
       className: 'avatar-field',
     });

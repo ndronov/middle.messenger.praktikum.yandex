@@ -7,53 +7,71 @@ enum Method {
   DELETE = 'DELETE',
 }
 
+export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
+
+export type HTTPRequestBody = Record<string, unknown>;
+
 interface Options {
   method?: Method
-  data?: Record<string, unknown>,
+  data?: HTTPRequestBody | unknown,
   headers?: Record<string, string>,
   timeout?: number,
+  raw?: boolean,
 }
 
 const defaultMethod = Method.GET;
 const defaultTimeout = 5000;
 
-class HTTP {
-  get = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+export default class HTTP {
+  protected endpoint: string;
+
+  constructor(endpoint: string) {
+    this.endpoint = `${BASE_URL}${endpoint}`;
+  }
+
+  public get<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.GET },
-    ));
+    );
+  }
 
-  post = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+  public post<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.POST },
-    ));
+    );
+  }
 
-  put = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+  public put<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.PUT },
-    ));
+    );
+  }
 
-  delete = (url: string, options: Options = {}): Promise<XMLHttpRequest> => (
-    this.request(
-      url,
+  public delete<Response>(path = '/', options: Options = {}): Promise<Response> {
+    return HTTP.request(
+      this.endpoint + path,
       { ...options, method: Method.DELETE },
-    ));
+    );
+  }
 
-  request = (url: string, options: Options): Promise<XMLHttpRequest> => {
+  private static request<Response>(url: string, options: Options): Promise<Response> {
     const {
       method = defaultMethod,
       data,
-      headers = {},
+      headers = {
+        'content-type': 'application/json; charset=utf-8',
+      },
       timeout = defaultTimeout,
+      raw = false,
     } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const isGet = method === Method.GET;
-      const requestUrl = isGet ? url + queryStringify(data) : url;
+      const requestUrl = isGet ? url + queryStringify(data as HTTPRequestBody) : url;
 
       xhr.open(method, requestUrl);
 
@@ -63,7 +81,12 @@ class HTTP {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.response);
+          try {
+            const parsedResponse = JSON.parse(xhr.response);
+            resolve(parsedResponse);
+          } catch {
+            resolve(xhr.response);
+          }
         } else {
           reject(new Error(`${xhr.status}: ${xhr.statusText}`));
         }
@@ -73,14 +96,16 @@ class HTTP {
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
+      xhr.withCredentials = true;
 
-      const body = isGet || !data
-        ? null
-        : JSON.stringify(data);
+      if (isGet || !data) {
+        xhr.send();
+        return;
+      }
+
+      const body = raw ? (data as FormData) : JSON.stringify(data);
 
       xhr.send(body);
     });
-  };
+  }
 }
-
-export default HTTP;

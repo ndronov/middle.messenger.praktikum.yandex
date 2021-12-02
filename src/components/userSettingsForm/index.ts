@@ -1,30 +1,12 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
+import getAvatarURL from '../../utils/getAvatarURL';
 import { FormProps } from '../../types';
+import Link from '../link';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import './index.scss';
-
-const template = `
-form.settings-form#user-settings(novalidate="")
-  div.avatar
-
-  email-input(data-component-id=emailInput.id)
-  login-input(data-component-id=loginInput.id)
-  first-name-input(data-component-id=firstNameInput.id)
-  second-name-input(data-component-id=secondNameInput.id)
-  display-name-input(data-component-id=displayNameInput.id)
-  phone-input(data-component-id=phoneInput.id)
-
-  if (editMode)
-    submit-button(data-component-id=submitButton.id)
-  else
-    div.links
-      a.link(href="#") Изменить данные
-      a.link(href="#") Изменить пароль
-      a.link.exit-link(href="#") Выйти
-`;
+import { User } from '../../models';
+import template from './template';
 
 interface UserSettingsFormValues {
   email?: string;
@@ -35,17 +17,31 @@ interface UserSettingsFormValues {
   phone?: string;
 }
 
+interface UserSettingsFormProps extends FormProps<UserSettingsFormValues> {
+  user?: User;
+  emailInput: Input;
+  loginInput: Input;
+  firstNameInput: Input;
+  secondNameInput: Input;
+  displayNameInput: Input;
+  phoneInput: Input;
+  logoutLink: Link;
+  passwordLink: Link;
+  avatarLink: Link;
+  submitButton: Input;
+}
+
 class UserSettingsForm extends Component {
-  protected readonly props: FormProps<UserSettingsFormValues>;
+  readonly props: UserSettingsFormProps;
 
   constructor(props: FormProps<UserSettingsFormValues>) {
-    const { validation, values } = props;
+    const { validation } = props;
 
     const emailInput = new Input({
       type: 'email',
       label: 'Почта',
       inputName: 'email',
-      value: values?.email,
+      value: '',
       className: 'settings-input-field',
       ...validation?.email,
     });
@@ -54,7 +50,7 @@ class UserSettingsForm extends Component {
       type: 'text',
       label: 'Логин',
       inputName: 'login',
-      value: values?.login,
+      value: '',
       className: 'settings-input-field',
       ...validation?.login,
     });
@@ -62,8 +58,8 @@ class UserSettingsForm extends Component {
     const firstNameInput = new Input({
       type: 'text',
       label: 'Имя',
-      inputName: 'firstName',
-      value: values?.firstName,
+      inputName: 'first_name',
+      value: '',
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -71,8 +67,8 @@ class UserSettingsForm extends Component {
     const secondNameInput = new Input({
       type: 'text',
       label: 'Фамилия',
-      inputName: 'secondName',
-      value: values?.secondName,
+      inputName: 'second_name',
+      value: '',
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -80,8 +76,8 @@ class UserSettingsForm extends Component {
     const displayNameInput = new Input({
       type: 'text',
       label: 'Имя в чате',
-      inputName: 'displayName',
-      value: values?.displayName,
+      inputName: 'display_name',
+      value: '',
       className: 'settings-input-field',
       ...validation?.name,
     });
@@ -90,9 +86,27 @@ class UserSettingsForm extends Component {
       type: 'tel',
       label: 'Телефон',
       inputName: 'phone',
-      value: values?.phone,
+      value: '',
       className: 'settings-input-field',
       ...validation?.phone,
+    });
+
+    const logoutLink = new Link({
+      label: 'Выйти из системы',
+      href: '/sign-out',
+      className: 'link exit-link',
+    });
+
+    const passwordLink = new Link({
+      label: 'Изменить пароль',
+      href: '/password',
+      className: 'link',
+    });
+
+    const avatarLink = new Link({
+      label: 'Изменить аватар',
+      href: '/avatar',
+      className: 'link',
     });
 
     const submitButton = new SubmitButton({
@@ -109,20 +123,32 @@ class UserSettingsForm extends Component {
         secondNameInput,
         displayNameInput,
         phoneInput,
+        logoutLink,
+        passwordLink,
+        avatarLink,
         submitButton,
       },
     );
   }
 
   render(): string {
+    const { user } = this.props;
+
+    if (!user) {
+      return '';
+    }
+
     return pug.render(template, {
-      editMode: this.props.editMode,
-      emailInput: this.props.emailInput,
-      loginInput: this.props.loginInput,
-      firstNameInput: this.props.firstNameInput,
-      secondNameInput: this.props.secondNameInput,
-      displayNameInput: this.props.displayNameInput,
-      phoneInput: this.props.phoneInput,
+      avatar: getAvatarURL(user.avatar),
+      emailInput: this.props.emailInput.setProps({ value: user.email }),
+      loginInput: this.props.loginInput.setProps({ value: user.login }),
+      firstNameInput: this.props.firstNameInput.setProps({ value: user.first_name }),
+      secondNameInput: this.props.secondNameInput.setProps({ value: user.second_name }),
+      displayNameInput: this.props.displayNameInput.setProps({ value: user.display_name }),
+      phoneInput: this.props.phoneInput.setProps({ value: user.phone }),
+      logoutLink: this.props.logoutLink,
+      passwordLink: this.props.passwordLink,
+      avatarLink: this.props.avatarLink,
       submitButton: this.props.submitButton,
     });
   }

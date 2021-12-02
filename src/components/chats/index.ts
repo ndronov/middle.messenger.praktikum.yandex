@@ -1,30 +1,39 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
-import './index.scss';
-
-const template = `
-div.chats
-  each chat in chats
-    div.chat
-      div.avatar
-      div.content
-        span.name= chat.name
-        span.message= chat.message
-      div.additional-content
-        time.time= chat.time
-        if chat.notificationsNumber
-          span.notifications-number= chat.notificationsNumber
-`;
+import formatTime from '../../utils/formatTime';
+import router from '../../modules/router';
+import template from './template';
 
 class Chats extends Component {
   constructor(props: ComponentProps) {
     super('div', props);
   }
 
+  async componentDidMount(): Promise<void> {
+    this.addEventListener('click', Chats.handleClick);
+  }
+
+  static handleClick(e: Event): void {
+    e.preventDefault();
+
+    const target = e.target as HTMLElement;
+    const chatAnchor = target.closest('a');
+
+    if (!chatAnchor) {
+      throw new Error('Ошибка открытия чата');
+    }
+
+    const { pathname } = new URL(chatAnchor.href);
+    router.go(pathname);
+  }
+
   render(): string {
-    return pug.render(template, this.props);
+    return pug.render(template, {
+      ...this.props,
+      eventTarget: 'a',
+      formatTime,
+    });
   }
 }
 

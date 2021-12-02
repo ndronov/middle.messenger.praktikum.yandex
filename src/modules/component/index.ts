@@ -1,5 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ComponentProps, ValidationOptions } from '../../types';
+import {
+  ComponentProps,
+  ValidationOptions,
+  ComponentUpdateOptions,
+  ComponentUpdateData,
+  ComponentUpdateType,
+} from '../../types';
 import EventBus from '../eventBus';
 import htmlToDOM from './htmlToDOM';
 import renderElement from './renderElement';
@@ -12,52 +18,58 @@ interface Meta {
   tagName: string;
   props: ComponentProps;
   componentId: string;
-  root?: string;
+  rootElement?: Element;
   eventTargetSelector?: string;
 }
 
 type ChildrenType = Record<string, Component>;
 type InnerHandlers = Record<string, EventListener>;
 
+export interface ComponentConstructor {
+  new (props?: ComponentProps): Component;
+}
+
 abstract class Component {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
+    FLOW_CWU: 'flow:component-did-unmount',
     FLOW_RENDER: 'flow:render',
     FLOW_REGISTER_HANDLERS: 'flow:register-handlers',
     FLOW_UNREGISTER_HANDLERS: 'flow:unregister-handlers',
     FLOW_REGISTER_INNER_HANDLERS: 'flow:register-inner-handlers',
     FLOW_UNREGISTER_INNER_HANDLERS: 'flow:unregister-inner-handlers',
+    CLEAR: 'clear',
   };
 
   private element: HTMLElement;
 
-  private readonly meta: Meta;
+  readonly meta: Meta;
 
-  protected readonly props: ComponentProps;
+  readonly props: ComponentProps;
 
   private readonly eventBus: EventBus;
 
-  private readonly children: ChildrenType = {};
+  private children: ChildrenType = {};
 
   private readonly innerHandlers: InnerHandlers = {};
 
   protected constructor(tagName = 'div', initialProps: ComponentProps = {}) {
     const {
-      root,
+      hasFlow,
       template,
       eventTargetSelector,
       validateOnSubmit,
+      id,
       ...props
     } = initialProps;
 
     this.meta = {
       tagName,
       props,
-      root: root as string,
       eventTargetSelector: eventTargetSelector as string,
-      componentId: uuidv4(),
+      componentId: id as string ?? uuidv4(),
     };
 
     this.props = this.makePropsProxy(props);
@@ -70,7 +82,7 @@ abstract class Component {
       this.setInnerHandler('submit', this.validateChildComponents.bind(this));
     }
 
-    if (root) {
+    if (hasFlow) {
       this.eventBus.emit(Component.EVENTS.INIT);
     }
   }
@@ -93,6 +105,8 @@ abstract class Component {
       Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS,
       this.flowUnregisterInnerHandlers.bind(this),
     );
+    this.eventBus.on(Component.EVENTS.FLOW_CWU, this.flowComponentWillUnmount.bind(this));
+    this.eventBus.on(Component.EVENTS.CLEAR, this.flowClearEventBus.bind(this));
   }
 
   private createResources(placeholderFromParent?: Element) {
@@ -111,24 +125,62 @@ abstract class Component {
     this.eventBus.emit(Component.EVENTS.FLOW_CDM);
   }
 
-  private flowComponentDidMount(): void {
-    this.componentDidMount();
+  private async flowComponentDidMount(): Promise<void> {
+    await this.componentDidMount();
     this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     // каждый компонент может реализовать свой метод componentDidMount
   }
 
-  private flowComponentDidUpdate(oldProps: ComponentProps, newProps: ComponentProps): void {
+  private async flowComponentDidUpdate(
+    oldProps: ComponentProps,
+    newProps: ComponentProps,
+  ): Promise<void> {
     const shouldUpdate = this.shouldComponentUpdate(oldProps, newProps);
 
     if (shouldUpdate) {
+      await this.componentDidUpdate(newProps);
       this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_HANDLERS);
       this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS);
       this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
     }
+  }
+
+  // @ts-ignore
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
+  async componentDidUpdate(newProps: ComponentProps): Promise<void> {
+    // каждый компонент может реализовать свой метод componentDidUpdate
+  }
+
+  private flowComponentWillUnmount(): void {
+    this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_HANDLERS);
+    this.eventBus.emit(Component.EVENTS.FLOW_UNREGISTER_INNER_HANDLERS);
+    this.eventBus.emit(Component.EVENTS.CLEAR);
+  }
+
+  private flowClearEventBus(): void {
+    this.eventBus.clear();
+  }
+
+  protected removeFromParent(): void {
+    this.removeChildComponents();
+
+    this.eventBus.emit(Component.EVENTS.FLOW_CWU);
+  }
+
+  clearRoot(): void {
+    if (!this.meta.rootElement) {
+      throw new Error('Для компонента не найден корневой элемент');
+    }
+
+    this.meta.rootElement.innerHTML = '';
+  }
+
+  private createRootElement(selector: string): void {
+    this.meta.rootElement = document.querySelector(selector) ?? undefined;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -136,31 +188,42 @@ abstract class Component {
     return !equal(oldProps, newProps);
   }
 
-  setProps = (nextProps: ComponentProps): void => {
-    if (!nextProps) {
-      return;
+  setProps = (values: ComponentProps, options: ComponentUpdateOptions = {}): Component => {
+    if (!values) {
+      return this;
     }
 
-    Object.assign(this.props, nextProps);
+    const componentUpdateData = { [ComponentUpdateType.Flow]: { values, options } };
+
+    setTimeout(() => Object.assign(this.props, componentUpdateData), 200);
+    return this;
   };
 
-  renderToRoot(): void {
-    if (!this.meta.root) {
-      throw new Error('Для компонента не указан корневой элемент');
-    }
+  mountToRoot(selector: string): void {
+    this.createRootElement(selector);
+    this.renderToRoot();
+  }
 
-    const rootElement = document.querySelector(this.meta.root);
-
-    if (!rootElement) {
+  renderToRoot(params?: ComponentProps): void {
+    if (!this.meta.rootElement) {
       throw new Error('Для компонента не найден корневой элемент');
     }
 
-    rootElement.innerHTML = '';
-    rootElement.appendChild(this.content);
+    if (params) {
+      this.setProps(params);
+      return;
+    }
+
+    this.meta.rootElement.appendChild(this.content);
   }
 
   private flowRender(): void {
     const componentTemplate = htmlToDOM(this.render());
+
+    if (!componentTemplate) {
+      return;
+    }
+
     renderElement(componentTemplate, this.element);
 
     this.renderChildComponents();
@@ -203,6 +266,10 @@ abstract class Component {
     });
   }
 
+  protected addEventListener(eventName: string, listener: EventListener): void {
+    this.eventTarget.addEventListener(eventName, listener);
+  }
+
   private flowUnregisterHandlers() {
     this.eventHandlersProps.forEach((handlerPropName) => {
       const eventName = getEventNameByHandlerPropName(handlerPropName);
@@ -212,7 +279,7 @@ abstract class Component {
     });
   }
 
-  setInnerHandler(event: string, handler: EventListener): void {
+  protected setInnerHandler(event: string, handler: EventListener): void {
     this.innerHandlers[event] = handler;
   }
 
@@ -267,12 +334,28 @@ abstract class Component {
         return typeof value === 'function' ? value.bind(props) : value;
       },
 
-      set: (props: ComponentProps, propName: string, value: unknown) => {
-        const oldProps = { ...props };
+      set: (
+        oldProps: ComponentProps,
+        componentUpdateType: ComponentUpdateType,
+        componentUpdateData: ComponentUpdateData,
+      ) => {
+        if (componentUpdateType !== ComponentUpdateType.Flow) {
+          return false;
+        }
 
-        Object.assign(props, { [propName]: value });
+        const { options, values } = componentUpdateData;
 
-        this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, props);
+        const oldPropsValues = Object.entries(values)
+          .reduce((
+            result,
+            [propName],
+          ) => ({ ...result, [propName]: oldProps[propName] }), {});
+
+        Object.assign(oldProps, values);
+
+        if (!options.silent) {
+          this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldPropsValues, values);
+        }
 
         return true;
       },
@@ -287,14 +370,6 @@ abstract class Component {
 
   static createDocumentElement(tagName: string): HTMLElement {
     return document.createElement(tagName);
-  }
-
-  show(): void {
-    this.content.style.display = 'block';
-  }
-
-  hide(): void {
-    this.content.style.display = 'none';
   }
 
   get hasValidation(): boolean {
@@ -323,6 +398,15 @@ abstract class Component {
         this.children[prop.id] = prop;
       }
     });
+  }
+
+  removeChildComponents(): void {
+    Object.keys(this.children)
+      .forEach((id) => {
+        this.children[id].removeFromParent();
+        this.children[id].element.remove();
+        delete this.children[id];
+      });
   }
 }
 

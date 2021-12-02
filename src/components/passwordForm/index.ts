@@ -1,21 +1,11 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import '../../styles/settings.scss';
-
-const template = `
-form.settings-form#user-settings(novalidate="")
-  div.avatar
-
-  old-password-input(data-component-id=oldPasswordInput.id)
-  new-password-input(data-component-id=newPasswordInput.id)
-  new-password-confirmation-input(data-component-id=newPasswordConfirmationInput.id)
-
-  submit-button(data-component-id=submitButton.id)
-`;
+import getAvatarURL from '../../utils/getAvatarURL';
+import { User } from '../../models';
+import template from './template';
 
 interface PasswordFormValues {
   oldPassword?: string;
@@ -23,17 +13,25 @@ interface PasswordFormValues {
   newPasswordConfirmation?: string;
 }
 
+interface PasswordFormProps extends FormProps<PasswordFormValues> {
+  user?: User;
+  oldPasswordInput: Input;
+  newPasswordInput: Input;
+  newPasswordConfirmationInput: Input;
+  submitButton: Input;
+}
+
 class PasswordForm extends Component {
-  protected readonly props: FormProps<PasswordFormValues>;
+  readonly props: PasswordFormProps;
 
   constructor(props: FormProps<PasswordFormValues>) {
-    const { validation, values } = props;
+    const { validation } = props;
 
     const oldPasswordInput = new Input({
       type: 'password',
       label: 'Старый пароль',
       inputName: 'oldPassword',
-      value: values?.oldPassword,
+      value: '',
       className: 'settings-input-field',
       ...validation?.password,
     });
@@ -42,7 +40,7 @@ class PasswordForm extends Component {
       type: 'password',
       label: 'Новый пароль',
       inputName: 'newPassword',
-      value: values?.newPassword,
+      value: '',
       className: 'settings-input-field',
       ...validation?.password,
     });
@@ -51,7 +49,7 @@ class PasswordForm extends Component {
       type: 'password',
       label: 'Повторите новый пароль',
       inputName: 'newPasswordConfirmation',
-      value: values?.newPasswordConfirmation,
+      value: '',
       className: 'settings-input-field',
       ...validation?.password,
     });
@@ -73,8 +71,14 @@ class PasswordForm extends Component {
   }
 
   render(): string {
+    const { user } = this.props;
+
+    if (!user) {
+      return '';
+    }
+
     return pug.render(template, {
-      editMode: this.props.editMode,
+      avatar: getAvatarURL(user.avatar),
       oldPasswordInput: this.props.oldPasswordInput,
       newPasswordInput: this.props.newPasswordInput,
       newPasswordConfirmationInput: this.props.newPasswordConfirmationInput,

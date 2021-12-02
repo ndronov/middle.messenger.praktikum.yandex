@@ -1,12 +1,8 @@
-// @ts-ignore
 import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
+import template from './template';
 import './index.scss';
-
-const template = `
-button.submit-button(type="submit")= label
-`;
 
 class SubmitButton extends Component {
   constructor(props: ComponentProps) {

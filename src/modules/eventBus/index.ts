@@ -1,4 +1,4 @@
-type Listener = (data?: unknown) => void;
+export type Listener = (data?: unknown) => void;
 
 class EventBus {
   listeners: Record<string, Listener[]>;
@@ -31,6 +31,10 @@ class EventBus {
     this.listeners[event].forEach((listener) => {
       listener(...args);
     });
+  }
+
+  clear(): void {
+    this.listeners = {};
   }
 }
 

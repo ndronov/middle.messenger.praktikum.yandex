@@ -17,9 +17,13 @@
   background: $color_grey1;
   border-right: 1px solid $color_grey4;
 
-  .profile-link {
-    align-self: flex-end;
+  .links {
+    display: flex;
+    justify-content: space-between;
     margin: 20px 0;
+  }
+
+  .link {
     color: $color_grey5;
     font-size: 12px;
     line-height: 12px;
@@ -82,8 +86,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 20px;
+        min-width: 20px;
         height: 20px;
+        padding: 0 4px;
         color: $color_white;
         font-size: 11px;
         line-height: 12px;
@@ -114,13 +119,14 @@
   flex: 1;
   flex-flow: column;
   align-self: stretch;
+  height: 100%;
   padding: 0 20px;
   color: $color_grey5;
   font-size: 12px;
   line-height: 12px;
   background: $color_white;
 
-  .user-panel {
+  .chat-header {
     display: flex;
     align-items: center;
     height: 54px;
@@ -131,7 +137,7 @@
       width: 34px;
     }
 
-    .user-name {
+    .chat-title {
       flex: 1;
       color: $color_black;
       font-weight: 600;
@@ -139,4 +145,15 @@
       line-height: 13px;
     }
   }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.chats-additional-forms {
+  flex-flow: row;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px;
 }

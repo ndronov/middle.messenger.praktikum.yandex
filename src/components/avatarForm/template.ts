@@ -1,0 +1,11 @@
+const template = `
+div.modal-backdrop
+  form.avatar-form(novalidate="")
+    h3.title Загрузите файл
+
+    avatar-input(data-component-id=avatarInput.id)
+
+    submit-button(data-component-id=submitButton.id)
+`;
+
+export default template;
