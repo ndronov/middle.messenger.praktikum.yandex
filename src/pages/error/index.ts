@@ -1,6 +1,8 @@
 import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
+import template from './template';
+
 import '../../styles/errorPages.scss';
 
 const metaData = [{
@@ -18,13 +20,6 @@ export const getErrorMeta = (code: number): ErrorMeta => {
 
   return metaByCode ?? { code, label: unknownErrorMetaLabel };
 };
-
-const template = `
-div.error-page
-  span.code= meta.code
-  span.label= meta.label
-  a.link(href="/") Назад к чатам
-`;
 
 interface ErrorMeta extends ComponentProps {
   code: number;

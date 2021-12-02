@@ -6,14 +6,7 @@ import AuthController from '../../controllers/authController';
 import UsersController from '../../controllers/usersController';
 import { ComponentProps, RouterLink } from '../../types';
 import { User } from '../../models';
-
-const template = `
-div.container
-  aside.aside-panel
-    link(data-component-id=backLink.id)
-
-  password-form(data-component-id=passwordForm.id)
-`;
+import template from './template';
 
 interface PasswordChange extends ComponentProps {
   user?: User;

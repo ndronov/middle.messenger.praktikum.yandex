@@ -4,18 +4,7 @@ import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
 import Link from '../../components/link';
 import AuthController from '../../controllers/authController';
-
-const template = `
-form.auth-form(novalidate="")
-  h1.title Вход
-  login-input(data-component-id=loginInput.id)
-  password-input(data-component-id=passwordInput.id)
-
-  div.gap
-
-  submit-button(data-component-id=submitButton.id)
-  link(data-component-id=signupLink.id)
-`;
+import template from './template';
 
 class LoginPage extends Component {
   constructor() {

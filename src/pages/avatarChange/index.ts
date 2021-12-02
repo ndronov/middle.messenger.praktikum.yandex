@@ -6,15 +6,7 @@ import AvatarForm from '../../components/avatarForm';
 import AuthController from '../../controllers/authController';
 import UsersController from '../../controllers/usersController';
 import { ComponentProps, RouterLink } from '../../types';
-
-const template = `
-div.container
-  aside.aside-panel
-    link(data-component-id=backLink.id)
-
-  user-settings-form(data-component-id=userSettingsForm.id)
-  avatar-form(data-component-id=avatarForm.id)
-`;
+import template from './template';
 
 interface AvatarChangeProps extends ComponentProps {
   backLink: Link;

@@ -7,14 +7,7 @@ import UsersController from '../../controllers/usersController';
 import { ComponentProps, RouterLink } from '../../types';
 import Chats from '../../components/chats';
 import { Chat } from '../../models';
-
-const template = `
-div.container
-  aside.aside-panel
-    link(data-component-id=backLink.id)
-
-  user-settings-form(data-component-id=userSettingsForm.id)
-`;
+import template from './template';
 
 interface UserSettingsProps extends ComponentProps {
   backLink: Link;
