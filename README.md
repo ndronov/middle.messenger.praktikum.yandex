@@ -1,12 +1,12 @@
 ## middle.messenger.praktikum.yandex
 
-Проектная работа третьего спринта в рамках курса [Мидл фронтенд-разработчик](https://praktikum.yandex.ru/middle-frontend/) на платформе [Яндекс.Практикум](https://praktikum.yandex.ru/).
+Проектная работа четвёртого спринта в рамках курса [Мидл фронтенд-разработчик](https://praktikum.yandex.ru/middle-frontend/) на платформе [Яндекс.Практикум](https://praktikum.yandex.ru/).
 Внедренные доработки:
-- Роутинг
-- HTTP API
-- WebSocket для работы с real-time сообщениями
-- Защита от XSS
-- Добавлены тесты для роутера, компонента, модуля отправки запросов
+- Сборка переведена с parcel на Webpack
+- Настроена сборка приложения в Docker
+- Настроен деплой на платформе Heroku
+- Настроен precommit
+- Проведён аудит npm-пакетов
 
 ## Команды для работы с проектом
 
@@ -26,13 +26,13 @@
 
 ## Пример
 
-Экземпляр развернутого приложения доступен по адресу [https://messenger-domain.netlify.app/](https://messenger-domain.netlify.app/).
+Экземпляр развернутого приложения доступен по адресу [https://messenger-domain.herokuapp.com/](https://messenger-domain.herokuapp.com/).
 
 ## Основные технологии проекта
 
-- [GitHub](https://www.github.com/)
-- [Netlify](https://www.netlify.com/)
-- [Parcel](https://parceljs.org/)
+- [Heroku](https://www.heroku.com/)
+- [Webpack](https://webpack.js.org/)
+- [Docker](https://www.docker.com/)
 - [Pug](https://pugjs.org/)
 - [Sass](https://sass-lang.com/)
 - [TypeScript](https://www.typescriptlang.org/)
