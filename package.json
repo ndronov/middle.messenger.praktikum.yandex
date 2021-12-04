@@ -4,8 +4,11 @@
   "description": "Messenger application",
   "main": "index.js",
   "scripts": {
-    "prebuild": "rimraf build/*",
-    "build": "parcel build ./src/index.html --no-scope-hoist --dist-dir build",
+    "prebuild:parcel": "rimraf build/*",
+    "build:parcel": "parcel build ./src/index.html --no-scope-hoist --dist-dir build",
+    "serve": "webpack serve --mode=development --progress",
+    "build": "webpack",
+    "build:prod": "webpack --config webpack.config.prod.js",
     "dev": "parcel serve ./src/index.html --open --dist-dir .parcel-serve",
     "prestart": "rimraf build/*",
     "start": "parcel build ./src/index.html --no-scope-hoist --dist-dir build && node server",
