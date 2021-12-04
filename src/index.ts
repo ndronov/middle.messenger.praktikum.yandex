@@ -9,6 +9,15 @@ import PasswordChange from './pages/passwordChange';
 import ErrorPage, { getErrorMeta } from './pages/error';
 import router from './modules/router';
 
+import './index.scss';
+
+
+console.log('hello, world');
+
+const testMessage = 'TypeScript works';
+
+console.log(testMessage);
+
 router
   .use('/', LoginPage)
   .use('/sign-out', LogoutPage)
