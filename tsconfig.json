@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "./dist/",
     "downlevelIteration": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
