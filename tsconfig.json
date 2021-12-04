@@ -1,14 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "downlevelIteration": true,
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "sourceMap": true,
-    "strictNullChecks": true,
-    "target": "ES6",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": true
   }
 }
