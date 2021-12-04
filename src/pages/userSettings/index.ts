@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import Link from '../../components/link';
 import UserSettingsForm from '../../components/userSettingsForm';
@@ -57,7 +57,7 @@ class UserSettings extends Component {
       return '';
     }
 
-    return pug.render(template, {
+    return render(template, {
       backLink: this.props.backLink,
       userSettingsForm: this.props.userSettingsForm.setProps({ user }),
     });

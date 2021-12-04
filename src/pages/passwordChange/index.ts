@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import Link from '../../components/link';
 import PasswordForm from '../../components/passwordForm';
@@ -53,7 +53,7 @@ class PasswordChange extends Component {
       return '';
     }
 
-    return pug.render(template, {
+    return render(template, {
       backLink: this.props.backLink,
       passwordForm: this.props.passwordForm.setProps({ user }),
     });

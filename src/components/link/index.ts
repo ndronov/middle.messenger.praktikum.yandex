@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import router from '../../modules/router';
 import { LinkProps, RouterLink } from '../../types';
@@ -46,7 +46,7 @@ class Link extends Component {
   }
 
   render(): string {
-    return pug.render(template, this.props);
+    return render(template, this.props);
   }
 }
 

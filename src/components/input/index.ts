@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import { InputProps, ValidationOptions } from '../../types';
 import template from './template';
@@ -81,7 +81,7 @@ class Input extends Component {
   }
 
   render(): string {
-    return pug.render(template, this.props);
+    return render(template, this.props);
   }
 }
 

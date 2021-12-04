@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
@@ -31,7 +31,7 @@ class MessageSendingForm extends Component {
   }
 
   render(): string {
-    return pug.render(template, {
+    return render(template, {
       messageInput: this.props.messageInput,
     });
   }

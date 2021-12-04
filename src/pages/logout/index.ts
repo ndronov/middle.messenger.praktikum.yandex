@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import AuthController from '../../controllers/authController';
 import template from './template';
@@ -17,7 +17,7 @@ class LogoutPage extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   render(): string {
-    return pug.render(template);
+    return render(template);
   }
 }
 

@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
@@ -50,7 +50,7 @@ class AddUserToChatForm extends Component {
   }
 
   render(): string {
-    return pug.render(template, {
+    return render(template, {
       chatIdInput: this.props.chatIdInput,
       userIdInput: this.props.userIdInput,
       submitButton: this.props.submitButton,

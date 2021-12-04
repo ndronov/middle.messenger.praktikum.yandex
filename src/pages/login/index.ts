@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
@@ -55,7 +55,7 @@ class LoginPage extends Component {
   }
 
   render(): string {
-    return pug.render(template, {
+    return render(template, {
       loginInput: this.props.loginInput,
       passwordInput: this.props.passwordInput,
       submitButton: this.props.submitButton,

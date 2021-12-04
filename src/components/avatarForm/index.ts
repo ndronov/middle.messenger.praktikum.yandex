@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
@@ -39,7 +39,7 @@ class AvatarForm extends Component {
   }
 
   render(): string {
-    return pug.render(template, {
+    return render(template, {
       avatarInput: this.props.avatarInput,
       submitButton: this.props.submitButton,
     });

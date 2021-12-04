@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
 import formatTime from '../../utils/formatTime';
@@ -29,7 +29,7 @@ class Chats extends Component {
   }
 
   render(): string {
-    return pug.render(template, {
+    return render(template, {
       ...this.props,
       eventTarget: 'a',
       formatTime,

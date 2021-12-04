@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import getAvatarURL from '../../utils/getAvatarURL';
 import { FormProps } from '../../types';
@@ -138,7 +138,7 @@ class UserSettingsForm extends Component {
       return '';
     }
 
-    return pug.render(template, {
+    return render(template, {
       avatar: getAvatarURL(user.avatar),
       emailInput: this.props.emailInput.setProps({ value: user.email }),
       loginInput: this.props.loginInput.setProps({ value: user.login }),

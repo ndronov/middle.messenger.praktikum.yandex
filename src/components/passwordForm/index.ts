@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
@@ -77,7 +77,7 @@ class PasswordForm extends Component {
       return '';
     }
 
-    return pug.render(template, {
+    return render(template, {
       avatar: getAvatarURL(user.avatar),
       oldPasswordInput: this.props.oldPasswordInput,
       newPasswordInput: this.props.newPasswordInput,

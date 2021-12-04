@@ -1,4 +1,4 @@
-import pug from 'pug';
+import { render } from 'pug';
 import Component from '../../modules/component';
 import Chats from '../../components/chats';
 import Link from '../../components/link';
@@ -102,7 +102,7 @@ class ActiveChat extends Component {
       return '';
     }
 
-    return pug.render(template, {
+    return render(template, {
       logoutLink: this.props.logoutLink,
       profileLink: this.props.profileLink,
       dialogs: this.props.dialogs.setProps({ chats }),
