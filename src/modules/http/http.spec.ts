@@ -4,8 +4,8 @@ import { useFakeXMLHttpRequest, SinonFakeXMLHttpRequest, SinonFakeXMLHttpRequest
 import HTTP, { BASE_URL } from './index';
 
 function mockHttp(): {
-  fakeRequests: SinonFakeXMLHttpRequest[],
-  FakeXMLHttpRequest: SinonFakeXMLHttpRequestStatic
+  fakeRequests: SinonFakeXMLHttpRequest[];
+  FakeXMLHttpRequest: SinonFakeXMLHttpRequestStatic;
 } {
   const fakeRequests: SinonFakeXMLHttpRequest[] = [];
   const FakeXMLHttpRequest = useFakeXMLHttpRequest();

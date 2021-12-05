@@ -1,5 +1,8 @@
 /.idea
 /node_modules
 /build
+/dist
 /.parcel-serve
 /.parcel-cache
+webpack-stats.json
+npm-debug.log
