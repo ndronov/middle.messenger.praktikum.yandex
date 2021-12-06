@@ -6,8 +6,8 @@ const path = require('path');
 const DEFAULT_PORT = 3000;
 const port = process.env.PORT || DEFAULT_PORT;
 
-const STATIC = path.resolve(__dirname, 'dist');
-const INDEX = path.resolve(STATIC, 'index.html');
+const STATIC = path.resolve(__dirname, 'build');
+const INDEX = path.resolve(STATIC, 'app.html');
 
 const app = express();
 
