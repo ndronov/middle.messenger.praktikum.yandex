@@ -1,9 +1,8 @@
-import { render } from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import template from './template';
+import template from './template.pug';
 
 interface AddUserToChatFormValues {
   chatId?: number;
@@ -50,7 +49,7 @@ class AddUserToChatForm extends Component {
   }
 
   render(): string {
-    return render(template, {
+    return template({
       chatIdInput: this.props.chatIdInput,
       userIdInput: this.props.userIdInput,
       submitButton: this.props.submitButton,

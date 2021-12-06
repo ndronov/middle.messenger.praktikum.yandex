@@ -1,7 +1,6 @@
-import { render } from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
-import template from './template';
+import template from './template.pug';
 
 import '../../styles/errorPages.scss';
 
@@ -35,7 +34,7 @@ class ErrorPage extends Component {
   }
 
   render(): string {
-    return render(template, { meta: this.props.meta });
+    return template({ meta: this.props.meta });
   }
 }
 

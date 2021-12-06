@@ -1,9 +1,8 @@
-import { render } from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import template from './template';
+import template from './template.pug';
 import './index.scss';
 
 interface AvatarFormProps extends FormProps {
@@ -39,7 +38,7 @@ class AvatarForm extends Component {
   }
 
   render(): string {
-    return render(template, {
+    return template({
       avatarInput: this.props.avatarInput,
       submitButton: this.props.submitButton,
     });

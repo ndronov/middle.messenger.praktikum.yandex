@@ -32,7 +32,7 @@ class Router {
     Router.instance = this;
   }
 
-  setRootQuery(rootQuery: string) {
+  setRootQuery(rootQuery: string): void {
     this.rootQuery = rootQuery;
   }
 

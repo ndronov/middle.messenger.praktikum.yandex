@@ -1,8 +1,7 @@
-import { render } from 'pug';
 import Component from '../../modules/component';
 import router from '../../modules/router';
 import { LinkProps, RouterLink } from '../../types';
-import template from './template';
+import template from './template.pug';
 
 class Link extends Component {
   readonly props: LinkProps;
@@ -46,7 +45,7 @@ class Link extends Component {
   }
 
   render(): string {
-    return render(template, this.props);
+    return template(this.props);
   }
 }
 

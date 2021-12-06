@@ -47,8 +47,8 @@ export enum RouterLink {
 }
 
 export interface LinkProps extends ComponentProps {
-  label: string,
-  href?: string,
+  label: string;
+  href?: string;
   go?: RouterLink;
-  className?: string,
+  className?: string;
 }

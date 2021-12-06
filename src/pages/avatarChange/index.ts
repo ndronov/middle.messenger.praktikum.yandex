@@ -1,4 +1,3 @@
-import { render } from 'pug';
 import Component from '../../modules/component';
 import Link from '../../components/link';
 import UserSettingsForm from '../../components/userSettingsForm';
@@ -6,7 +5,7 @@ import AvatarForm from '../../components/avatarForm';
 import AuthController from '../../controllers/authController';
 import UsersController from '../../controllers/usersController';
 import { ComponentProps, RouterLink } from '../../types';
-import template from './template';
+import template from './template.pug';
 
 interface AvatarChangeProps extends ComponentProps {
   backLink: Link;
@@ -56,7 +55,7 @@ class AvatarChange extends Component {
       return '';
     }
 
-    return render(template, {
+    return template({
       backLink: this.props.backLink,
       userSettingsForm: this.props.userSettingsForm.setProps({ user }),
       avatarForm: this.props.avatarForm,
