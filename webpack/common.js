@@ -3,7 +3,7 @@ import {
 } from './plugins';
 import { paths, config } from './configuration';
 import {
-  css, fonts, images, javaScript, typeScript,
+  pug, css, fonts, images, javaScript, typeScript,
 } from './modules';
 
 /**
@@ -29,7 +29,7 @@ const plugins = [htmlWebpackPlugin, copyWebpackPlugin, eSLintWebpackPlugin, styl
  * Shared modules.
  */
 const modules = {
-  rules: [css, fonts, images, javaScript, typeScript],
+  rules: [pug, css, fonts, images, javaScript, typeScript],
 };
 
 /**

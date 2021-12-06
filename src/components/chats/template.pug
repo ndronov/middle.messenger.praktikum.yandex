@@ -1,4 +1,3 @@
-const template = `
 div.chats
   each chat in chats
     a.chat(href='/chat/' + chat.id)
@@ -12,6 +11,3 @@ div.chats
           time.time= formatTime(chat.last_message.time)
         if chat.unread_count
           span.notifications-number= chat.unread_count
-`;
-
-export default template;

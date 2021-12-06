@@ -1,4 +1,3 @@
-import { render } from 'pug';
 import Component from '../../modules/component';
 import getAvatarURL from '../../utils/getAvatarURL';
 import { FormProps } from '../../types';
@@ -6,7 +5,7 @@ import Link from '../link';
 import Input from '../input';
 import SubmitButton from '../submitButton';
 import { User } from '../../models';
-import template from './template';
+import template from './template.pug';
 
 interface UserSettingsFormValues {
   email?: string;
@@ -138,7 +137,7 @@ class UserSettingsForm extends Component {
       return '';
     }
 
-    return render(template, {
+    return template({
       avatar: getAvatarURL(user.avatar),
       emailInput: this.props.emailInput.setProps({ value: user.email }),
       loginInput: this.props.loginInput.setProps({ value: user.login }),

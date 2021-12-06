@@ -1,4 +1,3 @@
-import { render } from 'pug';
 import Component from '../../modules/component';
 import Link from '../../components/link';
 import UserSettingsForm from '../../components/userSettingsForm';
@@ -7,7 +6,7 @@ import UsersController from '../../controllers/usersController';
 import { ComponentProps, RouterLink } from '../../types';
 import Chats from '../../components/chats';
 import { Chat } from '../../models';
-import template from './template';
+import template from './template.pug';
 
 interface UserSettingsProps extends ComponentProps {
   backLink: Link;
@@ -57,7 +56,7 @@ class UserSettings extends Component {
       return '';
     }
 
-    return render(template, {
+    return template({
       backLink: this.props.backLink,
       userSettingsForm: this.props.userSettingsForm.setProps({ user }),
     });
