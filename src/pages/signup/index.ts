@@ -1,10 +1,9 @@
-import pug from 'pug';
 import Component from '../../modules/component';
 import SubmitButton from '../../components/submitButton';
 import Input from '../../components/input';
 import Link from '../../components/link';
 import AuthController from '../../controllers/authController';
-import template from './template';
+import template from './template.pug';
 
 class SignupPage extends Component {
   constructor() {
@@ -87,7 +86,7 @@ class SignupPage extends Component {
   }
 
   render(): string {
-    return pug.render(template, {
+    return template({
       emailInput: this.props.emailInput,
       loginInput: this.props.loginInput,
       firstNameInput: this.props.firstNameInput,

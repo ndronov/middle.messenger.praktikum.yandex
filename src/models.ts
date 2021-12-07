@@ -19,7 +19,7 @@ export interface Chat {
     user: User;
     time: string;
     content: string;
-  }
+  };
 }
 
 export interface Message {
@@ -37,5 +37,5 @@ export interface Message {
     content_type: string;
     content_size: number;
     upload_date: string;
-  }
+  };
 }

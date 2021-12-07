@@ -12,11 +12,11 @@ export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 export type HTTPRequestBody = Record<string, unknown>;
 
 interface Options {
-  method?: Method
-  data?: HTTPRequestBody | unknown,
-  headers?: Record<string, string>,
-  timeout?: number,
-  raw?: boolean,
+  method?: Method;
+  data?: HTTPRequestBody | unknown;
+  headers?: Record<string, string>;
+  timeout?: number;
+  raw?: boolean;
 }
 
 const defaultMethod = Method.GET;

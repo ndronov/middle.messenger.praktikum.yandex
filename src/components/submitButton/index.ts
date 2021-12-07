@@ -1,7 +1,6 @@
-import pug from 'pug';
 import Component from '../../modules/component';
 import { ComponentProps } from '../../types';
-import template from './template';
+import template from './template.pug';
 import './index.scss';
 
 class SubmitButton extends Component {
@@ -10,7 +9,7 @@ class SubmitButton extends Component {
   }
 
   render(): string {
-    return pug.render(template, this.props);
+    return template(this.props);
   }
 }
 

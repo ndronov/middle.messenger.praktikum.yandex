@@ -1,9 +1,8 @@
-import pug from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
-import template from './template';
+import template from './template.pug';
 
 interface NewChatFormValues {
   title?: string;
@@ -44,7 +43,7 @@ class NewChatForm extends Component {
   }
 
   render(): string {
-    return pug.render(template, {
+    return template({
       chatTitleInput: this.props.chatTitleInput,
       submitButton: this.props.submitButton,
     });

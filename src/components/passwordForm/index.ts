@@ -1,11 +1,10 @@
-import pug from 'pug';
 import Component from '../../modules/component';
 import { FormProps } from '../../types';
 import Input from '../input';
 import SubmitButton from '../submitButton';
 import getAvatarURL from '../../utils/getAvatarURL';
 import { User } from '../../models';
-import template from './template';
+import template from './template.pug';
 
 interface PasswordFormValues {
   oldPassword?: string;
@@ -77,7 +76,7 @@ class PasswordForm extends Component {
       return '';
     }
 
-    return pug.render(template, {
+    return template({
       avatar: getAvatarURL(user.avatar),
       oldPasswordInput: this.props.oldPasswordInput,
       newPasswordInput: this.props.newPasswordInput,
